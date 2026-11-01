@@ -1,12 +1,21 @@
+<div align="center">
+
+<img src="docs/social-card.png" alt="Gutenberg Reader Studio & Vocabulary Lab — A Reading Room for the Public Domain" width="100%" />
+
 # Gutenberg Reader Studio & Vocabulary Lab
 
-A production-ready, browser-native reading room for the public domain. Search 75,000+ Project Gutenberg books, read them in a customizable typeset page, switch on bionic reading or an RSVP speed reader, generate ambient study sound, and keep every unfamiliar word in a spaced-repetition vocabulary bank.
+**A Reading Room for the Public Domain**
 
-It runs entirely from a read-only static host such as GitHub Pages — no backend, no database, no build step, and no account.
+Search 75,000+ classics, read with bionic or RSVP modes, and keep every unfamiliar word in a spaced-repetition vocabulary bank.
 
-![Gutenberg Reader Studio library](screenshot.png)
+[![Live demo](https://img.shields.io/badge/live_demo-online-d4a373?style=flat-square)](https://somphol.github.io/gutenberg-reader-studio/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-d4a373?style=flat-square)](LICENSE)
 
-**Live demo:** <https://somphol.github.io/gutenberg-reader-studio/>
+**[Try it live →](https://somphol.github.io/gutenberg-reader-studio/)**
+
+</div>
+
+---
 
 ## What it does
 
