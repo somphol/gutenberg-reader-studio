@@ -13,6 +13,9 @@ It runs entirely from a read-only static host such as GitHub Pages — no backen
 ### Discover and read
 
 - **Gutendex search** across Project Gutenberg’s catalogue, with language filtering, popular-first ordering, genre browsing, and paged results.
+- **A 165-book local catalogue** — 20 hand-picked classics, 140 popular Gutenberg titles, and unique Standard Ebooks editions. Search checks this shelf first, so common searches return instantly without waiting for Gutendex.
+- **Standard Ebooks as a second text source** — single-page XHTML is cleaned and paginated the same way as Gutenberg text.
+- **Search caching** — Gutendex responses are cached in `localStorage` for 7 days, and opened full texts are cached in IndexedDB for instant reopen.
 - **Twenty curated classics** with hand-checked covers and reliable public-domain text sources.
 - **Automatic text cleanup** removes the Gutenberg header, license, transcriber notes, illustration markers, and page furniture.
 - **Chapter detection** for `CHAPTER`, `BOOK`, `PART`, `LETTER`, `ACT`, `SCENE`, and common front-matter headings.
@@ -81,8 +84,20 @@ A local server is recommended over opening `index.html` directly because `fetch`
 Project Gutenberg does not send an `Access-Control-Allow-Origin` header for plain text, so the studio uses a layered, CORS-friendly strategy:
 
 1. **GITenberg archive** on `raw.githubusercontent.com` — the primary source. Curated books have an explicit repository and text file; search results are matched by Gutenberg ID through the GitHub API, then by derived repository names.
-2. **Direct Project Gutenberg** mirrors — attempted for environments that permit them.
-3. **Public CORS relays** — a last-resort fallback for the Gutenberg text URL.
+2. **Standard Ebooks** — a second public-domain source for selected titles. The studio fetches the single-page XHTML, removes front matter, notes, and colophons, and extracts chapter headings and paragraphs.
+3. **Direct Project Gutenberg** mirrors — attempted for environments that permit them.
+4. **Public CORS relays** — a last-resort fallback for the Gutenberg text URL.
+
+### Search is local-first
+
+The studio ships with a **165-book local catalogue**: 20 curated classics, 140 popular Gutenberg titles, and unique Standard Ebooks editions. Search and genre browsing filter this shelf synchronously, so results appear immediately. Gutendex is then asked to supplement the list in the background.
+
+- If Gutendex is slow or unavailable, the local matches remain usable.
+- Gutendex responses are cached for 7 days, so a repeat search does not wait on the network.
+- Opened full texts are cached in IndexedDB. Reopening a book skips the download and goes straight to pagination.
+- The only time you see “Searching the full Gutendex catalogue…” is when neither the local shelf nor the search cache has a match.
+
+![Local catalogue shelf](screenshot-catalog.png)
 
 Gutendex metadata is fetched from `https://gutendex.com/books/`. If the direct request is blocked by a network, a public relay is tried before the search shows an error.
 
@@ -162,7 +177,8 @@ Book text itself is not stored — it is re-fetched and re-paginated when you re
 
 - No analytics, tracking, cookies, accounts, or server.
 - Reading positions, notes, and vocabulary live in `localStorage` and in files you explicitly export.
-- Network requests are limited to Project Gutenberg/GITenberg text, Gutendex metadata, the Free Dictionary API, and optional Google Fonts / jsDelivr font files.
+- Network requests are limited to Project Gutenberg/GITenberg and Standard Ebooks text, Gutendex metadata, the Free Dictionary API, and optional Google Fonts / jsDelivr font files.
+- Full book text opened in the reader is cached locally in IndexedDB so it can reopen without another download.
 - Speech audio is played by the browser; the app does not record or upload audio.
 
 ## Browser support
@@ -190,6 +206,7 @@ gutenberg-reader-studio/
 ├── screenshot-rsvp.png
 ├── screenshot-settings.png
 ├── screenshot-wordbank.png
+├── screenshot-catalog.png
 ├── screenshot-mobile.png
 ├── README.md
 ├── STATE.md
@@ -205,7 +222,7 @@ This studio was built in a single agent session with **OpenCode 2.2.5** and **De
 
 ## Credits
 
-- Books: [Project Gutenberg](https://www.gutenberg.org/). Text mirrors: [GITenberg](https://github.com/GITenberg).
+- Books: [Project Gutenberg](https://www.gutenberg.org/) and [Standard Ebooks](https://standardebooks.org/). Gutenberg text mirrors: [GITenberg](https://github.com/GITenberg).
 - Discovery: [Gutendex](https://gutendex.com/).
 - Definitions and pronunciation: [Free Dictionary API](https://dictionaryapi.dev/).
 - Fonts: [Fraunces](https://fonts.google.com/specimen/Fraunces) and [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts; [OpenDyslexic](https://opendyslexic.org/) via Fontsource/jsDelivr.

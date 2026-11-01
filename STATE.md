@@ -4,8 +4,8 @@
 | --- | --- |
 | Project | Gutenberg Reader Studio & Vocabulary Lab (`gutenberg-reader-studio`) |
 | Started | 2026-11-01 01:56:05.063000 UTC |
-| Completed | 2026-11-01 03:26:09.029289 UTC |
-| Duration | **1h 30m 3s** (5,404.0 seconds) |
+| Completed | 2026-11-01 07:14:25.251078 UTC |
+| Duration | **5h 18m 20s** (19,100.2 seconds) |
 | Harness | OpenCode 2.2.5 |
 | Model | DeepSeek V4.1 Flash (`opencode-go/deepseek-v4.1-flash`) |
 | Session | `ses_e6b2dd0caffeJNXNDXuZvo48oV` |
@@ -16,21 +16,24 @@
 
 | Metric | Tokens |
 | --- | ---: |
-| Input | 166,463 |
-| Output | 176,697 |
-| Reasoning | 135,823 |
-| **Total (input + output + reasoning)** | **478,983** |
-| Cache read | 75,116,032 |
+| Input | 622,312 |
+| Output | 218,223 |
+| Reasoning | 181,335 |
+| **Total (input + output + reasoning)** | **1,021,870** |
+| Cache read | 128,888,320 |
 | Cache write | 1,204 |
-| Total including cache | 75,596,219 |
+| Total including cache | 129,911,394 |
 
-> Snapshot taken from the OpenCode session record when the project was packaged at 2026-11-01T03:26:09.029289Z. The final commit/push and closing response occur outside this snapshot. `total = input + output + reasoning`; cache reads/writes are reported separately because they are a subset of context usage.
+> Snapshot taken from the OpenCode session record when the project was packaged at 2026-11-01T07:14:25.251078Z. The final commit/push and closing response occur outside this snapshot. `total = input + output + reasoning`; cache reads/writes are reported separately because they are a subset of context usage.
 
 ## What was built
 
-- **Three production files**: `index.html` (638 lines), `style.css` (2,379 lines), `script.js` (3,664 lines). No build step, framework, backend, or database.
-- **Discovery**: Gutendex search, language filtering, genre browsing, paged results, and 20 curated classics with verified GITenberg text sources.
-- **Reader**: automatic Gutenberg header/license cleaning, chapter detection, height-aware pagination, page-turn and continuous-scroll modes, running heads, page numbers, drop caps, poetry blocks, italics, and a reading-position memory.
+- **Three production files**: `index.html` (651 lines), `style.css` (2,387 lines), `script.js` (7,302 lines). No build step, framework, backend, or database.
+- **Local catalogue**: 165 books — 20 curated classics, 140 popular Gutenberg titles, and 8 unique Standard Ebooks editions. A 12-book shelf and a “Browse all local books” view make the catalogue visible.
+- **Local-first search**: the local catalogue filters synchronously, Gutendex supplements in the background, and API responses are cached for 7 days. The “Searching the full Gutendex catalogue…” state only appears when neither local nor cached results exist.
+- **Standard Ebooks source**: single-page XHTML is stripped of front matter, notes, and colophons, then parsed into chapter headings and prose.
+- **Full-text cache**: opened books are stored in IndexedDB so they reopen without another download.
+- **Reader**: automatic Gutenberg header/license cleaning, chapter detection, measured pagination, page-turn and continuous-scroll modes, running heads, page numbers, drop caps, poetry blocks, italics, and a reading-position memory.
 - **Page turn**: the outgoing page hinges on the spine and swings left, revealing the next page already waiting underneath; Previous swings the earlier page back in from the left.
 - **Customization**: four themes, three typefaces, 14–32px font size, 1.2×–2.2× line height, persisted in `localStorage`.
 - **Focus modes**: bionic reading with full-word capture, RSVP at 150–500 wpm with ORP alignment, teleprompter auto-scroll, and Web Audio rain/café/fireplace soundscapes.
@@ -64,9 +67,15 @@
 - Context extraction verified around abbreviations: selecting “Bennet” captured the full sentence beginning “My dear Mr. Bennet…” instead of cutting at “Mr.”.
 - Mobile reader layout verified at 390×844: the bottom Previous/Next bar stays in the viewport and the quick-action labels remain visible.
 - Page-turn animation verified in both directions at 400ms: the outgoing page is visibly angled while the next sheet is already visible underneath; Previous swings the earlier page back in from the left.
+- Local catalogue verified: 165 books (20 curated, 140 popular Gutenberg, 8 Standard Ebooks) render instantly; the library hero and a 12-book “Popular from the local catalogue” shelf show the offline count.
+- Local-first search verified: a “persuasion” query rendered the local result before Gutendex answered, then supplemented with the API result; a repeat query used the 7-day search cache.
+- Standard Ebooks extraction verified: Persuasion (423 pages), Wuthering Heights (619 pages), and Around the World in Eighty Days (405 pages) loaded from single-page XHTML with chapters and prose intact.
+- IndexedDB full-text cache verified: reopening The Yellow Wallpaper skipped the download and completed in about 0.4 seconds.
+- Page-count stability verified on open: the first measured layout and the final pagination match before the loading overlay is removed.
+- Browse-all-local view verified: 165 cached books rendered without a Gutendex request.
 
 ## Credits
 
 Built with [OpenCode](https://opencode.ai) and **DeepSeek V4.1 Flash**. The app, design system, SRS engine, text pipeline, tests, screenshots, and documentation were generated in a single agent session.
 
-Books are provided by [Project Gutenberg](https://www.gutenberg.org/) and mirrored by [GITenberg](https://github.com/GITenberg). Discovery uses [Gutendex](https://gutendex.com/). Definitions and pronunciation audio use the [Free Dictionary API](https://dictionaryapi.dev/). Fraunces and Inter are served by Google Fonts; OpenDyslexic is served by Fontsource/jsDelivr. This is an independent reading project and is not affiliated with Project Gutenberg, Gutendex, or the Free Dictionary API.
+Books are provided by [Project Gutenberg](https://www.gutenberg.org/) and [Standard Ebooks](https://standardebooks.org/), with Gutenberg text mirrored by [GITenberg](https://github.com/GITenberg). Discovery uses [Gutendex](https://gutendex.com/). Definitions and pronunciation audio use the [Free Dictionary API](https://dictionaryapi.dev/). Fraunces and Inter are served by Google Fonts; OpenDyslexic is served by Fontsource/jsDelivr. This is an independent reading project and is not affiliated with Project Gutenberg, Gutendex, Standard Ebooks, or the Free Dictionary API.

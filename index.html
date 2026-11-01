@@ -68,6 +68,7 @@
 
             <div class="hero-meta">
               <span><strong>75k+</strong> public-domain books</span>
+              <span><strong id="offline-count">0</strong> ready offline</span>
               <span><strong>3</strong> reading modes</span>
               <span><strong>100%</strong> local-first</span>
             </div>
@@ -125,6 +126,18 @@
             </div>
           </div>
           <div class="book-grid" id="book-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="shelf-section catalog-section" id="catalog-section" aria-labelledby="catalog-heading" hidden>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Ready offline</p>
+              <h2 id="catalog-heading">Popular from the local catalogue</h2>
+              <p class="section-sub" id="catalog-sub">Popular Gutenberg and Standard Ebooks titles cached on this device.</p>
+            </div>
+            <button class="btn btn-ghost btn-small" type="button" id="browse-catalog">Browse all local books</button>
+          </div>
+          <div class="book-grid" id="catalog-grid" aria-live="polite"></div>
         </section>
 
         <section class="results-section" id="results-section" aria-labelledby="results-heading" hidden>

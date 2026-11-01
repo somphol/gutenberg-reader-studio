@@ -15,20 +15,20 @@
   ],
   "build": {
     "startedAt": "2026-11-01T01:56:05.063000Z",
-    "completedAt": "2026-11-01T03:26:09.029289Z",
-    "durationSeconds": 5404.0,
-    "durationHuman": "1h 30m 3s",
+    "completedAt": "2026-11-01T07:14:25.251078Z",
+    "durationSeconds": 19100.2,
+    "durationHuman": "5h 18m 20s",
     "timezone": "UTC",
     "note": "Elapsed time from OpenCode session creation to the token snapshot used for this state file. The final commit, GitHub Pages deployment, and closing response occur after this snapshot."
   },
   "tokens": {
-    "input": 166463,
-    "output": 176697,
-    "reasoning": 135823,
-    "cacheRead": 75116032,
+    "input": 622312,
+    "output": 218223,
+    "reasoning": 181335,
+    "cacheRead": 128888320,
     "cacheWrite": 1204,
-    "total": 478983,
-    "totalWithCache": 75596219,
+    "total": 1021870,
+    "totalWithCache": 129911394,
     "note": "Snapshot from the OpenCode session record when the project was packaged. total = input + output + reasoning. Cache reads/writes are reported separately because they are a subset of context usage."
   },
   "cost": {
@@ -99,6 +99,7 @@
     "srsMasteredAtReview": 4,
     "textSources": [
       "GITenberg raw archive",
+      "Standard Ebooks single-page XHTML",
       "Project Gutenberg mirrors",
       "public CORS relays"
     ],
@@ -108,18 +109,38 @@
     "mobileDefaultMode": "Continuous scroll",
     "files": {
       "index.html": {
-        "bytes": 36204,
-        "lines": 638
+        "bytes": 36961,
+        "lines": 651
       },
       "style.css": {
-        "bytes": 75777,
-        "lines": 2379
+        "bytes": 76002,
+        "lines": 2387
       },
       "script.js": {
-        "bytes": 130172,
-        "lines": 3664
+        "bytes": 239756,
+        "lines": 7302
       }
-    }
+    },
+    "localCatalog": 165,
+    "localCatalogBreakdown": {
+      "curated": 20,
+      "popularGutenberg": 140,
+      "standardEbooks": 8,
+      "afterTitleDedupe": 165
+    },
+    "searchCacheDays": 7,
+    "fullTextCache": "IndexedDB",
+    "searchStrategy": "Local catalogue first; Gutendex supplements in the background; 7-day search cache",
+    "standardEbooks": [
+      "Persuasion",
+      "Northanger Abbey",
+      "Mansfield Park",
+      "Wuthering Heights",
+      "The Hound of the Baskervilles",
+      "Around the World in Eighty Days",
+      "Meditations",
+      "The Art of War"
+    ]
   },
   "verification": [
     "20 curated classics rendered with real Gutenberg cover art and reliable GITenberg text sources.",
@@ -144,7 +165,13 @@
     "Title-page cleanup verified on Sherlock Holmes and The Yellow Wallpaper: table-of-contents/author front matter is dropped so page 1 opens on prose.",
     "Context extraction verified around abbreviations: selecting “Bennet” captured the full sentence beginning “My dear Mr. Bennet…” instead of cutting at “Mr.”.",
     "Mobile reader layout verified at 390×844: the bottom Previous/Next bar stays in the viewport and the quick-action labels remain visible.",
-    "Page-turn animation verified in both directions at 400ms: the outgoing page is visibly angled while the next sheet is already visible underneath; Previous swings the earlier page back in from the left."
+    "Page-turn animation verified in both directions at 400ms: the outgoing page is visibly angled while the next sheet is already visible underneath; Previous swings the earlier page back in from the left.",
+    "Local catalogue verified: 165 books (20 curated, 140 popular Gutenberg, 8 Standard Ebooks) render instantly; the library hero and a 12-book “Popular from the local catalogue” shelf show the offline count.",
+    "Local-first search verified: a “persuasion” query rendered the local result before Gutendex answered, then supplemented with the API result; a repeat query used the 7-day search cache.",
+    "Standard Ebooks extraction verified: Persuasion (423 pages), Wuthering Heights (619 pages), and Around the World in Eighty Days (405 pages) loaded from single-page XHTML with chapters and prose intact.",
+    "IndexedDB full-text cache verified: reopening The Yellow Wallpaper skipped the download and completed in about 0.4 seconds.",
+    "Page-count stability verified on open: the first measured layout and the final pagination match before the loading overlay is removed.",
+    "Browse-all-local view verified: 165 cached books rendered without a Gutendex request."
   ],
   "artifacts": [
     "index.html",
@@ -157,6 +184,7 @@
     "screenshot-rsvp.png",
     "screenshot-settings.png",
     "screenshot-wordbank.png",
+    "screenshot-catalog.png",
     "screenshot-mobile.png",
     "README.md",
     "STATE.md",
@@ -165,5 +193,5 @@
     ".nojekyll",
     ".gitignore"
   ],
-  "credits": "Built with OpenCode 2.2.5 and DeepSeek V4.1 Flash (opencode-go/deepseek-v4.1-flash). Books from Project Gutenberg via Gutendex and GITenberg. Definitions and audio from the Free Dictionary API. Fraunces/Inter via Google Fonts and OpenDyslexic via Fontsource/jsDelivr. This is an independent reading project and is not affiliated with Project Gutenberg, Gutendex, or the Free Dictionary API."
+  "credits": "Built with OpenCode 2.2.5 and DeepSeek V4.1 Flash (opencode-go/deepseek-v4.1-flash). Books from Project Gutenberg via Gutendex and GITenberg, plus Standard Ebooks. Definitions and audio from the Free Dictionary API. Fraunces/Inter via Google Fonts and OpenDyslexic via Fontsource/jsDelivr. This is an independent reading project and is not affiliated with Project Gutenberg, Gutendex, Standard Ebooks, or the Free Dictionary API."
 }

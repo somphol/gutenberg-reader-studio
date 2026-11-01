@@ -12,6 +12,7 @@ const APP = {
   version: 1,
   storageKey: 'gutenbergStudio.v1',
   dictKey: 'gutenbergStudio.dict.v1',
+  searchCacheKey: 'gutenbergStudio.searchCache.v1',
   stateFileName: 'gutenberg_studio_state.json',
   repository: 'https://github.com/somphol/gutenberg-reader-studio',
   pages: 'https://somphol.github.io/gutenberg-reader-studio/',
@@ -151,6 +152,3283 @@ const CURATED = [
   source: 'curated',
 }));
 
+const POPULAR_GUTENBERG = [
+  {
+    "id": 37683,
+    "title": "Chambers's Twentieth Century Dictionary (part 1 of 4: A-D)",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "English language -- Dictionaries"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 94005,
+    "cover": "https://www.gutenberg.org/cache/epub/37683/pg37683.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/37683.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/37683.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1513,
+    "title": "Romeo and Juliet",
+    "author": "William Shakespeare",
+    "authorSort": "William Shakespeare",
+    "subjects": [
+      "Conflict of generations -- Drama",
+      "Juliet (Fictitious character) -- Drama",
+      "Romeo (Fictitious character) -- Drama",
+      "Tragedies (Drama)"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 81893,
+    "cover": "https://www.gutenberg.org/cache/epub/1513/pg1513.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1513.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1513.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 100,
+    "title": "The Complete Works of William Shakespeare",
+    "author": "William Shakespeare",
+    "authorSort": "William Shakespeare",
+    "subjects": [
+      "English drama -- Early modern and Elizabethan, 1500-1600"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 76146,
+    "cover": "https://www.gutenberg.org/cache/epub/100/pg100.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/100.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/100.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 43,
+    "title": "The strange case of Dr. Jekyll and Mr. Hyde",
+    "author": "Robert Louis Stevenson",
+    "authorSort": "Robert Louis Stevenson",
+    "subjects": [
+      "Horror tales",
+      "London (England) -- Fiction",
+      "Multiple personality -- Fiction",
+      "Physicians -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 71859,
+    "cover": "https://www.gutenberg.org/cache/epub/43/pg43.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/43.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/43.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2641,
+    "title": "A Room with a View",
+    "author": "E. M. (Edward Morgan) Forster",
+    "authorSort": "E. M. (Edward Morgan) Forster",
+    "subjects": [
+      "British -- Italy -- Fiction",
+      "England -- Fiction",
+      "Florence (Italy) -- Fiction",
+      "Humorous stories"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 70690,
+    "cover": "https://www.gutenberg.org/cache/epub/2641/pg2641.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2641.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2641.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 145,
+    "title": "Middlemarch",
+    "author": "George Eliot",
+    "authorSort": "George Eliot",
+    "subjects": [
+      "Bildungsromans",
+      "City and town life -- Fiction",
+      "Didactic fiction",
+      "Domestic fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 70535,
+    "cover": "https://www.gutenberg.org/cache/epub/145/pg145.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/145.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/145.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 49297,
+    "title": "The Works of William Shakespeare [Cambridge Edition] [Vol. 5 of 9]",
+    "author": "William Shakespeare",
+    "authorSort": "William Shakespeare",
+    "subjects": [
+      "English drama"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 67762,
+    "cover": "https://www.gutenberg.org/cache/epub/49297/pg49297.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/49297.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/49297.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1727,
+    "title": "The Odyssey: Rendered into English prose for the use of those who cannot read the original",
+    "author": "Homer",
+    "authorSort": "Homer",
+    "subjects": [
+      "Epic poetry, Greek -- Translations into English",
+      "Homer -- Translations into English",
+      "Odysseus, King of Ithaca (Mythological character)"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 63666,
+    "cover": "https://www.gutenberg.org/cache/epub/1727/pg1727.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1727.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1727.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 67979,
+    "title": "The Blue Castle: a novel",
+    "author": "L. M. (Lucy Maud) Montgomery",
+    "authorSort": "L. M. (Lucy Maud) Montgomery",
+    "subjects": [
+      "Canada -- History -- 1914-1945 -- Fiction",
+      "Choice (Psychology) -- Fiction",
+      "Love -- Fiction",
+      "Romance fiction"
+    ],
+    "topics": [
+      "fiction",
+      "romance"
+    ],
+    "downloads": 62659,
+    "cover": "https://www.gutenberg.org/cache/epub/67979/pg67979.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/67979.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/67979.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 37106,
+    "title": "Little Women; Or, Meg, Jo, Beth, and Amy",
+    "author": "Louisa May Alcott",
+    "authorSort": "Louisa May Alcott",
+    "subjects": [
+      "Autobiographical fiction",
+      "Bildungsromans",
+      "Domestic fiction",
+      "Family life -- New England -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 57282,
+    "cover": "https://www.gutenberg.org/cache/epub/37106/pg37106.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/37106.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/37106.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1184,
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "authorSort": "Alexandre Dumas",
+    "subjects": [
+      "Adventure stories",
+      "Dantès, Edmond (Fictitious character) -- Fiction",
+      "France -- History -- 19th century -- Fiction",
+      "Historical fiction"
+    ],
+    "topics": [
+      "adventure",
+      "fiction"
+    ],
+    "downloads": 53145,
+    "cover": "https://www.gutenberg.org/cache/epub/1184/pg1184.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1184.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1184.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2680,
+    "title": "Meditations",
+    "author": "Emperor of Rome Marcus Aurelius",
+    "authorSort": "Emperor of Rome Marcus Aurelius",
+    "subjects": [
+      "Ethics",
+      "Life",
+      "Stoics"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 50637,
+    "cover": "https://www.gutenberg.org/cache/epub/2680/pg2680.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2680.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2680.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 16328,
+    "title": "Beowulf: An Anglo-Saxon Epic Poem",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "Dragons -- Poetry",
+      "Epic poetry, English (Old)",
+      "Monsters -- Poetry"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 50413,
+    "cover": "https://www.gutenberg.org/cache/epub/16328/pg16328.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/16328.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/16328.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 65238,
+    "title": "The Secret of Chimneys",
+    "author": "Agatha Christie",
+    "authorSort": "Agatha Christie",
+    "subjects": [
+      "Battle, Superintendent (Fictitious character) -- Fiction",
+      "Detective and mystery stories",
+      "Police -- England -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 50307,
+    "cover": "https://www.gutenberg.org/cache/epub/65238/pg65238.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/65238.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/65238.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 5197,
+    "title": "My Life — Volume 1",
+    "author": "Richard Wagner",
+    "authorSort": "Richard Wagner",
+    "subjects": [
+      "Composers -- Germany -- Biography",
+      "Wagner, Richard, 1813-1883"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 50152,
+    "cover": "https://www.gutenberg.org/cache/epub/5197/pg5197.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/5197.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/5197.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 16389,
+    "title": "The Enchanted April",
+    "author": "Elizabeth Von Arnim",
+    "authorSort": "Elizabeth Von Arnim",
+    "subjects": [
+      "British -- Italy -- Fiction",
+      "Domestic fiction",
+      "Female friendship -- Fiction",
+      "Italy -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 47374,
+    "cover": "https://www.gutenberg.org/cache/epub/16389/pg16389.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/16389.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/16389.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1952,
+    "title": "The Yellow Wallpaper",
+    "author": "Charlotte Perkins Gilman",
+    "authorSort": "Charlotte Perkins Gilman",
+    "subjects": [
+      "Feminist fiction",
+      "Married women -- Psychology -- Fiction",
+      "Mentally ill women -- Fiction",
+      "Psychological fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 46806,
+    "cover": "https://www.gutenberg.org/cache/epub/1952/pg1952.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1952.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1952.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1259,
+    "title": "Twenty years after",
+    "author": "Alexandre Dumas",
+    "authorSort": "Alexandre Dumas",
+    "subjects": [
+      "France -- History -- Louis XIV, 1643-1715 -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 46606,
+    "cover": "https://www.gutenberg.org/cache/epub/1259/pg1259.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1259.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1259.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1232,
+    "title": "The Prince",
+    "author": "Niccolò Machiavelli",
+    "authorSort": "Niccolò Machiavelli",
+    "subjects": [
+      "Political ethics -- Early works to 1800",
+      "Political science -- Philosophy -- Early works to 1800",
+      "State, The -- Early works to 1800"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 45102,
+    "cover": "https://www.gutenberg.org/cache/epub/1232/pg1232.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1232.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1232.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 394,
+    "title": "Cranford",
+    "author": "Elizabeth Cleghorn Gaskell",
+    "authorSort": "Elizabeth Cleghorn Gaskell",
+    "subjects": [
+      "England -- Fiction",
+      "Female friendship -- Fiction",
+      "Older women -- Fiction",
+      "Pastoral fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 44534,
+    "cover": "https://www.gutenberg.org/cache/epub/394/pg394.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/394.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/394.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 8492,
+    "title": "The King in Yellow",
+    "author": "Robert W. (Robert William) Chambers",
+    "authorSort": "Robert W. (Robert William) Chambers",
+    "subjects": [
+      "Horror tales, American",
+      "Short stories, American",
+      "United States -- Social life and customs -- 19th century -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 44422,
+    "cover": "https://www.gutenberg.org/cache/epub/8492/pg8492.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/8492.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/8492.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2160,
+    "title": "The Expedition of Humphry Clinker",
+    "author": "T. (Tobias) Smollett",
+    "authorSort": "T. (Tobias) Smollett",
+    "subjects": [
+      "Epistolary fiction",
+      "Great Britain -- Fiction",
+      "Travelers -- Fiction"
+    ],
+    "topics": [
+      "adventure",
+      "fiction"
+    ],
+    "downloads": 43773,
+    "cover": "https://www.gutenberg.org/cache/epub/2160/pg2160.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2160.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2160.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 6761,
+    "title": "The Adventures of Ferdinand Count Fathom — Complete",
+    "author": "T. (Tobias) Smollett",
+    "authorSort": "T. (Tobias) Smollett",
+    "subjects": [
+      "Adventure stories",
+      "Gothic fiction"
+    ],
+    "topics": [
+      "adventure",
+      "fiction"
+    ],
+    "downloads": 43606,
+    "cover": "https://www.gutenberg.org/cache/epub/6761/pg6761.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/6761.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/6761.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 6593,
+    "title": "History of Tom Jones, a Foundling",
+    "author": "Henry Fielding",
+    "authorSort": "Henry Fielding",
+    "subjects": [
+      "Bildungsromans",
+      "England -- Fiction",
+      "Foundlings -- Fiction",
+      "Humorous stories"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 43175,
+    "cover": "https://www.gutenberg.org/cache/epub/6593/pg6593.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/6593.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/6593.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 4085,
+    "title": "The Adventures of Roderick Random",
+    "author": "T. (Tobias) Smollett",
+    "authorSort": "T. (Tobias) Smollett",
+    "subjects": [
+      "England -- Fiction",
+      "Impressment -- Fiction",
+      "Picaresque literature",
+      "Rogues and vagabonds -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 42492,
+    "cover": "https://www.gutenberg.org/cache/epub/4085/pg4085.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/4085.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/4085.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 23,
+    "title": "Narrative of the Life of Frederick Douglass, an American Slave",
+    "author": "Frederick Douglass",
+    "authorSort": "Frederick Douglass",
+    "subjects": [
+      "Abolitionists -- United States -- Biography",
+      "African American abolitionists -- Biography",
+      "Douglass, Frederick, 1818-1895",
+      "Enslaved persons -- United States -- Biography"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 42092,
+    "cover": "https://www.gutenberg.org/cache/epub/23/pg23.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/23.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/23.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 49008,
+    "title": "The Works of William Shakespeare [Cambridge Edition] [Vol. 8 of 9]",
+    "author": "William Shakespeare",
+    "authorSort": "William Shakespeare",
+    "subjects": [
+      "English drama"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 40595,
+    "cover": "https://www.gutenberg.org/cache/epub/49008/pg49008.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/49008.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/49008.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 59828,
+    "title": "The String of Pearls; Or, The Barber of Fleet Street. A Domestic Romance.",
+    "author": "Thomas Peckett Prest",
+    "authorSort": "Thomas Peckett Prest",
+    "subjects": [
+      "Bakers -- Fiction",
+      "Barbers -- Fiction",
+      "Cannibalism -- Fiction",
+      "Fleet Street (London, England) -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 40572,
+    "cover": "https://www.gutenberg.org/cache/epub/59828/pg59828.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/59828.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/59828.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 25344,
+    "title": "The Scarlet Letter",
+    "author": "Nathaniel Hawthorne",
+    "authorSort": "Nathaniel Hawthorne",
+    "subjects": [
+      "Adultery -- Fiction",
+      "Boston (Mass.) -- History -- Colonial period, ca. 1600-1775 -- Fiction",
+      "Clergy -- Fiction",
+      "Historical fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 40216,
+    "cover": "https://www.gutenberg.org/cache/epub/25344/pg25344.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/25344.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/25344.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 3296,
+    "title": "The Confessions of St. Augustine",
+    "author": "of Hippo Augustine",
+    "authorSort": "of Hippo Augustine",
+    "subjects": [
+      "Augustine, of Hippo, Saint, 354-430",
+      "Bishops -- Algeria -- Hippo (Extinct city) -- Biography",
+      "Catholic Church -- Bishops -- Biography",
+      "Christian saints -- Algeria -- Hippo (Extinct city) -- Biography"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 39021,
+    "cover": "https://www.gutenberg.org/cache/epub/3296/pg3296.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/3296.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/3296.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 55,
+    "title": "The Wonderful Wizard of Oz",
+    "author": "L. Frank (Lyman Frank) Baum",
+    "authorSort": "L. Frank (Lyman Frank) Baum",
+    "subjects": [
+      "Courage -- Juvenile fiction",
+      "Cowardly Lion (Fictitious character) -- Juvenile fiction",
+      "Cyclones -- Juvenile fiction",
+      "Dreams -- Juvenile fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 38574,
+    "cover": "https://www.gutenberg.org/cache/epub/55/pg55.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/55.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/55.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1400,
+    "title": "Great Expectations",
+    "author": "Charles Dickens",
+    "authorSort": "Charles Dickens",
+    "subjects": [
+      "Benefactors -- Fiction",
+      "Bildungsromans",
+      "England -- Fiction",
+      "Ex-convicts -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 38268,
+    "cover": "https://www.gutenberg.org/cache/epub/1400/pg1400.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1400.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1400.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2591,
+    "title": "Grimms' Fairy Tales",
+    "author": "Jacob Grimm",
+    "authorSort": "Jacob Grimm",
+    "subjects": [
+      "Fairy tales -- Germany"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 37383,
+    "cover": "https://www.gutenberg.org/cache/epub/2591/pg2591.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2591.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2591.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1080,
+    "title": "A Modest Proposal: For preventing the children of poor people in Ireland, from being a burden on their parents or country, and for making them beneficial to the publick",
+    "author": "Jonathan Swift",
+    "authorSort": "Jonathan Swift",
+    "subjects": [
+      "Ireland -- Politics and government -- 18th century -- Humor",
+      "Political satire, English",
+      "Religious satire, English"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 37350,
+    "cover": "https://www.gutenberg.org/cache/epub/1080/pg1080.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1080.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1080.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78033,
+    "title": "The silent Baltic: or, Detained near Kiel",
+    "author": "Marcus Knox",
+    "authorSort": "Marcus Knox",
+    "subjects": [
+      "World War, 1914-1918 -- Personal narratives"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 37335,
+    "cover": "https://www.gutenberg.org/cache/epub/78033/pg78033.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78033.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78033.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 161,
+    "title": "Sense and Sensibility",
+    "author": "Jane Austen",
+    "authorSort": "Jane Austen",
+    "subjects": [
+      "Domestic fiction",
+      "England -- Fiction",
+      "England -- Social life and customs -- 19th century -- Fiction",
+      "Gentry -- England -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 37222,
+    "cover": "https://www.gutenberg.org/cache/epub/161/pg161.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/161.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/161.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 244,
+    "title": "A Study in Scarlet",
+    "author": "Arthur Conan Doyle",
+    "authorSort": "Arthur Conan Doyle",
+    "subjects": [
+      "Detective and mystery stories",
+      "England -- Fiction",
+      "Holmes, Sherlock (Fictitious character) -- Fiction",
+      "Private investigators -- England -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 37075,
+    "cover": "https://www.gutenberg.org/cache/epub/244/pg244.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/244.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/244.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 3207,
+    "title": "Leviathan",
+    "author": "Thomas Hobbes",
+    "authorSort": "Thomas Hobbes",
+    "subjects": [
+      "Political science -- Early works to 1800",
+      "State, The -- Early works to 1800"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 36709,
+    "cover": "https://www.gutenberg.org/cache/epub/3207/pg3207.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/3207.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/3207.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 76,
+    "title": "Adventures of Huckleberry Finn",
+    "author": "Mark Twain",
+    "authorSort": "Mark Twain",
+    "subjects": [
+      "Adventure stories",
+      "Bildungsromans",
+      "Boys -- Fiction",
+      "Finn, Huckleberry (Fictitious character) -- Fiction"
+    ],
+    "topics": [
+      "adventure",
+      "fiction"
+    ],
+    "downloads": 36044,
+    "cover": "https://www.gutenberg.org/cache/epub/76/pg76.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/76.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/76.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 768,
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "authorSort": "Emily Brontë",
+    "subjects": [
+      "Domestic fiction",
+      "Foundlings -- Fiction",
+      "Heathcliff (Fictitious character : Brontë) -- Fiction",
+      "Love stories"
+    ],
+    "topics": [
+      "fiction",
+      "romance"
+    ],
+    "downloads": 35636,
+    "cover": "https://www.gutenberg.org/cache/epub/768/pg768.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/768.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/768.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78118,
+    "title": "Barry Locke, half-back",
+    "author": "Ralph Henry Barbour",
+    "authorSort": "Ralph Henry Barbour",
+    "subjects": [
+      "Football players -- Juvenile fiction",
+      "Football stories"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 33952,
+    "cover": "https://www.gutenberg.org/cache/epub/78118/pg78118.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78118.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78118.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 205,
+    "title": "Walden, and On The Duty Of Civil Disobedience",
+    "author": "Henry David Thoreau",
+    "authorSort": "Henry David Thoreau",
+    "subjects": [
+      "Authors, American -- 19th century -- Biography",
+      "Civil disobedience",
+      "Government, Resistance to",
+      "Natural history -- Massachusetts -- Walden Woods"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 33667,
+    "cover": "https://www.gutenberg.org/cache/epub/205/pg205.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/205.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/205.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 4300,
+    "title": "Ulysses",
+    "author": "James Joyce",
+    "authorSort": "James Joyce",
+    "subjects": [
+      "Alienation (Social psychology) -- Fiction",
+      "Artists -- Fiction",
+      "City and town life -- Fiction",
+      "Domestic fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 33146,
+    "cover": "https://www.gutenberg.org/cache/epub/4300/pg4300.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/4300.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/4300.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2542,
+    "title": "A Doll's House : a play",
+    "author": "Henrik Ibsen",
+    "authorSort": "Henrik Ibsen",
+    "subjects": [
+      "Man-woman relationships -- Drama",
+      "Marriage -- Drama",
+      "Norwegian drama -- Translations into English",
+      "Wives -- Drama"
+    ],
+    "topics": [
+      "romance"
+    ],
+    "downloads": 32656,
+    "cover": "https://www.gutenberg.org/cache/epub/2542/pg2542.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2542.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2542.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 41,
+    "title": "The Legend of Sleepy Hollow",
+    "author": "Washington Irving",
+    "authorSort": "Washington Irving",
+    "subjects": [
+      "Ghosts -- Fiction",
+      "New York (State) -- History -- 1775-1865 -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 31979,
+    "cover": "https://www.gutenberg.org/cache/epub/41/pg41.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/41.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/41.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 844,
+    "title": "The Importance of Being Earnest: A Trivial Comedy for Serious People",
+    "author": "Oscar Wilde",
+    "authorSort": "Oscar Wilde",
+    "subjects": [
+      "Comedy plays",
+      "England -- Drama",
+      "Foundlings -- Drama",
+      "Identity (Psychology) -- Drama"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 31888,
+    "cover": "https://www.gutenberg.org/cache/epub/844/pg844.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/844.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/844.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 45,
+    "title": "Anne of Green Gables",
+    "author": "L. M. (Lucy Maud) Montgomery",
+    "authorSort": "L. M. (Lucy Maud) Montgomery",
+    "subjects": [
+      "Bildungsromans",
+      "Canada -- History -- 1867-1914 -- Fiction",
+      "Country life -- Prince Edward Island -- Fiction",
+      "Friendship -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 31124,
+    "cover": "https://www.gutenberg.org/cache/epub/45/pg45.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/45.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/45.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 7370,
+    "title": "Second Treatise of Government",
+    "author": "John Locke",
+    "authorSort": "John Locke",
+    "subjects": [
+      "Liberty -- Early works to 1800",
+      "Political science -- Early works to 1800",
+      "Toleration -- Early works to 1800"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 30985,
+    "cover": "https://www.gutenberg.org/cache/epub/7370/pg7370.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/7370.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/7370.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2148,
+    "title": "The Works of Edgar Allan Poe — Volume 2",
+    "author": "Edgar Allan Poe",
+    "authorSort": "Edgar Allan Poe",
+    "subjects": [
+      "American fiction -- 19th century",
+      "Fantasy fiction",
+      "Horror tales, American",
+      "Short stories"
+    ],
+    "topics": [
+      "fiction",
+      "science fiction"
+    ],
+    "downloads": 30902,
+    "cover": "https://www.gutenberg.org/cache/epub/2148/pg2148.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2148.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2148.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 3268,
+    "title": "The Mysteries of Udolpho",
+    "author": "Ann Ward Radcliffe",
+    "authorSort": "Ann Ward Radcliffe",
+    "subjects": [
+      "Castles -- Fiction",
+      "Gothic fiction",
+      "Guardian and ward -- Fiction",
+      "Horror tales"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 30860,
+    "cover": "https://www.gutenberg.org/cache/epub/3268/pg3268.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/3268.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/3268.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 28054,
+    "title": "The Brothers Karamazov",
+    "author": "Fyodor Dostoyevsky",
+    "authorSort": "Fyodor Dostoyevsky",
+    "subjects": [
+      "Brothers -- Fiction",
+      "Didactic fiction",
+      "Fathers and sons -- Fiction",
+      "Russia -- Social life and customs -- 1533-1917 -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 30834,
+    "cover": "https://www.gutenberg.org/cache/epub/28054/pg28054.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/28054.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/28054.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 69087,
+    "title": "The murder of Roger Ackroyd",
+    "author": "Agatha Christie",
+    "authorSort": "Agatha Christie",
+    "subjects": [
+      "Belgians -- England -- Fiction",
+      "Detective and mystery stories",
+      "Murder -- Investigation -- Fiction",
+      "Poirot, Hercule (Fictitious character) -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 30771,
+    "cover": "https://www.gutenberg.org/cache/epub/69087/pg69087.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/69087.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/69087.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 68283,
+    "title": "The call of Cthulhu",
+    "author": "H. P. (Howard Phillips) Lovecraft",
+    "authorSort": "H. P. (Howard Phillips) Lovecraft",
+    "subjects": [
+      "Cthulhu (Fictitious character) -- Fiction",
+      "Horror tales"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 29992,
+    "cover": "https://www.gutenberg.org/cache/epub/68283/pg68283.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/68283.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/68283.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 408,
+    "title": "The Souls of Black Folk",
+    "author": "W. E. B. (William Edward Burghardt) Du Bois",
+    "authorSort": "W. E. B. (William Edward Burghardt) Du Bois",
+    "subjects": [
+      "African Americans"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 29969,
+    "cover": "https://www.gutenberg.org/cache/epub/408/pg408.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/408.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/408.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 61262,
+    "title": "Poirot Investigates",
+    "author": "Agatha Christie",
+    "authorSort": "Agatha Christie",
+    "subjects": [
+      "Belgians -- England -- Fiction",
+      "Detective and mystery stories, English",
+      "Poirot, Hercule (Fictitious character) -- Fiction",
+      "Private investigators -- England -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 29928,
+    "cover": "https://www.gutenberg.org/cache/epub/61262/pg61262.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/61262.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/61262.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 20203,
+    "title": "Autobiography of Benjamin Franklin",
+    "author": "Benjamin Franklin",
+    "authorSort": "Benjamin Franklin",
+    "subjects": [
+      "Franklin, Benjamin, 1706-1790",
+      "Statesmen -- United States -- Biography"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 29881,
+    "cover": "https://www.gutenberg.org/cache/epub/20203/pg20203.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/20203.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/20203.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 58866,
+    "title": "The Murder on the Links",
+    "author": "Agatha Christie",
+    "authorSort": "Agatha Christie",
+    "subjects": [
+      "Detective and mystery stories",
+      "Poirot, Hercule (Fictitious character) -- Fiction",
+      "Private investigators -- England -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 29614,
+    "cover": "https://www.gutenberg.org/cache/epub/58866/pg58866.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/58866.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/58866.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 209,
+    "title": "The Turn of the Screw",
+    "author": "Henry James",
+    "authorSort": "Henry James",
+    "subjects": [
+      "Children -- Fiction",
+      "England -- Fiction",
+      "Ghost stories",
+      "Governesses -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 29238,
+    "cover": "https://www.gutenberg.org/cache/epub/209/pg209.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/209.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/209.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 61168,
+    "title": "The Man in the Brown Suit",
+    "author": "Agatha Christie",
+    "authorSort": "Agatha Christie",
+    "subjects": [
+      "Detective and mystery stories",
+      "London (England) -- Fiction",
+      "Murder -- Investigation -- Fiction",
+      "South Africa -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 29124,
+    "cover": "https://www.gutenberg.org/cache/epub/61168/pg61168.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/61168.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/61168.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 46,
+    "title": "A Christmas Carol in Prose; Being a Ghost Story of Christmas",
+    "author": "Charles Dickens",
+    "authorSort": "Charles Dickens",
+    "subjects": [
+      "Christmas stories",
+      "Ghost stories",
+      "London (England) -- Fiction",
+      "Misers -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 28618,
+    "cover": "https://www.gutenberg.org/cache/epub/46/pg46.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/46.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/46.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1998,
+    "title": "Thus Spake Zarathustra: A Book for All and None",
+    "author": "Friedrich Wilhelm Nietzsche",
+    "authorSort": "Friedrich Wilhelm Nietzsche",
+    "subjects": [
+      "Philosophy, German",
+      "Superman (Philosophical concept)"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 28518,
+    "cover": "https://www.gutenberg.org/cache/epub/1998/pg1998.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1998.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1998.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 57669,
+    "title": "The problem of Cell 13",
+    "author": "Jacques Futrelle",
+    "authorSort": "Jacques Futrelle",
+    "subjects": [
+      "Boston (Mass.) -- Fiction",
+      "College teachers -- Fiction",
+      "Detective and mystery stories",
+      "Van Dusen, Augustus S. F. X. (Fictitious character) -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 28419,
+    "cover": "https://www.gutenberg.org/cache/epub/57669/pg57669.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/57669.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/57669.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2465,
+    "title": "Carmen",
+    "author": "Prosper Mérimée",
+    "authorSort": "Prosper Mérimée",
+    "subjects": [
+      "Carmen (Fictitious character) -- Fiction",
+      "Spain -- Social life and customs -- 19th century -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 27559,
+    "cover": "https://www.gutenberg.org/cache/epub/2465/pg2465.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2465.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2465.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 58820,
+    "title": "Whose Body? A Lord Peter Wimsey Novel",
+    "author": "Dorothy L. (Dorothy Leigh) Sayers",
+    "authorSort": "Dorothy L. (Dorothy Leigh) Sayers",
+    "subjects": [
+      "Detective and mystery stories",
+      "Murder -- Investigation -- Fiction",
+      "Private investigators -- England -- Fiction",
+      "Wimsey, Peter, Lord (Fictitious character), 1890- -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 27392,
+    "cover": "https://www.gutenberg.org/cache/epub/58820/pg58820.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/58820.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/58820.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 4363,
+    "title": "Beyond Good and Evil",
+    "author": "Friedrich Wilhelm Nietzsche",
+    "authorSort": "Friedrich Wilhelm Nietzsche",
+    "subjects": [
+      "Ethics",
+      "Philosophy, German"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 26971,
+    "cover": "https://www.gutenberg.org/cache/epub/4363/pg4363.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/4363.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/4363.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1497,
+    "title": "The Republic",
+    "author": "Plato",
+    "authorSort": "Plato",
+    "subjects": [
+      "Classical literature",
+      "Justice -- Early works to 1800",
+      "Political science -- Early works to 1800",
+      "Utopias -- Early works to 1800"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 26842,
+    "cover": "https://www.gutenberg.org/cache/epub/1497/pg1497.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1497.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1497.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 15399,
+    "title": "The Interesting Narrative of the Life of Olaudah Equiano, Or Gustavus Vassa, The African: Written By Himself",
+    "author": "Olaudah Equiano",
+    "authorSort": "Olaudah Equiano",
+    "subjects": [
+      "Enslaved persons -- Great Britain -- Biography",
+      "Enslaved persons -- United States -- Biography",
+      "Equiano, Olaudah, 1745-1797"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 26791,
+    "cover": "https://www.gutenberg.org/cache/epub/15399/pg15399.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/15399.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/15399.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 59892,
+    "title": "Changeling, and Other Stories",
+    "author": "Donn Byrne",
+    "authorSort": "Donn Byrne",
+    "subjects": [
+      "Ireland -- Social life and customs -- Fiction",
+      "Short stories, Irish"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 26601,
+    "cover": "https://www.gutenberg.org/cache/epub/59892/pg59892.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/59892.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/59892.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 63469,
+    "title": "Washington Confidential",
+    "author": "Jack Lait",
+    "authorSort": "Jack Lait",
+    "subjects": [
+      "Washington (D.C.) -- Description and travel",
+      "Washington (D.C.) -- Social life and customs"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 26580,
+    "cover": "https://www.gutenberg.org/cache/epub/63469/pg63469.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/63469.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/63469.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 1695,
+    "title": "The Man Who Was Thursday: A Nightmare",
+    "author": "G. K. (Gilbert Keith) Chesterton",
+    "authorSort": "G. K. (Gilbert Keith) Chesterton",
+    "subjects": [
+      "Allegories",
+      "Anarchists -- Fiction",
+      "Detective and mystery stories",
+      "Fantasy fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery",
+      "science fiction"
+    ],
+    "downloads": 26053,
+    "cover": "https://www.gutenberg.org/cache/epub/1695/pg1695.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/1695.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/1695.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78102,
+    "title": "The wheel of earth",
+    "author": "Helga Sandburg",
+    "authorSort": "Helga Sandburg",
+    "subjects": [
+      "Farm life -- Fiction",
+      "Kentucky -- Fiction",
+      "Teenage girls -- Fiction",
+      "Young women -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25951,
+    "cover": "https://www.gutenberg.org/cache/epub/78102/pg78102.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78102.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78102.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78084,
+    "title": "The mysterious Mr. Quin",
+    "author": "Agatha Christie",
+    "authorSort": "Agatha Christie",
+    "subjects": [
+      "Detective and mystery stories, English",
+      "Short stories, English"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 25718,
+    "cover": "https://www.gutenberg.org/cache/epub/78084/pg78084.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78084.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78084.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 16,
+    "title": "Peter Pan: [Peter and Wendy]",
+    "author": "J. M. (James Matthew) Barrie",
+    "authorSort": "J. M. (James Matthew) Barrie",
+    "subjects": [
+      "Fairies -- Fiction",
+      "Fantasy literature",
+      "Never-Never Land (Imaginary place) -- Fiction",
+      "Peter Pan (Fictitious character) -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "science fiction"
+    ],
+    "downloads": 25701,
+    "cover": "https://www.gutenberg.org/cache/epub/16/pg16.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/16.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/16.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 12342,
+    "title": "The Nuttall encyclopædia: being a concise and comprehensive dictionary of general knowledge",
+    "author": "P. Austin Nuttall",
+    "authorSort": "P. Austin Nuttall",
+    "subjects": [
+      "Encyclopedias and dictionaries"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25634,
+    "cover": "https://www.gutenberg.org/cache/epub/12342/pg12342.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/12342.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/12342.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78016,
+    "title": "Herman Melville",
+    "author": "Lewis Mumford",
+    "authorSort": "Lewis Mumford",
+    "subjects": [
+      "Melville, Herman, 1819-1891",
+      "Novelists, American -- 19th century -- Biography"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25410,
+    "cover": "https://www.gutenberg.org/cache/epub/78016/pg78016.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78016.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78016.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 204,
+    "title": "The innocence of Father Brown",
+    "author": "G. K. (Gilbert Keith) Chesterton",
+    "authorSort": "G. K. (Gilbert Keith) Chesterton",
+    "subjects": [
+      "Brown, Father (Fictitious character) -- Fiction",
+      "Catholics -- Fiction",
+      "Clergy -- Fiction",
+      "Detective and mystery stories, English"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 25386,
+    "cover": "https://www.gutenberg.org/cache/epub/204/pg204.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/204.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/204.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78009,
+    "title": "A guide to the history of physical education",
+    "author": "Fred Eugene Leonard",
+    "authorSort": "Fred Eugene Leonard",
+    "subjects": [
+      "Physical education and training",
+      "Physical education and training -- History"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25383,
+    "cover": "https://www.gutenberg.org/cache/epub/78009/pg78009.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78009.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78009.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 34901,
+    "title": "On Liberty",
+    "author": "John Stuart Mill",
+    "authorSort": "John Stuart Mill",
+    "subjects": [
+      "Liberty"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25348,
+    "cover": "https://www.gutenberg.org/cache/epub/34901/pg34901.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/34901.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/34901.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 2852,
+    "title": "The Hound of the Baskervilles",
+    "author": "Arthur Conan Doyle",
+    "authorSort": "Arthur Conan Doyle",
+    "subjects": [
+      "Blessing and cursing -- Fiction",
+      "Dartmoor (England) -- Fiction",
+      "Detective and mystery stories",
+      "Dogs -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 25319,
+    "cover": "https://www.gutenberg.org/cache/epub/2852/pg2852.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/2852.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/2852.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78017,
+    "title": "The Swiss family Robinson",
+    "author": "Johann David Wyss",
+    "authorSort": "Johann David Wyss",
+    "subjects": [
+      "Family life -- Fiction",
+      "Islands -- Fiction",
+      "Survival -- Fiction"
+    ],
+    "topics": [
+      "adventure",
+      "fiction"
+    ],
+    "downloads": 25237,
+    "cover": "https://www.gutenberg.org/cache/epub/78017/pg78017.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78017.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78017.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78065,
+    "title": "The anatomy of revolution",
+    "author": "Crane Brinton",
+    "authorSort": "Crane Brinton",
+    "subjects": [
+      "Revolutions"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25201,
+    "cover": "https://www.gutenberg.org/cache/epub/78065/pg78065.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78065.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78065.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78122,
+    "title": "The history of the Norman conquest of England, its causes and its results, Volume 3 (of 6)",
+    "author": "Edward A. (Edward Augustus) Freeman",
+    "authorSort": "Edward A. (Edward Augustus) Freeman",
+    "subjects": [
+      "Great Britain -- History -- Anglo-Saxon period, 449-1066",
+      "Great Britain -- History -- Norman period, 1066-1154",
+      "Hastings, Battle of, England, 1066",
+      "Normans -- England"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25028,
+    "cover": "https://www.gutenberg.org/cache/epub/78122/pg78122.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78122.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78122.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78105,
+    "title": "Tales grotesque and curious",
+    "author": "Ryūnosuke Akutagawa",
+    "authorSort": "Ryūnosuke Akutagawa",
+    "subjects": [
+      "Japan -- Social life and customs -- Fiction",
+      "Short stories, Japanese -- Translations into English"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 25025,
+    "cover": "https://www.gutenberg.org/cache/epub/78105/pg78105.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78105.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78105.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78119,
+    "title": "Humanism and America: Essays on the outlook of modern civilisation",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "Humanism",
+      "Literature -- Philosophy",
+      "Philosophy, Modern",
+      "United States -- Civilization -- 20th century"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 25003,
+    "cover": "https://www.gutenberg.org/cache/epub/78119/pg78119.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78119.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78119.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78025,
+    "title": "Main currents in American thought: An interpretation of American literature from the beginnings to 1920",
+    "author": "Vernon Louis Parrington",
+    "authorSort": "Vernon Louis Parrington",
+    "subjects": [
+      "American literature -- History and criticism",
+      "Philosophy, American",
+      "United States -- Civilization",
+      "United States -- Intellectual life"
+    ],
+    "topics": [
+      "philosophy"
+    ],
+    "downloads": 25000,
+    "cover": "https://www.gutenberg.org/cache/epub/78025/pg78025.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78025.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78025.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 863,
+    "title": "The Mysterious Affair at Styles",
+    "author": "Agatha Christie",
+    "authorSort": "Agatha Christie",
+    "subjects": [
+      "Belgians -- England -- Fiction",
+      "Detective and mystery stories",
+      "Poirot, Hercule (Fictitious character) -- Fiction",
+      "Private investigators -- England -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 24963,
+    "cover": "https://www.gutenberg.org/cache/epub/863/pg863.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/863.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/863.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78022,
+    "title": "Præraphaelite diaries and letters",
+    "author": "Dante Gabriel Rossetti",
+    "authorSort": "Dante Gabriel Rossetti",
+    "subjects": [
+      "Brown, Ford Madox, 1821-1893",
+      "Pre-Raphaelites -- Great Britain -- Correspondence",
+      "Pre-Raphaelites -- Great Britain -- Diaries",
+      "Pre-Raphaelitism -- Great Britain"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24920,
+    "cover": "https://www.gutenberg.org/cache/epub/78022/pg78022.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78022.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78022.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78013,
+    "title": "Arrian on coursing: the Cynegeticus of the younger Xenophon, translated from the Greek, with classical and practical annotations, and a brief sketch of the life and writings of the author. To which is added an appendix, containing some account of the Canes Venatici of classical antiquity",
+    "author": "Arrian",
+    "authorSort": "Arrian",
+    "subjects": [
+      "Coursing",
+      "Hunting"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24899,
+    "cover": "https://www.gutenberg.org/cache/epub/78013/pg78013.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78013.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78013.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78124,
+    "title": "1066 and all that: A memorable history of England, comprising all the parts you can remember, including 103 good things, 5 bad kings and 2 genuine dates",
+    "author": "Walter Carruthers Sellar",
+    "authorSort": "Walter Carruthers Sellar",
+    "subjects": [
+      "English wit and humor -- 20th century",
+      "Great Britain -- History -- Humor"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24874,
+    "cover": "https://www.gutenberg.org/cache/epub/78124/pg78124.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78124.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78124.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78120,
+    "title": "The marvellous land of Snergs",
+    "author": "E. A. (Edward Augustine) Wyke-Smith",
+    "authorSort": "E. A. (Edward Augustine) Wyke-Smith",
+    "subjects": [
+      "Fantasy fiction",
+      "Imaginary places -- Juvenile fiction"
+    ],
+    "topics": [
+      "fiction",
+      "science fiction"
+    ],
+    "downloads": 24859,
+    "cover": "https://www.gutenberg.org/cache/epub/78120/pg78120.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78120.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78120.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78047,
+    "title": "The dogaressas of Venice (the wives of the doges)",
+    "author": "Edgcumbe Staley",
+    "authorSort": "Edgcumbe Staley",
+    "subjects": [
+      "Venice (Italy) -- Dogaressas",
+      "Venice (Italy) -- Social life and customs"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24851,
+    "cover": "https://www.gutenberg.org/cache/epub/78047/pg78047.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78047.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78047.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78029,
+    "title": "The dangerous game",
+    "author": "William Le Queux",
+    "authorSort": "William Le Queux",
+    "subjects": [
+      "Detective and mystery stories",
+      "English fiction -- 19th century",
+      "Spy stories"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 24835,
+    "cover": "https://www.gutenberg.org/cache/epub/78029/pg78029.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78029.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78029.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78011,
+    "title": "Three sevens: A detective story",
+    "author": "Perley Poore Sheehan",
+    "authorSort": "Perley Poore Sheehan",
+    "subjects": [
+      "Detective and mystery stories",
+      "Escaped prisoners -- Fiction",
+      "Escapes -- Fiction",
+      "Thrillers (Fiction)"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 24815,
+    "cover": "https://www.gutenberg.org/cache/epub/78011/pg78011.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78011.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78011.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78039,
+    "title": "Boston: a novel",
+    "author": "Upton Sinclair",
+    "authorSort": "Upton Sinclair",
+    "subjects": [
+      "Historical fiction",
+      "Legal stories",
+      "Sacco, Nicola, 1891-1927 -- Fiction",
+      "Sacco-Vanzetti Trial, Dedham, Mass., 1921 -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24810,
+    "cover": "https://www.gutenberg.org/cache/epub/78039/pg78039.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78039.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78039.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78053,
+    "title": "Field Artillery Training. 1914",
+    "author": "Great Britain. War Office",
+    "authorSort": "Great Britain. War Office",
+    "subjects": [
+      "Great Britain. Army. Royal Field Artillery"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24808,
+    "cover": "https://www.gutenberg.org/cache/epub/78053/pg78053.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78053.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78053.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 10,
+    "title": "The King James Version of the Bible",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "Bible"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24756,
+    "cover": "https://www.gutenberg.org/cache/epub/10/pg10.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/10.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/10.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78020,
+    "title": "The cruise of the Nona: The story of a cruise from Holyhead to the Wash, with reflections and judgments on life and letters, men and manners",
+    "author": "Hilaire Belloc",
+    "authorSort": "Hilaire Belloc",
+    "subjects": [
+      "England -- Description and travel",
+      "Nona (Cutter)"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24750,
+    "cover": "https://www.gutenberg.org/cache/epub/78020/pg78020.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78020.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78020.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78077,
+    "title": "Cartels: challenge to a free world",
+    "author": "Wendell Berge",
+    "authorSort": "Wendell Berge",
+    "subjects": [
+      "Monopolies",
+      "Restraint of trade",
+      "Trusts, Industrial"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24745,
+    "cover": "https://www.gutenberg.org/cache/epub/78077/pg78077.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78077.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78077.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78044,
+    "title": "Claribel: or, Rest at last",
+    "author": "Lucy Ellen Guernsey",
+    "authorSort": "Lucy Ellen Guernsey",
+    "subjects": [
+      "Christian life -- Juvenile fiction",
+      "Conduct of life -- Juvenile fiction",
+      "People with disabilities -- Juvenile fiction",
+      "Schools -- Juvenile fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24739,
+    "cover": "https://www.gutenberg.org/cache/epub/78044/pg78044.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78044.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78044.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78090,
+    "title": "Blackwood's Edinburgh magazine, volume 456, no. 10, October 1853",
+    "author": "Various",
+    "authorSort": "Various",
+    "subjects": [
+      "England -- Periodicals",
+      "Scotland -- Periodicals"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24724,
+    "cover": "https://www.gutenberg.org/cache/epub/78090/pg78090.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78090.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78090.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78092,
+    "title": "Records of Captain Clapperton's last expedition to Africa, Vol. 2 (of 2)",
+    "author": "Richard Lander",
+    "authorSort": "Richard Lander",
+    "subjects": [
+      "Clapperton, Hugh, 1788-1827",
+      "Sudan (Region) -- Description and travel"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24674,
+    "cover": "https://www.gutenberg.org/cache/epub/78092/pg78092.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78092.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78092.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78087,
+    "title": "The black pearl",
+    "author": "Marie Lion",
+    "authorSort": "Marie Lion",
+    "subjects": [
+      "French -- Australia -- Fiction",
+      "Man-woman relationships -- Fiction",
+      "Theosophy -- Fiction",
+      "Young women -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24659,
+    "cover": "https://www.gutenberg.org/cache/epub/78087/pg78087.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78087.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78087.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78078,
+    "title": "The adventures of an ensign",
+    "author": "Valentine Williams",
+    "authorSort": "Valentine Williams",
+    "subjects": [
+      "Somme, 1st Battle of the, France, 1916",
+      "World War, 1914-1918 -- Personal narratives, British"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24633,
+    "cover": "https://www.gutenberg.org/cache/epub/78078/pg78078.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78078.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78078.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78046,
+    "title": "Joan and Co.",
+    "author": "Frederick Orin Bartlett",
+    "authorSort": "Frederick Orin Bartlett",
+    "subjects": [
+      "Business enterprises -- Fiction",
+      "Children of the rich -- Fiction",
+      "Inventors -- Fiction",
+      "Man-woman relationships -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24630,
+    "cover": "https://www.gutenberg.org/cache/epub/78046/pg78046.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78046.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78046.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78107,
+    "title": "Body-build and its inheritance",
+    "author": "Charles Benedict Davenport",
+    "authorSort": "Charles Benedict Davenport",
+    "subjects": [
+      "Heredity",
+      "Human anatomy"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24615,
+    "cover": "https://www.gutenberg.org/cache/epub/78107/pg78107.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78107.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78107.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78028,
+    "title": "The loot of the Lazy A",
+    "author": "W. C. (Wilbur C.) Tuttle",
+    "authorSort": "W. C. (Wilbur C.) Tuttle",
+    "subjects": [
+      "Ranches -- Fiction",
+      "Vendetta -- Fiction",
+      "Western stories"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24606,
+    "cover": "https://www.gutenberg.org/cache/epub/78028/pg78028.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78028.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78028.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78040,
+    "title": "Kate Mulhall: A romance of the Oregon Trail",
+    "author": "Ezra Meeker",
+    "authorSort": "Ezra Meeker",
+    "subjects": [
+      "Oregon National Historic Trail -- Fiction",
+      "Western stories",
+      "Women pioneers -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24597,
+    "cover": "https://www.gutenberg.org/cache/epub/78040/pg78040.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78040.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78040.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78104,
+    "title": "An historical account of all the voyages round the world, performed by English navigators, vol. 4 of 4: Including those lately undertaken by order of His present Majesty. The whole faithfully extracted from the journals of the voyagers",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "Voyages around the world -- Early works to 1800"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24587,
+    "cover": "https://www.gutenberg.org/cache/epub/78104/pg78104.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78104.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78104.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78075,
+    "title": "The eclipse of Russia",
+    "author": "Emile Joseph Dillon",
+    "authorSort": "Emile Joseph Dillon",
+    "subjects": [
+      "Russia -- Politics and government -- 1894-1917",
+      "Soviet Union -- Foreign relations"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24586,
+    "cover": "https://www.gutenberg.org/cache/epub/78075/pg78075.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78075.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78075.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78005,
+    "title": "The Green Dolphin",
+    "author": "Sara Ware Bassett",
+    "authorSort": "Sara Ware Bassett",
+    "subjects": [
+      "Family-owned business enterprises -- Fiction",
+      "Husband and wife -- Fiction",
+      "Man-woman relationships -- Fiction",
+      "Manners and customs -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "romance"
+    ],
+    "downloads": 24555,
+    "cover": "https://www.gutenberg.org/cache/epub/78005/pg78005.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78005.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78005.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78117,
+    "title": "Democracy—false or true?: A prologue and a dream",
+    "author": "W. B. (William Blake) Richmond",
+    "authorSort": "W. B. (William Blake) Richmond",
+    "subjects": [
+      "Great Britain -- Social conditions",
+      "Labor -- Great Britain"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24551,
+    "cover": "https://www.gutenberg.org/cache/epub/78117/pg78117.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78117.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78117.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78095,
+    "title": "Great rivers of the world: as seen and described by famous writers",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "Rivers"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24536,
+    "cover": "https://www.gutenberg.org/cache/epub/78095/pg78095.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78095.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78095.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78126,
+    "title": "The weird of the wanderer: Being the papyrus records of some incidents in one of the previous lives of Mr. Nicholas Crabbe",
+    "author": "Frederick Rolfe",
+    "authorSort": "Frederick Rolfe",
+    "subjects": [
+      "Fantasy fiction",
+      "Time travel -- Fiction"
+    ],
+    "topics": [
+      "adventure",
+      "fiction",
+      "science fiction"
+    ],
+    "downloads": 24530,
+    "cover": "https://www.gutenberg.org/cache/epub/78126/pg78126.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78126.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78126.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78083,
+    "title": "Fawn in the wood",
+    "author": "Unknown",
+    "authorSort": "Unknown",
+    "subjects": [
+      "Fairy tales"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24519,
+    "cover": "https://www.gutenberg.org/cache/epub/78083/pg78083.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78083.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78083.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78111,
+    "title": "How they loved him, Vol. 2 (of 3): A novel",
+    "author": "Florence Marryat",
+    "authorSort": "Florence Marryat",
+    "subjects": [
+      "English fiction -- 19th century"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24519,
+    "cover": "https://www.gutenberg.org/cache/epub/78111/pg78111.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78111.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78111.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78004,
+    "title": "An historical account of all the voyages round the world, performed by English navigators, vol. 2 of 4: Including those lately undertaken by order of His present Majesty. The whole faithfully extracted from the journals of the voyagers",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "Voyages around the world -- Early works to 1800"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24517,
+    "cover": "https://www.gutenberg.org/cache/epub/78004/pg78004.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78004.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78004.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78019,
+    "title": "An historical account of all the voyages round the world, performed by English navigators, vol. 3 of 4: Including those lately undertaken by order of His present Majesty. The whole faithfully extracted from the journals of the voyagers",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "Voyages around the world -- Early works to 1800"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24510,
+    "cover": "https://www.gutenberg.org/cache/epub/78019/pg78019.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78019.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78019.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78103,
+    "title": "The trouble at Pinelands: A detective story",
+    "author": "Ernest M. Poate",
+    "authorSort": "Ernest M. Poate",
+    "subjects": [
+      "Detective and mystery stories",
+      "Distilling, Illicit -- Fiction",
+      "Murder -- Investigation -- Fiction",
+      "North Carolina -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 24507,
+    "cover": "https://www.gutenberg.org/cache/epub/78103/pg78103.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78103.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78103.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78106,
+    "title": "Things near & far",
+    "author": "Arthur Machen",
+    "authorSort": "Arthur Machen",
+    "subjects": [
+      "Authors, English -- 20th century -- Biography",
+      "Authors, Welsh -- 20th century -- Biography",
+      "Autobiography",
+      "Fantasy fiction -- Authorship"
+    ],
+    "topics": [
+      "fiction",
+      "science fiction"
+    ],
+    "downloads": 24505,
+    "cover": "https://www.gutenberg.org/cache/epub/78106/pg78106.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78106.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78106.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78032,
+    "title": "Twelve years in the army: or, The incidents of a soldier's life",
+    "author": "John G. Gollan",
+    "authorSort": "John G. Gollan",
+    "subjects": [
+      "Great Britain. Army. Queen's Own Cameron Highlanders"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24501,
+    "cover": "https://www.gutenberg.org/cache/epub/78032/pg78032.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78032.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78032.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78012,
+    "title": "Success",
+    "author": "Una L. Silberrad",
+    "authorSort": "Una L. Silberrad",
+    "subjects": [
+      "Engineers -- Fiction",
+      "England -- Social life and customs -- 20th century -- Fiction",
+      "Inventors -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24493,
+    "cover": "https://www.gutenberg.org/cache/epub/78012/pg78012.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78012.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78012.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78112,
+    "title": "Astronomy for beginners",
+    "author": "Hereward Carrington",
+    "authorSort": "Hereward Carrington",
+    "subjects": [
+      "Astronomy"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24489,
+    "cover": "https://www.gutenberg.org/cache/epub/78112/pg78112.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78112.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78112.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78015,
+    "title": "Khartoum, and the Blue and White Niles, Vol. 2 (of 2)",
+    "author": "George Melly",
+    "authorSort": "George Melly",
+    "subjects": [
+      "Egypt -- Description and travel",
+      "Nile River",
+      "Sudan -- Description and travel"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24480,
+    "cover": "https://www.gutenberg.org/cache/epub/78015/pg78015.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78015.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78015.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78094,
+    "title": "The haunting hand",
+    "author": "Walter Adolphe Roberts",
+    "authorSort": "Walter Adolphe Roberts",
+    "subjects": [
+      "Astoria (New York, N.Y.) -- Fiction",
+      "Detective and mystery stories",
+      "Man-woman relationships -- Fiction",
+      "Motion picture industry -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 24472,
+    "cover": "https://www.gutenberg.org/cache/epub/78094/pg78094.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78094.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78094.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78024,
+    "title": "The woman of Andros",
+    "author": "Thornton Wilder",
+    "authorSort": "Thornton Wilder",
+    "subjects": [
+      "Courtesans -- Fiction",
+      "Greece -- Social life and customs -- Fiction",
+      "Historical fiction",
+      "Man-woman relationships -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24470,
+    "cover": "https://www.gutenberg.org/cache/epub/78024/pg78024.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78024.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78024.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78010,
+    "title": "The unknown seven: A detective story",
+    "author": "Herman Landon",
+    "authorSort": "Herman Landon",
+    "subjects": [
+      "Detective and mystery stories",
+      "New York (N.Y.) -- Fiction",
+      "Private investigators -- Fiction",
+      "Secret societies -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 24458,
+    "cover": "https://www.gutenberg.org/cache/epub/78010/pg78010.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78010.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78010.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78060,
+    "title": "A young man's story",
+    "author": "Sarah Doudney",
+    "authorSort": "Sarah Doudney",
+    "subjects": [
+      "Betrothal -- Juvenile fiction",
+      "England -- Juvenile fiction",
+      "Man-woman relationships -- Fiction",
+      "Short stories"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24452,
+    "cover": "https://www.gutenberg.org/cache/epub/78060/pg78060.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78060.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78060.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78043,
+    "title": "Bushy: a romance founded on fact",
+    "author": "Cynthia May Westover Alden",
+    "authorSort": "Cynthia May Westover Alden",
+    "subjects": [
+      "Fathers and daughters -- Fiction",
+      "Frontier and pioneer life -- Rocky Mountains -- Fiction",
+      "Girls -- Fiction",
+      "Historical fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24426,
+    "cover": "https://www.gutenberg.org/cache/epub/78043/pg78043.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78043.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78043.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78121,
+    "title": "The servant's behaviour book: or, Hints on manners and dress for maid servants in small households",
+    "author": "Emily A. (Emily Augusta) Patmore",
+    "authorSort": "Emily A. (Emily Augusta) Patmore",
+    "subjects": [
+      "Women household employees -- England -- Handbooks, manuals, etc."
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24421,
+    "cover": "https://www.gutenberg.org/cache/epub/78121/pg78121.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78121.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78121.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78114,
+    "title": "Miniatures of French history",
+    "author": "Hilaire Belloc",
+    "authorSort": "Hilaire Belloc",
+    "subjects": [
+      "France -- History"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24420,
+    "cover": "https://www.gutenberg.org/cache/epub/78114/pg78114.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78114.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78114.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78076,
+    "title": "Robert Frost: A study in sensibility and good sense",
+    "author": "Gorham Bert Munson",
+    "authorSort": "Gorham Bert Munson",
+    "subjects": [
+      "Frost, Robert, 1874-1963",
+      "Poets, American -- 20th century -- Biography"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24414,
+    "cover": "https://www.gutenberg.org/cache/epub/78076/pg78076.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78076.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78076.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78048,
+    "title": "Sandhills sketches",
+    "author": "Williams Haynes",
+    "authorSort": "Williams Haynes",
+    "subjects": [
+      "North Carolina -- Description and travel"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24412,
+    "cover": "https://www.gutenberg.org/cache/epub/78048/pg78048.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78048.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78048.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78091,
+    "title": "Records of Captain Clapperton's last expedition to Africa, Vol. 1 (of 2)",
+    "author": "Richard Lander",
+    "authorSort": "Richard Lander",
+    "subjects": [
+      "Clapperton, Hugh, 1788-1827",
+      "Sudan (Region) -- Description and travel"
+    ],
+    "topics": [
+      "adventure"
+    ],
+    "downloads": 24402,
+    "cover": "https://www.gutenberg.org/cache/epub/78091/pg78091.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78091.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78091.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78109,
+    "title": "Grateful Peter's new year's gift",
+    "author": "Ruth Lamb",
+    "authorSort": "Ruth Lamb",
+    "subjects": [
+      "Almshouses -- Juvenile fiction",
+      "Charity -- Juvenile fiction",
+      "Christian life -- Juvenile fiction",
+      "Kindness -- Juvenile fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24399,
+    "cover": "https://www.gutenberg.org/cache/epub/78109/pg78109.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78109.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78109.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78031,
+    "title": "How they loved him, Vol. 1 (of 3): A novel",
+    "author": "Florence Marryat",
+    "authorSort": "Florence Marryat",
+    "subjects": [
+      "English fiction -- 19th century"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24398,
+    "cover": "https://www.gutenberg.org/cache/epub/78031/pg78031.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78031.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78031.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78082,
+    "title": "The yellow book, an illustrated quarterly. Vol. 3, October, 1894",
+    "author": "Unknown author",
+    "authorSort": "",
+    "subjects": [
+      "English literature -- 19th century -- Periodicals",
+      "Great Britain -- Periodicals",
+      "Literature, Modern -- 19th century -- Periodicals"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24397,
+    "cover": "https://www.gutenberg.org/cache/epub/78082/pg78082.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78082.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78082.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 108,
+    "title": "The Return of Sherlock Holmes",
+    "author": "Arthur Conan Doyle",
+    "authorSort": "Arthur Conan Doyle",
+    "subjects": [
+      "Detective and mystery stories, English",
+      "Holmes, Sherlock (Fictitious character) -- Fiction",
+      "Private investigators -- England -- Fiction"
+    ],
+    "topics": [
+      "fiction",
+      "mystery"
+    ],
+    "downloads": 24396,
+    "cover": "https://www.gutenberg.org/cache/epub/108/pg108.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/108.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/108.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78085,
+    "title": "The Catholic Church and history",
+    "author": "Hilaire Belloc",
+    "authorSort": "Hilaire Belloc",
+    "subjects": [
+      "Catholic Church -- Controversial literature",
+      "Catholic Church -- Doctrines",
+      "Catholic Church -- History"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24395,
+    "cover": "https://www.gutenberg.org/cache/epub/78085/pg78085.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78085.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78085.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78067,
+    "title": "Joe Strong and his wings of steel: or, A young acrobat in the clouds",
+    "author": "Vance Barnum",
+    "authorSort": "Vance Barnum",
+    "subjects": [
+      "Circus performers -- Juvenile fiction",
+      "Flying-machines -- Juvenile fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24373,
+    "cover": "https://www.gutenberg.org/cache/epub/78067/pg78067.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78067.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78067.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  },
+  {
+    "id": 78108,
+    "title": "The bitter tea of General Yen",
+    "author": "Grace Zaring Stone",
+    "authorSort": "Grace Zaring Stone",
+    "subjects": [
+      "China -- History -- 20th century -- Fiction",
+      "Missionaries, Medical -- Fiction"
+    ],
+    "topics": [
+      "fiction"
+    ],
+    "downloads": 24372,
+    "cover": "https://www.gutenberg.org/cache/epub/78108/pg78108.cover.medium.jpg",
+    "htmlUrl": "https://www.gutenberg.org/ebooks/78108.html.images",
+    "textUrl": "https://www.gutenberg.org/ebooks/78108.txt.utf-8",
+    "source": "catalog",
+    "languages": [
+      "en"
+    ],
+    "year": null
+  }
+];
+
+const STANDARD_EBOOKS = [
+  { title: 'Persuasion', author: 'Jane Austen', year: 1817, seSlug: 'jane-austen/persuasion', subjects: ['Romance', 'England'], topics: ['romance', 'fiction'] },
+  { title: 'Northanger Abbey', author: 'Jane Austen', year: 1817, seSlug: 'jane-austen/northanger-abbey', subjects: ['Romance', 'Gothic fiction'], topics: ['romance', 'fiction'] },
+  { title: 'Mansfield Park', author: 'Jane Austen', year: 1814, seSlug: 'jane-austen/mansfield-park', subjects: ['Romance', 'Family'], topics: ['romance', 'fiction'] },
+  { title: 'Wuthering Heights', author: 'Emily Brontë', year: 1847, seSlug: 'emily-bronte/wuthering-heights', subjects: ['Romance', 'Yorkshire'], topics: ['romance', 'fiction'] },
+  { title: 'The Hound of the Baskervilles', author: 'Arthur Conan Doyle', year: 1902, seSlug: 'arthur-conan-doyle/the-hound-of-the-baskervilles', subjects: ['Detectives', 'Mystery'], topics: ['mystery', 'fiction'] },
+  { title: 'Around the World in Eighty Days', author: 'Jules Verne', year: 1872, seSlug: 'jules-verne/around-the-world-in-eighty-days/george-makepeace-towle', subjects: ['Voyages', 'Adventure'], topics: ['adventure', 'fiction'] },
+  { title: 'Meditations', author: 'Marcus Aurelius', year: 180, seSlug: 'marcus-aurelius/meditations/george-long', subjects: ['Stoicism', 'Philosophy'], topics: ['philosophy'] },
+  { title: 'The Art of War', author: 'Sun Tzu', year: 'c. 500 BCE', seSlug: 'sun-tzu/the-art-of-war/lionel-giles', subjects: ['Military art and science', 'Strategy'], topics: ['philosophy'] },
+].map((book) => ({
+  ...book,
+  id: `se-${book.seSlug.replace(/\//g, '-')}`,
+  authorSort: authorSortName(book.author),
+  cover: `https://standardebooks.org/ebooks/${book.seSlug}/downloads/cover.jpg`,
+  htmlUrl: `https://standardebooks.org/ebooks/${book.seSlug}`,
+  textUrl: `https://standardebooks.org/ebooks/${book.seSlug}/text/single-page`,
+  source: 'standardebooks',
+  languages: ['en'],
+  downloads: 0,
+}));
+
+function catalogKey(book) {
+  const title = String(book?.title || '')
+    .toLowerCase()
+    .split(/[;:]/)[0]
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+  return `${title}|${String(book?.author || '').toLowerCase()}`;
+}
+
+const LOCAL_CATALOG = (() => {
+  const seen = new Set();
+  return [...CURATED, ...POPULAR_GUTENBERG, ...STANDARD_EBOOKS].filter((book) => {
+    const key = catalogKey(book);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+})();
+
 const THEME_META = {
   paper: '#fbf9f5',
   sepia: '#f4ecd8',
@@ -209,6 +3487,10 @@ function uid(prefix = 'id') {
 
 function formatNumber(value) {
   return new Intl.NumberFormat('en').format(Number(value) || 0);
+}
+
+function booksLabel(count) {
+  return `${formatNumber(count)} ${Number(count) === 1 ? 'book' : 'books'}`;
 }
 
 function formatCompact(value) {
@@ -581,8 +3863,11 @@ const ui = {
     page: 1,
     total: 0,
     loading: false,
+    pending: false,
+    requestId: 0,
     sort: 'popular',
   },
+  searchCache: loadSearchCache(),
   currentBook: null,
   bookData: null,
   currentPage: 0,
@@ -750,6 +4035,93 @@ function setText(selector, text) {
 /* --------------------------------------------------------------------------
    6. Library
    -------------------------------------------------------------------------- */
+function inferTopics(subjects = []) {
+  const text = subjects.join(' ').toLowerCase();
+  const topics = new Set();
+  if (/romance|love|marriage|courtship|husband|wife/.test(text)) topics.add('romance');
+  if (/adventure|sea|voyage|travel|pirates|survival/.test(text)) topics.add('adventure');
+  if (/mystery|detective|crime|murder|holmes/.test(text)) topics.add('mystery');
+  if (/philosophy|ethics|metaphysics|political|stoicism|strategy/.test(text)) topics.add('philosophy');
+  if (/science fiction|sci-fi|time travel|future|fantasy/.test(text)) topics.add('science fiction');
+  if (/fiction|novel|short stories|tales/.test(text)) topics.add('fiction');
+  return topics.size ? Array.from(topics) : ['fiction'];
+}
+
+function mergeBookLists(...lists) {
+  const seen = new Set();
+  const merged = [];
+  lists.flat().forEach((book) => {
+    if (!book || !book.title) return;
+    const key = catalogKey(book);
+    if (seen.has(key)) return;
+    seen.add(key);
+    merged.push(book);
+  });
+  return merged;
+}
+
+function searchLocalCatalog(query, topic = 'all') {
+  const q = String(query || '').trim().toLowerCase();
+  const openedBooks = Object.values(state.library.books || {}).filter((book) => book && book.title);
+  const catalog = mergeBookLists(LOCAL_CATALOG, openedBooks);
+  return catalog
+    .filter((book) => {
+      if (topic && topic !== 'all') {
+        const topics = book.topics || inferTopics(book.subjects || []);
+        const subjectText = (book.subjects || []).join(' ').toLowerCase();
+        if (!topics.includes(topic) && !subjectText.includes(topic)) return false;
+      }
+      if (!q) return true;
+      const haystack = `${book.title} ${book.author} ${(book.subjects || []).join(' ')} ${(book.bookshelves || []).join(' ')}`.toLowerCase();
+      return q.split(/\s+/).every((part) => haystack.includes(part));
+    })
+    .sort((a, b) => (Number(b.downloads) || 0) - (Number(a.downloads) || 0) || a.title.localeCompare(b.title));
+}
+
+function searchCacheKey(query, topic, sort) {
+  return `${String(query || '').trim().toLowerCase()}|${topic || 'all'}|${sort || 'popular'}`;
+}
+
+function loadSearchCache() {
+  try {
+    const raw = localStorage.getItem(APP.searchCacheKey);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    const now = Date.now();
+    const fresh = {};
+    Object.entries(parsed || {}).forEach(([key, value]) => {
+      if (value && now - Number(value.ts) < 7 * DAY) fresh[key] = value;
+    });
+    return fresh;
+  } catch (error) {
+    return {};
+  }
+}
+
+function getCachedSearch(query, topic, sort) {
+  const entry = ui.searchCache[searchCacheKey(query, topic, sort)];
+  if (!entry) return null;
+  if (Date.now() - Number(entry.ts) > 7 * DAY) {
+    delete ui.searchCache[searchCacheKey(query, topic, sort)];
+    return null;
+  }
+  return entry;
+}
+
+function saveSearchCache(query, topic, sort, payload) {
+  const key = searchCacheKey(query, topic, sort);
+  ui.searchCache[key] = { ts: Date.now(), ...payload };
+  try {
+    const entries = Object.entries(ui.searchCache)
+      .sort((a, b) => Number(b[1].ts) - Number(a[1].ts))
+      .slice(0, 40);
+    ui.searchCache = Object.fromEntries(entries);
+    localStorage.setItem(APP.searchCacheKey, JSON.stringify(ui.searchCache));
+  } catch (error) {
+    // Search cache is optional; ignore quota failures.
+  }
+}
+
 function normalizeGutendexBook(raw) {
   const formats = raw.formats || {};
   const textKeys = Object.keys(formats).filter((key) => key.startsWith('text/plain'));
@@ -760,12 +4132,14 @@ function normalizeGutendexBook(raw) {
     null;
   const htmlUrl = formats['text/html'] || formats['text/html; charset=utf-8'] || `https://www.gutenberg.org/ebooks/${raw.id}`;
   const cover = formats['image/jpeg'] || coverUrl(raw.id);
+  const subjects = Array.isArray(raw.subjects) ? raw.subjects : [];
   return {
     id: raw.id,
     title: cleanBookTitle(raw.title),
     author: formatAuthors(raw.authors),
     authorSort: authorSortName(raw.authors?.[0]?.name || ''),
-    subjects: Array.isArray(raw.subjects) ? raw.subjects : [],
+    subjects,
+    topics: inferTopics(subjects),
     bookshelves: Array.isArray(raw.bookshelves) ? raw.bookshelves : [],
     languages: Array.isArray(raw.languages) ? raw.languages : ['en'],
     downloads: Number(raw.download_count) || 0,
@@ -788,6 +4162,24 @@ function renderCurated() {
   });
 }
 
+function renderCatalogShelf() {
+  const grid = $('#catalog-grid');
+  if (!grid) return;
+  const local = LOCAL_CATALOG.filter((book) => book.source !== 'curated');
+  const standardEbooks = local.filter((book) => book.source === 'standardebooks').slice(0, 4);
+  const shelfExclude = /dictionary|encyclopedia|catalogue|catalog|the works of .*volume|volume \d|vol\.|complete works|my life/i;
+  const popular = local
+    .filter((book) => book.source !== 'standardebooks' && !shelfExclude.test(book.title))
+    .sort((a, b) => (Number(b.downloads) || 0) - (Number(a.downloads) || 0));
+  const picks = mergeBookLists(standardEbooks, popular).slice(0, 12);
+  grid.innerHTML = '';
+  picks.forEach((book, index) => grid.appendChild(bookCard(book, index)));
+  setText('#catalog-sub', `${formatNumber(local.length)} additional books cached locally from Project Gutenberg and Standard Ebooks. Search checks this shelf first, then asks Gutendex for anything else.`);
+  setText('#offline-count', formatNumber(LOCAL_CATALOG.length));
+  const section = $('#catalog-section');
+  if (section) section.hidden = !picks.length;
+}
+
 function bookCard(book, index = 0) {
   const card = document.createElement('button');
   card.type = 'button';
@@ -795,17 +4187,27 @@ function bookCard(book, index = 0) {
   card.style.setProperty('--i', String(index % 12));
   card.setAttribute('aria-label', `Read ${book.title} by ${book.author}`);
   card.dataset.bookId = String(book.id);
-  const fallbackClass = ['', 'is-warm', 'is-blue', 'is-gold'][Number(book.id) % 4];
-  const badge = book.downloads > 0 ? `↓ ${formatCompact(book.downloads)}` : 'Free';
+  card.dataset.source = book.source || 'catalog';
+  const numericId = Number(book.id);
+  const hashId = Number.isFinite(numericId)
+    ? numericId
+    : Array.from(String(book.id)).reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const fallbackClass = ['', 'is-warm', 'is-blue', 'is-gold'][hashId % 4];
+  const badge = book.source === 'standardebooks'
+    ? 'SE'
+    : book.downloads > 0
+      ? `↓ ${formatCompact(book.downloads)}`
+      : 'Free';
   const subject = (book.subjects && book.subjects[0]) || 'Classic literature';
+  const sourceLabel = book.source === 'standardebooks' ? 'Standard Ebooks' : 'Gutenberg';
   card.innerHTML = `
     <span class="book-cover">
       <span class="cover-fallback ${fallbackClass}">
         <span class="cover-fallback-title">${escapeHtml(book.title)}</span>
         <span class="cover-fallback-author">${escapeHtml(book.author)}</span>
       </span>
-      <img src="${escapeHtml(book.cover)}" alt="" loading="lazy" decoding="async">
-      <span class="book-badge">${escapeHtml(badge)}</span>
+      <img src="${escapeHtml(book.cover || coverUrl(book.id))}" alt="" loading="lazy" decoding="async">
+      <span class="book-badge" title="${escapeHtml(sourceLabel)}">${escapeHtml(badge)}</span>
     </span>
     <span class="book-info">
       <span class="book-title">${escapeHtml(book.title)}</span>
@@ -813,7 +4215,7 @@ function bookCard(book, index = 0) {
       <span class="book-meta-row">
         <span class="book-subject">${escapeHtml(subject)}</span>
         <span class="dot"></span>
-        <span>${book.year || 'Gutenberg'}</span>
+        <span>${book.year || sourceLabel}</span>
       </span>
     </span>`;
   const image = card.querySelector('img');
@@ -839,26 +4241,55 @@ async function performSearch(query, options = {}) {
   const topic = options.topic || 'all';
   const page = options.page || 1;
   const append = Boolean(options.append);
-  if (ui.search.loading) return;
+  const localOnly = Boolean(options.localOnly);
+  const requestId = ++ui.search.requestId;
 
-  ui.search.loading = true;
   ui.search.query = query;
   ui.search.topic = topic;
   ui.search.page = page;
+  ui.search.loading = true;
+  ui.search.pending = !localOnly;
+
+  const local = searchLocalCatalog(query, topic);
+  const cached = localOnly ? null : getCachedSearch(query, topic, ui.search.sort);
+  const cachedResults = cached?.results || [];
+
   if (!append) {
-    ui.search.results = [];
-    ui.search.next = null;
-    ui.search.total = 0;
+    const initial = mergeBookLists(local, cachedResults);
+    ui.search.results = initial;
+    ui.search.next = cached?.next || null;
+    ui.search.total = Math.max(Number(cached?.total) || 0, initial.length);
     showResultsView();
-    renderSkeletons($('#search-grid'), 8);
     setText('#results-heading', query ? `Results for “${query}”` : `${TOPIC_LABELS[topic] || 'Popular'} classics`);
     setText('#results-eyebrow', query ? 'Project Gutenberg search' : 'Browse the collection');
-    setText('#results-sub', 'Searching the Gutendex catalogue…');
-    setText('#grid-status', 'Contacting Gutendex…');
+    if (initial.length) {
+      renderSearchResults();
+      const initialSource = local.length ? 'Local catalogue' : 'Cached catalogue';
+      setText('#grid-status', localOnly
+        ? `Local catalogue · ${booksLabel(initial.length)} ready offline`
+        : `${initialSource} · ${booksLabel(initial.length)} · checking Gutendex…`);
+      setText('#results-sub', `${booksLabel(ui.search.total || initial.length)} · ${local.length ? 'local' : 'cached'} catalogue first`);
+    } else {
+      renderSkeletons($('#search-grid'), 8);
+      setText('#grid-status', localOnly ? 'No local matches.' : 'Searching the full Gutendex catalogue…');
+      setText('#results-sub', localOnly ? 'No books in the local catalogue match this search.' : 'Checking the full Gutendex catalogue…');
+    }
     const loadMore = $('#load-more');
     if (loadMore) loadMore.hidden = true;
   } else {
     setText('#grid-status', 'Loading more books…');
+  }
+
+  if (localOnly) {
+    ui.search.results = local;
+    ui.search.total = local.length;
+    ui.search.next = null;
+    renderSearchResults();
+    setText('#grid-status', `Local catalogue · ${booksLabel(local.length)} ready offline`);
+    setText('#results-sub', `${booksLabel(local.length)} · local catalogue only`);
+    ui.search.loading = false;
+    ui.search.pending = false;
+    return;
   }
 
   try {
@@ -869,36 +4300,67 @@ async function performSearch(query, options = {}) {
     if (topic && topic !== 'all') url.searchParams.set('topic', topic);
     url.searchParams.set('sort', ui.search.sort === 'popular' ? 'popular' : 'ascending');
     const data = await fetchGutendex(url.toString(), 12000);
+    if (requestId !== ui.search.requestId) return;
     let books = (data.results || []).map(normalizeGutendexBook);
     if (ui.search.sort === 'title') books.sort((a, b) => a.title.localeCompare(b.title));
     if (ui.search.sort === 'author') books.sort((a, b) => a.authorSort.localeCompare(b.authorSort));
-    ui.search.results = append ? [...ui.search.results, ...books] : books;
-    ui.search.next = data.next || null;
-    ui.search.total = Number(data.count) || ui.search.results.length;
-    renderSearchResults();
-    setText('#grid-status', `${formatNumber(ui.search.total)} books found${ui.search.next ? '' : ' · end of results'}`);
-  } catch (error) {
-    console.error('Search failed:', error);
-    const grid = $('#search-grid');
-    if (grid) {
-      grid.innerHTML = `
-        <div class="empty-state">
-          <strong>Could not reach Gutendex</strong>
-          <p>The catalogue may be busy, or this network may block the request. Try again in a moment.</p>
-          <button class="btn btn-ghost btn-small" type="button" id="retry-search">Try again</button>
-        </div>`;
-      $('#retry-search')?.addEventListener('click', () => performSearch(query, { topic, page: 1 }));
+    if (append) {
+      ui.search.results = mergeBookLists(ui.search.results, books);
+    } else {
+      ui.search.results = mergeBookLists(searchLocalCatalog(query, topic), books);
     }
-    setText('#grid-status', 'Search unavailable. Check your connection.');
+    ui.search.next = data.next || null;
+    ui.search.total = data.next ? Math.max(Number(data.count) || 0, ui.search.results.length) : ui.search.results.length;
+    saveSearchCache(query, topic, ui.search.sort, {
+      results: books,
+      next: data.next || null,
+      total: Number(data.count) || 0,
+    });
+    renderSearchResults();
+    setText('#grid-status', `${booksLabel(ui.search.total)} found${ui.search.next ? '' : ' · end of results'}`);
+    const sortLabel = ui.search.sort === 'popular' ? 'most popular' : ui.search.sort === 'title' ? 'title A–Z' : 'author A–Z';
+    setText('#results-sub', `${booksLabel(ui.search.total)} · local catalogue first · sorted by ${sortLabel}`);
+  } catch (error) {
+    if (requestId !== ui.search.requestId) return;
+    console.error('Search failed:', error);
+    const fallback = mergeBookLists(searchLocalCatalog(query, topic), cachedResults);
+    ui.search.results = fallback;
+    ui.search.total = fallback.length;
+    ui.search.next = null;
+    if (fallback.length) {
+      renderSearchResults();
+      setText('#grid-status', `Offline catalogue · ${booksLabel(fallback.length)} cached`);
+      setText('#results-sub', `${booksLabel(fallback.length)} · cached locally`);
+    } else {
+      renderSearchError(query, topic);
+      setText('#grid-status', 'Search unavailable. Check your connection.');
+    }
   } finally {
-    ui.search.loading = false;
+    if (requestId === ui.search.requestId) {
+      ui.search.loading = false;
+      ui.search.pending = false;
+    }
   }
+}
+
+function renderSearchError(query, topic) {
+  const grid = $('#search-grid');
+  if (!grid) return;
+  grid.innerHTML = `
+    <div class="empty-state">
+      <strong>Could not reach Gutendex</strong>
+      <p>The catalogue may be busy, or this network may block the request. Try again, or browse the local catalogue.</p>
+      <button class="btn btn-ghost btn-small" type="button" id="retry-search">Try again</button>
+    </div>`;
+  $('#retry-search')?.addEventListener('click', () => performSearch(query, { topic, page: 1 }));
 }
 
 function showResultsView() {
   const shelf = $('#shelf-section');
+  const catalog = $('#catalog-section');
   const results = $('#results-section');
   if (shelf) shelf.hidden = true;
+  if (catalog) catalog.hidden = true;
   if (results) results.hidden = false;
   setText('#results-heading', ui.search.query ? `Results for “${ui.search.query}”` : `${TOPIC_LABELS[ui.search.topic] || 'Popular'} classics`);
   setText('#results-sub', '');
@@ -924,10 +4386,13 @@ function renderSearchResults() {
     : `${TOPIC_LABELS[ui.search.topic] || 'Popular'} classics`;
   setText('#results-heading', heading);
   const sortLabel = ui.search.sort === 'popular' ? 'most popular' : ui.search.sort === 'title' ? 'title A–Z' : 'author A–Z';
-  setText('#results-sub', `${formatNumber(ui.search.total)} public-domain books · sorted by ${sortLabel}`);
+  setText('#results-sub', `${booksLabel(ui.search.total)} · sorted by ${sortLabel}`);
 }
 
 function clearSearch(options = {}) {
+  ui.search.requestId += 1;
+  ui.search.loading = false;
+  ui.search.pending = false;
   ui.search.query = '';
   ui.search.topic = 'all';
   ui.search.results = [];
@@ -938,28 +4403,34 @@ function clearSearch(options = {}) {
   if (input) input.value = '';
   $$('#genre-chips .chip').forEach((chip) => chip.classList.toggle('is-active', chip.dataset.topic === 'all'));
   const shelf = $('#shelf-section');
+  const catalog = $('#catalog-section');
   const results = $('#results-section');
   if (shelf) shelf.hidden = false;
+  if (catalog) catalog.hidden = false;
   if (results) results.hidden = true;
   if (!options.silent) renderCurated();
 }
 
 async function loadMoreResults() {
   if (!ui.search.next || ui.search.loading) return;
+  const requestId = ++ui.search.requestId;
   try {
     ui.search.loading = true;
     setText('#grid-status', 'Loading more books…');
     const data = await fetchGutendex(ui.search.next, 12000);
+    if (requestId !== ui.search.requestId) return;
     const books = (data.results || []).map(normalizeGutendexBook);
-    ui.search.results = [...ui.search.results, ...books];
+    ui.search.results = mergeBookLists(ui.search.results, books);
     ui.search.next = data.next || null;
+    ui.search.total = data.next ? Math.max(Number(data.count) || 0, ui.search.results.length) : ui.search.results.length;
     renderSearchResults();
-    setText('#grid-status', `${formatNumber(ui.search.total)} books found${ui.search.next ? '' : ' · end of results'}`);
+    setText('#grid-status', `${booksLabel(ui.search.total)} found${ui.search.next ? '' : ' · end of results'}`);
   } catch (error) {
+    if (requestId !== ui.search.requestId) return;
     console.error('Load more failed:', error);
     toast('Could not load more books. Try again.', 'error');
   } finally {
-    ui.search.loading = false;
+    if (requestId === ui.search.requestId) ui.search.loading = false;
   }
 }
 
@@ -985,6 +4456,105 @@ async function fetchText(url, timeout = 15000) {
   if (!looksLikeBook(text)) throw new Error('Response was not a readable book');
   return text;
 }
+
+async function fetchHtml(url, timeout = 22000) {
+  const response = await fetchWithTimeout(url, {
+    mode: 'cors',
+    headers: { Accept: 'application/xhtml+xml, text/html;q=0.9, */*;q=0.8' },
+  }, timeout);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.text();
+}
+
+function extractStandardEbooksText(html) {
+  try {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const main = doc.querySelector('main') || doc.body;
+    if (!main) return '';
+    const isSkipped = (node) => {
+      const section = node.closest('section');
+      if (!section) return false;
+      const type = section.getAttribute('epub:type')
+        || section.getAttributeNS('http://www.idpf.org/2007/ops', 'type')
+        || '';
+      if (/frontmatter|backmatter|toc|colophon|imprint|titlepage|copyright|endnotes|loi/i.test(type)) return true;
+      return /^(titlepage|imprint|toc|colophon|uncopyright|endnotes|loi|copyright-page|halftitlepage)$/i.test(section.id);
+    };
+    const blocks = [];
+    main.querySelectorAll('h1, h2, h3, p, li').forEach((node) => {
+      if (isSkipped(node)) return;
+      const text = (node.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!text || !/[A-Za-z0-9]/.test(text)) return;
+      if (/^H[123]$/.test(node.tagName)) {
+        if (/^[IVXLCDM\d]+$/i.test(text)) blocks.push(`CHAPTER ${text}`);
+        else if (text.length <= 140) blocks.push(text);
+        return;
+      }
+      blocks.push(text);
+    });
+    return blocks.filter((block, index) => block !== blocks[index - 1]).join('\n\n');
+  } catch (error) {
+    console.warn('Could not parse Standard Ebooks XHTML:', error);
+    return '';
+  }
+}
+
+const TextCacheDB = {
+  dbPromise: null,
+  open() {
+    if (!('indexedDB' in window)) return Promise.reject(new Error('IndexedDB unavailable'));
+    if (this.dbPromise) return this.dbPromise;
+    this.dbPromise = new Promise((resolve, reject) => {
+      const request = indexedDB.open('gutenbergStudioText', 1);
+      request.onupgradeneeded = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains('texts')) db.createObjectStore('texts');
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    return this.dbPromise;
+  },
+  async get(key) {
+    try {
+      const db = await this.open();
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction('texts', 'readonly');
+        const request = tx.objectStore('texts').get(key);
+        request.onsuccess = () => resolve(request.result?.text || '');
+        request.onerror = () => reject(request.error);
+      });
+    } catch (error) {
+      return '';
+    }
+  },
+  async put(key, text) {
+    try {
+      const db = await this.open();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction('texts', 'readwrite');
+        tx.objectStore('texts').put({ text, savedAt: Date.now() }, key);
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+    } catch (error) {
+      // Full text caching is an optimization; ignore quota or privacy errors.
+    }
+  },
+  async clear() {
+    try {
+      const db = await this.open();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction('texts', 'readwrite');
+        tx.objectStore('texts').clear();
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+    } catch (error) {
+      // Ignore.
+    }
+  },
+};
 
 function gitenbergUrl(repo, file) {
   const safeRepo = repo.split('/').map(encodeURIComponent).join('/');
@@ -1042,6 +4612,28 @@ async function getBookText(book, onStatus = () => {}) {
   const key = String(book.id);
   if (ui.textCache.has(key)) return ui.textCache.get(key);
 
+  const diskCached = await TextCacheDB.get(key);
+  if (diskCached && diskCached.length > 500) {
+    ui.textCache.set(key, diskCached);
+    return diskCached;
+  }
+
+  if (book.source === 'standardebooks' && book.textUrl) {
+    onStatus('Downloading from Standard Ebooks…');
+    try {
+      const html = await fetchHtml(book.textUrl, 25000);
+      const extracted = extractStandardEbooksText(html);
+      if (!extracted || extracted.length < 500) throw new Error('The Standard Ebooks page had no readable text');
+      ui.textCache.set(key, extracted);
+      TextCacheDB.put(key, extracted);
+      return extracted;
+    } catch (error) {
+      const wrapped = new Error(`Standard Ebooks text could not be read: ${error.message}`);
+      wrapped.book = book;
+      throw wrapped;
+    }
+  }
+
   const attempts = [];
   const addAttempt = (url, label) => {
     if (url && !attempts.some((attempt) => attempt.url === url)) attempts.push({ url, label });
@@ -1079,6 +4671,7 @@ async function getBookText(book, onStatus = () => {}) {
       const cleaned = cleanGutenbergText(raw);
       if (!cleaned || cleaned.length < 500) throw new Error('Text was too short after cleaning');
       ui.textCache.set(key, cleaned);
+      TextCacheDB.put(key, cleaned);
       return cleaned;
     } catch (error) {
       lastError = error;
@@ -1362,7 +4955,7 @@ async function openBook(book, options = {}) {
   try {
     const id = String(normalized.id);
     const existing = state.library.books[id] || {};
-    state.library.activeBookId = Number(normalized.id);
+    state.library.activeBookId = normalized.id;
     state.library.books[id] = {
       ...existing,
       ...normalized,
@@ -1370,7 +4963,7 @@ async function openBook(book, options = {}) {
       lastOpened: Date.now(),
       progress: existing.progress || null,
     };
-    state.library.recent = [Number(normalized.id), ...state.library.recent.filter((item) => item !== Number(normalized.id))].slice(0, 20);
+    state.library.recent = [normalized.id, ...state.library.recent.filter((item) => String(item) !== String(normalized.id))].slice(0, 20);
     saveStateSoon();
 
     setLoadingStep(1);
@@ -1393,7 +4986,10 @@ async function openBook(book, options = {}) {
     const progress = state.library.books[id].progress;
     if (progress) {
       ui.currentPage = clamp(Number(progress.page) || 0, 0, pages.length - 1);
-      ui.progressPercent = clamp(Number(progress.scrollPercent ?? progress.percent) || 0, 0, 100);
+      const savedPercent = Number(progress.scrollPercent ?? progress.percent);
+      ui.progressPercent = Number.isFinite(savedPercent) && savedPercent > 0
+        ? clamp(savedPercent, 0, 100)
+        : clamp(((ui.currentPage + 1) / pages.length) * 100, 0, 100);
     } else {
       ui.currentPage = 0;
       ui.progressPercent = 0;
@@ -1404,7 +5000,21 @@ async function openBook(book, options = {}) {
     renderChapterSelect();
     showReader({ replaceHash: Boolean(options.replaceHash) });
     renderCurrentView({ initial: true });
-    setTimeout(scheduleRepaginate, 120);
+
+    // The first render gives the page body its real dimensions. Re-paginate
+    // once against the measured layout before the loading overlay is removed,
+    // so the page count never visibly changes on open.
+    await new Promise((resolve) => setTimeout(resolve, 60));
+    const fittedPages = paginate(chapters, computePageLayout());
+    if (fittedPages.length && fittedPages.length !== ui.bookData.pages.length) {
+      const percent = ui.progressPercent || ((ui.currentPage + 1) / ui.bookData.pages.length) * 100;
+      ui.bookData.pages = fittedPages;
+      ui.bookData.rsvpWords = buildRsvpWords(fittedPages);
+      ui.progressPercent = percent;
+      ui.currentPage = pageAtPercent(percent);
+      renderCurrentView({ initial: true });
+    }
+
     setLoadingStep(3);
     hideLoading();
     if (!options.silent) toast(`“${ui.currentBook.title}” is ready. Double-click any word to look it up.`, 'success');
@@ -1422,19 +5032,25 @@ async function openBook(book, options = {}) {
 }
 
 async function openBookById(id) {
-  const numericId = Number(id);
-  if (!numericId) {
+  const key = String(id || '').trim();
+  if (!key) {
     showLibrary({ replaceHash: true });
     return;
   }
-  const stored = state.library.books[numericId];
+  const stored = state.library.books[key];
   if (stored) {
     openBook(stored, { silent: true });
     return;
   }
-  const curated = CURATED.find((book) => Number(book.id) === numericId);
-  if (curated) {
-    openBook(curated, { silent: true });
+  const local = LOCAL_CATALOG.find((book) => String(book.id) === key);
+  if (local) {
+    openBook(local, { silent: true });
+    return;
+  }
+  const numericId = Number(key);
+  if (!Number.isFinite(numericId) || numericId <= 0) {
+    toast('That book is not in the local catalogue. Try searching for it.', 'error');
+    showLibrary({ replaceHash: true });
     return;
   }
   try {
@@ -1483,9 +5099,17 @@ function renderCurrentView(options = {}) {
 
 function pageHTML(page) {
   const pages = ui.bookData.pages;
+  const chapterKicker = /^chapter\b/i.test(page.chapterTitle) || /^[IVXLCDM]+\.?$/i.test(page.chapterTitle)
+    ? 'Chapter'
+    : /^book\b/i.test(page.chapterTitle)
+      ? 'Book'
+      : /^part\b/i.test(page.chapterTitle)
+        ? 'Part'
+        : 'Book';
+  const chapterDisplayTitle = page.chapterTitle.replace(/^(chapter|book|part|letter|canto|act|scene)\s+/i, '');
   const chapterHeading =
     page.chapterStart && page.chapterTitle !== 'Full Text'
-      ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(/^chapter\b/i.test(page.chapterTitle) || /^[IVXLCDM]+\.?$/i.test(page.chapterTitle) ? 'Chapter' : 'Book')}</span><h2>${escapeHtml(page.chapterTitle)}</h2></div>`
+      ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(chapterKicker)}</span><h2>${escapeHtml(chapterDisplayTitle)}</h2></div>`
       : '';
   return `
     <header class="page-head">
@@ -1610,9 +5234,17 @@ function renderScroll(initial = false) {
   const pages = ui.bookData.pages;
   const html = pages
     .map((page) => {
+      const chapterKicker = /^chapter\b/i.test(page.chapterTitle) || /^[IVXLCDM]+\.?$/i.test(page.chapterTitle)
+        ? 'Chapter'
+        : /^book\b/i.test(page.chapterTitle)
+          ? 'Book'
+          : /^part\b/i.test(page.chapterTitle)
+            ? 'Part'
+            : 'Book';
+      const chapterDisplayTitle = page.chapterTitle.replace(/^(chapter|book|part|letter|canto|act|scene)\s+/i, '');
       const chapterHeading =
         page.chapterStart && page.chapterTitle !== 'Full Text'
-          ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(/^chapter\b/i.test(page.chapterTitle) || /^[IVXLCDM]+\.?$/i.test(page.chapterTitle) ? 'Chapter' : 'Book')}</span><h2>${escapeHtml(page.chapterTitle)}</h2></div>`
+          ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(chapterKicker)}</span><h2>${escapeHtml(chapterDisplayTitle)}</h2></div>`
           : '';
       return `<section class="scroll-page${noDropCap(page) ? ' no-dropcap' : ''}" data-page-index="${page.index}" aria-label="Page ${page.index + 1}">
         ${chapterHeading}
@@ -1691,7 +5323,7 @@ function updateProgress() {
         updatedAt: Date.now(),
       },
     };
-    state.library.activeBookId = Number(ui.currentBook.id);
+    state.library.activeBookId = ui.currentBook.id;
     saveStateSoon();
   }
   setText('#reader-status-text', `${pages.length} pages · ${formatNumber(pages[pages.length - 1]?.endWord || 0)} words`);
@@ -3293,6 +6925,7 @@ function setupEvents() {
     }
   });
   $('#clear-search')?.addEventListener('click', () => clearSearch());
+  $('#browse-catalog')?.addEventListener('click', () => performSearch('', { localOnly: true }));
   $('#load-more')?.addEventListener('click', loadMoreResults);
   $('#sort-select')?.addEventListener('change', (event) => {
     ui.search.sort = event.target.value;
@@ -3403,7 +7036,11 @@ function setupEvents() {
     ui.progressPercent = 0;
     localStorage.removeItem(APP.storageKey);
     localStorage.removeItem(APP.dictKey);
+    localStorage.removeItem(APP.searchCacheKey);
     ui.dictCache = {};
+    ui.searchCache = {};
+    ui.textCache.clear();
+    TextCacheDB.clear();
     applySettings();
     clearSearch();
     renderWordBank();
@@ -3637,6 +7274,7 @@ function init() {
   setupEvents();
   setupReaderSelection();
   renderCurated();
+  renderCatalogShelf();
   renderWordBank();
   renderNotes();
   updateContinueBanner();

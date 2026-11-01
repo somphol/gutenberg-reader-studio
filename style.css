@@ -771,6 +771,14 @@ kbd {
 .continue-copy p:last-child { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
 /* Sections */
+.shelf-section { margin-top: 54px; }
+.catalog-section {
+  padding-top: 46px;
+  border-top: 1px solid var(--line);
+}
+.catalog-section .section-head { margin-bottom: 22px; }
+.catalog-section .section-sub { max-width: 620px; }
+
 .section-head {
   display: flex;
   align-items: flex-end;
