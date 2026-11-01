@@ -4,8 +4,8 @@
 | --- | --- |
 | Project | Gutenberg Reader Studio & Vocabulary Lab (`gutenberg-reader-studio`) |
 | Started | 2026-11-01 01:56:05.063000 UTC |
-| Completed | 2026-11-01 07:14:25.251078 UTC |
-| Duration | **5h 18m 20s** (19,100.2 seconds) |
+| Completed | 2026-11-01 07:36:42.684556 UTC |
+| Duration | **5h 40m 37s** (20,437.6 seconds) |
 | Harness | OpenCode 2.2.5 |
 | Model | DeepSeek V4.1 Flash (`opencode-go/deepseek-v4.1-flash`) |
 | Session | `ses_e6b2dd0caffeJNXNDXuZvo48oV` |
@@ -16,25 +16,26 @@
 
 | Metric | Tokens |
 | --- | ---: |
-| Input | 622,312 |
-| Output | 218,223 |
-| Reasoning | 181,335 |
-| **Total (input + output + reasoning)** | **1,021,870** |
-| Cache read | 128,888,320 |
+| Input | 631,722 |
+| Output | 231,937 |
+| Reasoning | 192,699 |
+| **Total (input + output + reasoning)** | **1,056,358** |
+| Cache read | 149,089,536 |
 | Cache write | 1,204 |
-| Total including cache | 129,911,394 |
+| Total including cache | 150,147,098 |
 
-> Snapshot taken from the OpenCode session record when the project was packaged at 2026-11-01T07:14:25.251078Z. The final commit/push and closing response occur outside this snapshot. `total = input + output + reasoning`; cache reads/writes are reported separately because they are a subset of context usage.
+> Snapshot taken from the OpenCode session record when the project was packaged at 2026-11-01T07:36:42.684556Z. The final commit/push and closing response occur outside this snapshot. `total = input + output + reasoning`; cache reads/writes are reported separately because they are a subset of context usage.
 
 ## What was built
 
-- **Three production files**: `index.html` (651 lines), `style.css` (2,387 lines), `script.js` (7,302 lines). No build step, framework, backend, or database.
-- **Local catalogue**: 165 books — 20 curated classics, 140 popular Gutenberg titles, and 8 unique Standard Ebooks editions. A 12-book shelf and a “Browse all local books” view make the catalogue visible.
+- **Three production files**: `index.html` (658 lines), `style.css` (2,410 lines), `script.js` (7,336 lines). No build step, framework, backend, or database.
+- **Local catalogue**: 165 books — 20 curated classics, 140 popular Gutenberg titles, and 9 Standard Ebooks editions (deduped to 165 titles). A 12-book shelf and a “Browse all local books” view make the catalogue visible.
 - **Local-first search**: the local catalogue filters synchronously, Gutendex supplements in the background, and API responses are cached for 7 days. The “Searching the full Gutendex catalogue…” state only appears when neither local nor cached results exist.
-- **Standard Ebooks source**: single-page XHTML is stripped of front matter, notes, and colophons, then parsed into chapter headings and prose.
-- **Full-text cache**: opened books are stored in IndexedDB so they reopen without another download.
+- **Standard Ebooks source**: single-page XHTML is stripped of TOC/nav, front matter, notes, colophon, and uncopyright pages, then parsed into chapter headings and prose. Matching catalogue titles use it as a fast fallback.
+- **Full-text cache**: opened books are stored in IndexedDB (versioned) so they reopen without another download.
 - **Reader**: automatic Gutenberg header/license cleaning, chapter detection, measured pagination, page-turn and continuous-scroll modes, running heads, page numbers, drop caps, poetry blocks, italics, and a reading-position memory.
 - **Page turn**: the outgoing page hinges on the spine and swings left, revealing the next page already waiting underneath; Previous swings the earlier page back in from the left.
+- **Genre bar**: persistent across library and search views, with immediate local filtering and background Gutendex supplementation.
 - **Customization**: four themes, three typefaces, 14–32px font size, 1.2×–2.2× line height, persisted in `localStorage`.
 - **Focus modes**: bionic reading with full-word capture, RSVP at 150–500 wpm with ORP alignment, teleprompter auto-scroll, and Web Audio rain/café/fireplace soundscapes.
 - **Vocabulary**: dictionary lookup with phonetics/audio, automatic context-sentence extraction, Word Bank with New/Practicing/Mastered status, real timestamp SRS intervals, due queue, flashcard review, and Again/Good/Easy grading.
@@ -73,6 +74,9 @@
 - IndexedDB full-text cache verified: reopening The Yellow Wallpaper skipped the download and completed in about 0.4 seconds.
 - Page-count stability verified on open: the first measured layout and the final pagination match before the loading overlay is removed.
 - Browse-all-local view verified: 165 cached books rendered without a Gutendex request.
+- Genre bar regression fixed: the chip row now lives outside the curated shelf, so it remains visible when Fiction or another genre opens search results.
+- The Odyssey verified end-to-end: the catalogue title resolves to the Standard Ebooks Bryant translation in under a second, with 566 pages and Book I–XXIV chapter navigation; it no longer falls through to a slow CORS relay.
+- Standard Ebooks parser hardened: TOC/nav/frontmatter/backmatter are skipped, while chapter headings inside bodymatter headers are retained.
 
 ## Credits
 

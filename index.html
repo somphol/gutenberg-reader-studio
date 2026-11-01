@@ -108,21 +108,28 @@
           <button class="btn btn-ink" type="button" id="continue-btn">Resume reading <span aria-hidden="true">→</span></button>
         </div>
 
+        <div class="genre-bar" id="genre-bar">
+          <div class="genre-label">
+            <span class="eyebrow">Browse</span>
+            <span class="genre-hint">Filter the local shelf, then let Gutendex fill in the rest.</span>
+          </div>
+          <div class="chip-row" id="genre-chips" role="group" aria-label="Filter by genre">
+            <button class="chip is-active" type="button" data-topic="all">All</button>
+            <button class="chip" type="button" data-topic="fiction">Fiction</button>
+            <button class="chip" type="button" data-topic="romance">Romance</button>
+            <button class="chip" type="button" data-topic="adventure">Adventure</button>
+            <button class="chip" type="button" data-topic="mystery">Mystery</button>
+            <button class="chip" type="button" data-topic="philosophy">Philosophy</button>
+            <button class="chip" type="button" data-topic="science fiction">Sci-Fi</button>
+          </div>
+        </div>
+
         <section class="shelf-section" id="shelf-section" aria-labelledby="shelf-heading">
           <div class="section-head">
             <div>
               <p class="eyebrow">Start here</p>
               <h2 id="shelf-heading">Curated classics</h2>
               <p class="section-sub">Twenty books that reward slow, close reading — all free and in the public domain.</p>
-            </div>
-            <div class="chip-row" id="genre-chips" role="group" aria-label="Filter by genre">
-              <button class="chip is-active" type="button" data-topic="all">All</button>
-              <button class="chip" type="button" data-topic="fiction">Fiction</button>
-              <button class="chip" type="button" data-topic="romance">Romance</button>
-              <button class="chip" type="button" data-topic="adventure">Adventure</button>
-              <button class="chip" type="button" data-topic="mystery">Mystery</button>
-              <button class="chip" type="button" data-topic="philosophy">Philosophy</button>
-              <button class="chip" type="button" data-topic="science fiction">Sci-Fi</button>
             </div>
           </div>
           <div class="book-grid" id="book-grid" aria-live="polite"></div>

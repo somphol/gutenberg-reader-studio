@@ -19,6 +19,7 @@ const APP = {
 };
 
 const DAY = 86400000;
+const TEXT_CACHE_VERSION = 3;
 const SRS_INTERVALS = [1, 3, 7, 14, 30, 60];
 const SRS_LABELS = ['New', 'Practicing', 'Mastered'];
 const CURATED = [
@@ -3398,6 +3399,7 @@ const STANDARD_EBOOKS = [
   { title: 'Around the World in Eighty Days', author: 'Jules Verne', year: 1872, seSlug: 'jules-verne/around-the-world-in-eighty-days/george-makepeace-towle', subjects: ['Voyages', 'Adventure'], topics: ['adventure', 'fiction'] },
   { title: 'Meditations', author: 'Marcus Aurelius', year: 180, seSlug: 'marcus-aurelius/meditations/george-long', subjects: ['Stoicism', 'Philosophy'], topics: ['philosophy'] },
   { title: 'The Art of War', author: 'Sun Tzu', year: 'c. 500 BCE', seSlug: 'sun-tzu/the-art-of-war/lionel-giles', subjects: ['Military art and science', 'Strategy'], topics: ['philosophy'] },
+  { title: 'The Odyssey', author: 'Homer', year: 'c. 8th century BCE', seSlug: 'homer/the-odyssey/william-cullen-bryant', subjects: ['Epic poetry', 'Voyages'], topics: ['adventure', 'fiction'] },
 ].map((book) => ({
   ...book,
   id: `se-${book.seSlug.replace(/\//g, '-')}`,
@@ -3428,6 +3430,12 @@ const LOCAL_CATALOG = (() => {
     return true;
   });
 })();
+
+const STANDARD_EBOOKS_BY_TITLE = new Map(STANDARD_EBOOKS.map((book) => [catalogKey(book), book]));
+LOCAL_CATALOG.forEach((book) => {
+  const fallback = STANDARD_EBOOKS_BY_TITLE.get(catalogKey(book));
+  if (fallback && fallback !== book) book.seFallback = fallback;
+});
 
 const THEME_META = {
   paper: '#fbf9f5',
@@ -4472,13 +4480,21 @@ function extractStandardEbooksText(html) {
     const main = doc.querySelector('main') || doc.body;
     if (!main) return '';
     const isSkipped = (node) => {
-      const section = node.closest('section');
-      if (!section) return false;
-      const type = section.getAttribute('epub:type')
-        || section.getAttributeNS('http://www.idpf.org/2007/ops', 'type')
-        || '';
-      if (/frontmatter|backmatter|toc|colophon|imprint|titlepage|copyright|endnotes|loi/i.test(type)) return true;
-      return /^(titlepage|imprint|toc|colophon|uncopyright|endnotes|loi|copyright-page|halftitlepage)$/i.test(section.id);
+      let parent = node.parentElement;
+      while (parent && parent !== main) {
+        const id = parent.id || '';
+        const type = parent.getAttribute('epub:type')
+          || parent.getAttributeNS('http://www.idpf.org/2007/ops', 'type')
+          || '';
+        const className = String(parent.className || '');
+        if (/^(nav|footer|aside)$/i.test(parent.tagName)) return true;
+        if (parent.tagName === 'HEADER' && !/^H[1-3]$/.test(node.tagName)) return true;
+        if (/toc|colophon|uncopyright|copyright|imprint|titlepage|endnotes|loi|backmatter|frontmatter/i.test(`${id} ${type} ${className}`)) {
+          return true;
+        }
+        parent = parent.parentElement;
+      }
+      return false;
     };
     const blocks = [];
     main.querySelectorAll('h1, h2, h3, p, li').forEach((node) => {
@@ -4521,7 +4537,10 @@ const TextCacheDB = {
       return await new Promise((resolve, reject) => {
         const tx = db.transaction('texts', 'readonly');
         const request = tx.objectStore('texts').get(key);
-        request.onsuccess = () => resolve(request.result?.text || '');
+        request.onsuccess = () => {
+          const record = request.result;
+          resolve(record && record.version === TEXT_CACHE_VERSION ? record.text : '');
+        };
         request.onerror = () => reject(request.error);
       });
     } catch (error) {
@@ -4533,7 +4552,7 @@ const TextCacheDB = {
       const db = await this.open();
       await new Promise((resolve, reject) => {
         const tx = db.transaction('texts', 'readwrite');
-        tx.objectStore('texts').put({ text, savedAt: Date.now() }, key);
+        tx.objectStore('texts').put({ text, savedAt: Date.now(), version: TEXT_CACHE_VERSION }, key);
         tx.oncomplete = resolve;
         tx.onerror = () => reject(tx.error);
       });
@@ -4608,6 +4627,16 @@ async function resolveGitenbergRepos(book) {
   return Array.from(repos);
 }
 
+async function fetchStandardEbooksText(seBook, key, onStatus = () => {}) {
+  onStatus('Downloading from Standard Ebooks…');
+  const html = await fetchHtml(seBook.textUrl, 25000);
+  const extracted = extractStandardEbooksText(html);
+  if (!extracted || extracted.length < 500) throw new Error('The Standard Ebooks page had no readable text');
+  ui.textCache.set(key, extracted);
+  TextCacheDB.put(key, extracted);
+  return extracted;
+}
+
 async function getBookText(book, onStatus = () => {}) {
   const key = String(book.id);
   if (ui.textCache.has(key)) return ui.textCache.get(key);
@@ -4618,15 +4647,11 @@ async function getBookText(book, onStatus = () => {}) {
     return diskCached;
   }
 
+  let lastError = null;
+
   if (book.source === 'standardebooks' && book.textUrl) {
-    onStatus('Downloading from Standard Ebooks…');
     try {
-      const html = await fetchHtml(book.textUrl, 25000);
-      const extracted = extractStandardEbooksText(html);
-      if (!extracted || extracted.length < 500) throw new Error('The Standard Ebooks page had no readable text');
-      ui.textCache.set(key, extracted);
-      TextCacheDB.put(key, extracted);
-      return extracted;
+      return await fetchStandardEbooksText(book, key, onStatus);
     } catch (error) {
       const wrapped = new Error(`Standard Ebooks text could not be read: ${error.message}`);
       wrapped.book = book;
@@ -4634,9 +4659,19 @@ async function getBookText(book, onStatus = () => {}) {
     }
   }
 
+  // Popular catalogue entries often have a Standard Ebooks edition. Try it
+  // before the slower Gutenberg/GITenberg/relay chain.
+  if (book.source === 'catalog' && book.seFallback?.textUrl) {
+    try {
+      return await fetchStandardEbooksText(book.seFallback, key, onStatus);
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
   const attempts = [];
-  const addAttempt = (url, label) => {
-    if (url && !attempts.some((attempt) => attempt.url === url)) attempts.push({ url, label });
+  const addAttempt = (url, label, timeout = 14000) => {
+    if (url && !attempts.some((attempt) => attempt.url === url)) attempts.push({ url, label, timeout });
   };
 
   if (book.repo && book.textFile) addAttempt(gitenbergUrl(book.repo, book.textFile), 'GITenberg archive');
@@ -4659,15 +4694,14 @@ async function getBookText(book, onStatus = () => {}) {
     `https://www.gutenberg.org/cache/epub/${book.id}/pg${book.id}.txt`,
   ].filter(Boolean);
   proxyTargets.forEach((target) => {
-    addAttempt(`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`, 'CORS relay');
-    addAttempt(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`, 'CORS relay');
+    addAttempt(`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`, 'CORS relay', 8000);
+    addAttempt(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`, 'CORS relay', 8000);
   });
 
-  let lastError = null;
   for (const attempt of attempts) {
     onStatus(`Trying ${attempt.label}…`);
     try {
-      const raw = await fetchText(attempt.url, 14000);
+      const raw = await fetchText(attempt.url, attempt.timeout || 14000);
       const cleaned = cleanGutenbergText(raw);
       if (!cleaned || cleaned.length < 500) throw new Error('Text was too short after cleaning');
       ui.textCache.set(key, cleaned);

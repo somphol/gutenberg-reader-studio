@@ -15,20 +15,20 @@
   ],
   "build": {
     "startedAt": "2026-11-01T01:56:05.063000Z",
-    "completedAt": "2026-11-01T07:14:25.251078Z",
-    "durationSeconds": 19100.2,
-    "durationHuman": "5h 18m 20s",
+    "completedAt": "2026-11-01T07:36:42.684556Z",
+    "durationSeconds": 20437.6,
+    "durationHuman": "5h 40m 37s",
     "timezone": "UTC",
     "note": "Elapsed time from OpenCode session creation to the token snapshot used for this state file. The final commit, GitHub Pages deployment, and closing response occur after this snapshot."
   },
   "tokens": {
-    "input": 622312,
-    "output": 218223,
-    "reasoning": 181335,
-    "cacheRead": 128888320,
+    "input": 631722,
+    "output": 231937,
+    "reasoning": 192699,
+    "cacheRead": 149089536,
     "cacheWrite": 1204,
-    "total": 1021870,
-    "totalWithCache": 129911394,
+    "total": 1056358,
+    "totalWithCache": 150147098,
     "note": "Snapshot from the OpenCode session record when the project was packaged. total = input + output + reasoning. Cache reads/writes are reported separately because they are a subset of context usage."
   },
   "cost": {
@@ -109,23 +109,23 @@
     "mobileDefaultMode": "Continuous scroll",
     "files": {
       "index.html": {
-        "bytes": 36961,
-        "lines": 651
+        "bytes": 37211,
+        "lines": 658
       },
       "style.css": {
-        "bytes": 76002,
-        "lines": 2387
+        "bytes": 76604,
+        "lines": 2410
       },
       "script.js": {
-        "bytes": 239756,
-        "lines": 7302
+        "bytes": 241162,
+        "lines": 7336
       }
     },
     "localCatalog": 165,
     "localCatalogBreakdown": {
       "curated": 20,
       "popularGutenberg": 140,
-      "standardEbooks": 8,
+      "standardEbooks": 9,
       "afterTitleDedupe": 165
     },
     "searchCacheDays": 7,
@@ -139,8 +139,10 @@
       "The Hound of the Baskervilles",
       "Around the World in Eighty Days",
       "Meditations",
-      "The Art of War"
-    ]
+      "The Art of War",
+      "The Odyssey"
+    ],
+    "fullTextCacheVersion": 3
   },
   "verification": [
     "20 curated classics rendered with real Gutenberg cover art and reliable GITenberg text sources.",
@@ -171,7 +173,10 @@
     "Standard Ebooks extraction verified: Persuasion (423 pages), Wuthering Heights (619 pages), and Around the World in Eighty Days (405 pages) loaded from single-page XHTML with chapters and prose intact.",
     "IndexedDB full-text cache verified: reopening The Yellow Wallpaper skipped the download and completed in about 0.4 seconds.",
     "Page-count stability verified on open: the first measured layout and the final pagination match before the loading overlay is removed.",
-    "Browse-all-local view verified: 165 cached books rendered without a Gutendex request."
+    "Browse-all-local view verified: 165 cached books rendered without a Gutendex request.",
+    "Genre bar regression fixed: the chip row now lives outside the curated shelf, so it remains visible when Fiction or another genre opens search results.",
+    "The Odyssey verified end-to-end: the catalogue title resolves to the Standard Ebooks Bryant translation in under a second, with 566 pages and Book I–XXIV chapter navigation; it no longer falls through to a slow CORS relay.",
+    "Standard Ebooks parser hardened: TOC/nav/frontmatter/backmatter are skipped, while chapter headings inside bodymatter headers are retained."
   ],
   "artifacts": [
     "index.html",

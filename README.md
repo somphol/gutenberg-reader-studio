@@ -93,6 +93,7 @@ Project Gutenberg does not send an `Access-Control-Allow-Origin` header for plai
 The studio ships with a **165-book local catalogue**: 20 curated classics, 140 popular Gutenberg titles, and unique Standard Ebooks editions. Search and genre browsing filter this shelf synchronously, so results appear immediately. Gutendex is then asked to supplement the list in the background.
 
 - If Gutendex is slow or unavailable, the local matches remain usable.
+- Catalogue titles with a Standard Ebooks edition use that edition as a fast fallback before the slower Gutenberg/GITenberg/relay chain.
 - Gutendex responses are cached for 7 days, so a repeat search does not wait on the network.
 - Opened full texts are cached in IndexedDB. Reopening a book skips the download and goes straight to pagination.
 - The only time you see “Searching the full Gutendex catalogue…” is when neither the local shelf nor the search cache has a match.
