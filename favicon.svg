@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Gutenberg Reader Studio">
+  <defs>
+    <linearGradient id="bg" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2b443b"/>
+      <stop offset="1" stop-color="#14241f"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="20" y1="18" x2="46" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e0a458"/>
+      <stop offset="1" stop-color="#b4552d"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <path d="M16 18.5c0-1.4 1.1-2.5 2.5-2.5H32v34H18.5A2.5 2.5 0 0 1 16 47.5v-29Z" fill="#f7f0df" opacity=".16"/>
+  <path d="M48 18.5c0-1.4-1.1-2.5-2.5-2.5H32v34h13.5a2.5 2.5 0 0 0 2.5-2.5v-29Z" fill="#f7f0df" opacity=".08"/>
+  <path d="M32 16v34" stroke="#f7f0df" stroke-opacity=".35" stroke-width="1.5"/>
+  <text x="31" y="44" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="31" font-weight="700" fill="#f7f0df">G</text>
+  <circle cx="47" cy="17" r="4.5" fill="url(#gold)"/>
+</svg>

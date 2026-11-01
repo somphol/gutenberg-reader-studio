@@ -1,0 +1,163 @@
+{
+  "project": "gutenberg-reader-studio",
+  "title": "Gutenberg Reader Studio & Vocabulary Lab",
+  "description": "A production-ready, static-hostable reading room for Project Gutenberg classics with bionic reading, 3D page turns, RSVP speed reading, ambient Web Audio soundscapes, a dictionary-powered Word Bank with SRS timestamp math, notes, and portable library files.",
+  "stack": [
+    "HTML5",
+    "CSS3",
+    "Vanilla ES6 JavaScript",
+    "localStorage",
+    "Web Audio API",
+    "Gutendex API",
+    "GITenberg / raw.githubusercontent.com",
+    "Free Dictionary API",
+    "GitHub Pages"
+  ],
+  "build": {
+    "startedAt": "2026-11-01T01:56:05.063000Z",
+    "completedAt": "2026-11-01T02:47:26.003340Z",
+    "durationSeconds": 3080.9,
+    "durationHuman": "0h 51m 20s",
+    "timezone": "UTC",
+    "note": "Elapsed time from OpenCode session creation to the token snapshot used for this state file. The final commit, GitHub Pages deployment, and closing response occur after this snapshot."
+  },
+  "tokens": {
+    "input": 133026,
+    "output": 145500,
+    "reasoning": 107431,
+    "cacheRead": 46626816,
+    "cacheWrite": 1204,
+    "total": 385957,
+    "totalWithCache": 47013977,
+    "note": "Snapshot from the OpenCode session record when the project was packaged. total = input + output + reasoning. Cache reads/writes are reported separately because they are a subset of context usage."
+  },
+  "cost": {
+    "usd": 0.0,
+    "note": "As reported by the OpenCode session record."
+  },
+  "sessionId": "ses_e6b2dd0caffeJNXNDXuZvo48oV",
+  "model": {
+    "name": "DeepSeek V4.1 Flash",
+    "providerID": "opencode-go",
+    "modelID": "deepseek-v4.1-flash"
+  },
+  "harness": {
+    "name": "OpenCode",
+    "version": "2.2.5"
+  },
+  "repository": "https://github.com/somphol/gutenberg-reader-studio",
+  "pages": "https://somphol.github.io/gutenberg-reader-studio/",
+  "app": {
+    "singlePage": true,
+    "backendRequired": false,
+    "databaseRequired": false,
+    "curatedBooks": 20,
+    "searchableBooks": "75,000+ via Gutendex",
+    "themes": [
+      "Light paper #FBF9F5",
+      "Warm sepia #F4ECD8",
+      "Midnight dark #1E222A",
+      "OLED black #000000"
+    ],
+    "fonts": [
+      "Georgia",
+      "Inter",
+      "OpenDyslexic"
+    ],
+    "fontSizeRangePx": [
+      14,
+      32
+    ],
+    "lineHeightRange": [
+      1.2,
+      2.2
+    ],
+    "readingModes": [
+      "3D page turn",
+      "Continuous scroll",
+      "Bionic reading",
+      "RSVP speed reader",
+      "Teleprompter auto-scroll"
+    ],
+    "ambientSounds": [
+      "Rain",
+      "Cafe",
+      "Fireplace"
+    ],
+    "rsvpWpmRange": [
+      150,
+      500
+    ],
+    "srsIntervalsDays": [
+      1,
+      3,
+      7,
+      14,
+      30,
+      60
+    ],
+    "srsMasteredAtReview": 4,
+    "textSources": [
+      "GITenberg raw archive",
+      "Project Gutenberg mirrors",
+      "public CORS relays"
+    ],
+    "dictionaryApi": "https://api.dictionaryapi.dev/api/v2/entries/en/<word>",
+    "searchApi": "https://gutendex.com/books/",
+    "exportFile": "gutenberg_studio_state.json",
+    "mobileDefaultMode": "Continuous scroll",
+    "files": {
+      "index.html": {
+        "bytes": 36204,
+        "lines": 638
+      },
+      "style.css": {
+        "bytes": 75340,
+        "lines": 2360
+      },
+      "script.js": {
+        "bytes": 128761,
+        "lines": 3632
+      }
+    }
+  },
+  "verification": [
+    "20 curated classics rendered with real Gutenberg cover art and reliable GITenberg text sources.",
+    "Gutendex discovery verified: philosophy topic returned 32 results; search for “yellow wallpaper” returned the correct book and opened a 41-page reading session.",
+    "Arbitrary Gutenberg text fetch verified through the GITenberg/GitHub lookup path when direct Gutenberg CORS requests were blocked.",
+    "Pagination height model verified at 19px and 24px: page body scrollHeight equalled clientHeight (592px) with no page overflow.",
+    "3D page-turn animation verified: leaving/entering classes applied and the page deck cleaned up to one sheet after the transition.",
+    "Bionic reading verified: 117 word wrappers on page 1; double-clicking a bold prefix looked up the full word (“universally”), not the fragment.",
+    "RSVP verified: starts at the first word of the current page (“It”), advances while playing, pauses/resumes, and updates 150–500 wpm.",
+    "Teleprompter verified: HUD opens, scrollTop advances, manual wheel pauses, and the HUD closes cleanly.",
+    "Ambient audio verified for rain, cafe, fireplace, and off; Web Audio graph starts without console exceptions.",
+    "Word Bank verified: dictionary lookup, automatic context sentence capture, add, search/filter, delete with undo, and review grading.",
+    "SRS verified: first “Good” review moved a word from New to Practicing with nextReviewDue exactly +1 day.",
+    "Notes verified: add, edit, delete, undo, and per-book/page timestamps.",
+    "Export verified: gutenberg_studio_state.json downloaded with settings, library progress, notes, and Word Bank.",
+    "Import verified: restored theme, font size, notes, Word Bank, active book ID, and reading position; Resume reading mapped the saved percentage to the new pagination.",
+    "Responsive checks at 1440px and 390px: mobile defaults to continuous scroll, quick-action labels are visible, and the bottom navigation stays in the viewport.",
+    "All four themes and all three typefaces applied live; OpenDyslexic loaded successfully via document.fonts.check.",
+    "GitHub Pages build completed and served index.html, style.css, script.js, and state.json with HTTP 200."
+  ],
+  "artifacts": [
+    "index.html",
+    "style.css",
+    "script.js",
+    "favicon.svg",
+    "screenshot.png",
+    "screenshot-reader.png",
+    "screenshot-bionic.png",
+    "screenshot-rsvp.png",
+    "screenshot-settings.png",
+    "screenshot-wordbank.png",
+    "screenshot-mobile.png",
+    "README.md",
+    "STATE.md",
+    "state.json",
+    "LICENSE",
+    ".nojekyll",
+    ".gitignore"
+  ],
+  "credits": "Built with OpenCode 2.2.5 and DeepSeek V4.1 Flash (opencode-go/deepseek-v4.1-flash). Books from Project Gutenberg via Gutendex and GITenberg. Definitions and audio from the Free Dictionary API. Fraunces/Inter via Google Fonts and OpenDyslexic via Fontsource/jsDelivr. This is an independent reading project and is not affiliated with Project Gutenberg, Gutendex, or the Free Dictionary API."
+}
