@@ -30,6 +30,7 @@ It runs entirely from a read-only static host such as GitHub Pages — no backen
 | Typeface | Georgia (classic serif), Inter (clean sans), OpenDyslexic (accessibility) |
 | Font size | 14px – 32px |
 | Line height | 1.2× – 2.2× |
+| Definition card text | 12px – 20px |
 
 All settings apply live and are remembered in `localStorage`.
 
@@ -45,6 +46,7 @@ All settings apply live and are remembered in `localStorage`.
 ### Build a vocabulary
 
 - **Double-click or select any word** to open a definition card with phonetics, audio, parts of speech, and definitions from the Free Dictionary API.
+- **Definition card controls** — the card is a roomy 500px on desktop (full-width bottom sheet on mobile) with **A− / A+** text-size controls from 12px to 20px. The setting is remembered with the rest of the studio.
 - **Context extraction** automatically captures the sentence around the word from the book.
 - **➕ Add to Word Bank** stores the word, definition, phonetic, audio URL, source book, and context.
 - **SRS review** moves words from 🔴 New to 🟡 Practicing to 🟢 Mastered using real timestamp math.

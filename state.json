@@ -15,20 +15,20 @@
   ],
   "build": {
     "startedAt": "2026-11-01T01:56:05.063000Z",
-    "completedAt": "2026-11-01T07:36:42.684556Z",
-    "durationSeconds": 20437.6,
-    "durationHuman": "5h 40m 37s",
+    "completedAt": "2026-11-01T07:51:31.948627Z",
+    "durationSeconds": 21326.9,
+    "durationHuman": "5h 55m 26s",
     "timezone": "UTC",
     "note": "Elapsed time from OpenCode session creation to the token snapshot used for this state file. The final commit, GitHub Pages deployment, and closing response occur after this snapshot."
   },
   "tokens": {
-    "input": 631722,
-    "output": 231937,
-    "reasoning": 192699,
-    "cacheRead": 149089536,
+    "input": 646675,
+    "output": 246261,
+    "reasoning": 200628,
+    "cacheRead": 172871680,
     "cacheWrite": 1204,
-    "total": 1056358,
-    "totalWithCache": 150147098,
+    "total": 1093564,
+    "totalWithCache": 173966448,
     "note": "Snapshot from the OpenCode session record when the project was packaged. total = input + output + reasoning. Cache reads/writes are reported separately because they are a subset of context usage."
   },
   "cost": {
@@ -109,16 +109,16 @@
     "mobileDefaultMode": "Continuous scroll",
     "files": {
       "index.html": {
-        "bytes": 37211,
-        "lines": 658
+        "bytes": 37719,
+        "lines": 663
       },
       "style.css": {
-        "bytes": 76604,
-        "lines": 2410
+        "bytes": 78151,
+        "lines": 2461
       },
       "script.js": {
-        "bytes": 241162,
-        "lines": 7336
+        "bytes": 242319,
+        "lines": 7365
       }
     },
     "localCatalog": 165,
@@ -142,7 +142,11 @@
       "The Art of War",
       "The Odyssey"
     ],
-    "fullTextCacheVersion": 3
+    "fullTextCacheVersion": 3,
+    "popupFontSizeRange": [
+      12,
+      20
+    ]
   },
   "verification": [
     "20 curated classics rendered with real Gutenberg cover art and reliable GITenberg text sources.",
@@ -176,7 +180,8 @@
     "Browse-all-local view verified: 165 cached books rendered without a Gutendex request.",
     "Genre bar regression fixed: the chip row now lives outside the curated shelf, so it remains visible when Fiction or another genre opens search results.",
     "The Odyssey verified end-to-end: the catalogue title resolves to the Standard Ebooks Bryant translation in under a second, with 566 pages and Book I–XXIV chapter navigation; it no longer falls through to a slow CORS relay.",
-    "Standard Ebooks parser hardened: TOC/nav/frontmatter/backmatter are skipped, while chapter headings inside bodymatter headers are retained."
+    "Standard Ebooks parser hardened: TOC/nav/frontmatter/backmatter are skipped, while chapter headings inside bodymatter headers are retained.",
+    "Definition card verified: 500px wide on desktop, 14px default definitions, A−/A+ controls moved 14→17px, mobile 366px bottom sheet fits an 844px viewport, and the 16px setting persisted across reload."
   ],
   "artifacts": [
     "index.html",

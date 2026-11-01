@@ -3728,6 +3728,7 @@ function defaultState() {
       bionic: false,
       pageTurn: typeof window === 'undefined' ? true : window.innerWidth > 720,
       rsvpWpm: 260,
+      popupFontSize: 14,
       teleprompterSpeed: 30,
       ambient: 'off',
       ambientVolume: 0.45,
@@ -3757,6 +3758,7 @@ function sanitizeSettings(raw = {}) {
   settings.bionic = Boolean(raw.bionic);
   settings.pageTurn = raw.pageTurn === undefined ? base.pageTurn : Boolean(raw.pageTurn);
   settings.rsvpWpm = clamp(Number(raw.rsvpWpm) || base.rsvpWpm, 150, 500);
+  settings.popupFontSize = clamp(Number(raw.popupFontSize) || base.popupFontSize, 12, 20);
   settings.teleprompterSpeed = clamp(Number(raw.teleprompterSpeed) || base.teleprompterSpeed, 5, 120);
   settings.ambient = ['off', 'rain', 'cafe', 'fireplace'].includes(raw.ambient) ? raw.ambient : 'off';
   settings.ambientVolume = clamp(Number(raw.ambientVolume) || base.ambientVolume, 0, 1);
@@ -3906,6 +3908,8 @@ function applySettings(options = {}) {
   root.style.setProperty('--reader-size', `${settings.fontSize}px`);
   root.style.setProperty('--reader-leading', settings.lineHeight);
   root.style.setProperty('--reader-font', FONT_STACKS[settings.font] || FONT_STACKS.georgia);
+  root.style.setProperty('--popup-font-size', `${settings.popupFontSize}px`);
+  syncPopupFontUI();
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute('content', THEME_META[settings.theme] || THEME_META.paper);
   syncSettingsUI();
@@ -3976,6 +3980,25 @@ function syncSettingsUI() {
   updateBionicUI();
   updateModeUI();
   updateAmbientUI();
+}
+
+function syncPopupFontUI() {
+  const size = clamp(Number(state.settings.popupFontSize) || 14, 12, 20);
+  setText('#popup-font-size-label', `${size}px`);
+  const down = $('#popup-font-down');
+  const up = $('#popup-font-up');
+  if (down) down.disabled = size <= 12;
+  if (up) up.disabled = size >= 20;
+}
+
+function adjustPopupFontSize(delta) {
+  const current = clamp(Number(state.settings.popupFontSize) || 14, 12, 20);
+  const next = clamp(current + delta, 12, 20);
+  if (next === current) return;
+  setSetting('popupFontSize', next);
+  if (ui.popup) {
+    requestAnimationFrame(() => positionPopup(ui.popup.x, ui.popup.y));
+  }
 }
 
 function setRangeFill(input) {
@@ -5733,6 +5756,7 @@ function showWordPopup(info) {
   addButton.textContent = '➕ Add to Word Bank';
   addButton.disabled = false;
   setText('#popup-status', '');
+  syncPopupFontUI();
   popup.hidden = false;
   popup.setAttribute('aria-hidden', 'false');
   positionPopup(info.x, info.y);
@@ -5805,8 +5829,11 @@ function positionPopup(x, y) {
   const width = popup.offsetWidth || 360;
   const height = popup.offsetHeight || 300;
   const left = clamp(x - width / 2, 12, window.innerWidth - width - 12);
+  const maxTop = Math.max(12, window.innerHeight - height - 12);
+  const minTop = Math.min(84, maxTop);
   let top = y + 14;
-  if (top + height > window.innerHeight - 12) top = Math.max(12, y - height - 18);
+  if (top + height > window.innerHeight - 12) top = y - height - 18;
+  top = clamp(top, minTop, maxTop);
   popup.style.left = `${left}px`;
   popup.style.top = `${top}px`;
   popup.style.right = 'auto';
@@ -7088,6 +7115,8 @@ function setupEvents() {
   // Word popup
   $('#popup-close')?.addEventListener('click', closeWordPopup);
   $('#popup-add')?.addEventListener('click', addCurrentWordToBank);
+  $('#popup-font-down')?.addEventListener('click', () => adjustPopupFontSize(-1));
+  $('#popup-font-up')?.addEventListener('click', () => adjustPopupFontSize(1));
   $('#popup-audio')?.addEventListener('click', () => {
     if (!ui.popup) return;
     if (ui.popup.data?.audio) {
