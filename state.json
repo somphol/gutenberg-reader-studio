@@ -15,20 +15,20 @@
   ],
   "build": {
     "startedAt": "2026-11-01T01:56:05.063000Z",
-    "completedAt": "2026-11-01T02:47:26.003340Z",
-    "durationSeconds": 3080.9,
-    "durationHuman": "0h 51m 20s",
+    "completedAt": "2026-11-01T02:52:17.183750Z",
+    "durationSeconds": 3372.1,
+    "durationHuman": "0h 56m 12s",
     "timezone": "UTC",
     "note": "Elapsed time from OpenCode session creation to the token snapshot used for this state file. The final commit, GitHub Pages deployment, and closing response occur after this snapshot."
   },
   "tokens": {
-    "input": 133026,
-    "output": 145500,
-    "reasoning": 107431,
-    "cacheRead": 46626816,
+    "input": 141066,
+    "output": 154815,
+    "reasoning": 113736,
+    "cacheRead": 53751040,
     "cacheWrite": 1204,
-    "total": 385957,
-    "totalWithCache": 47013977,
+    "total": 409617,
+    "totalWithCache": 54161861,
     "note": "Snapshot from the OpenCode session record when the project was packaged. total = input + output + reasoning. Cache reads/writes are reported separately because they are a subset of context usage."
   },
   "cost": {
@@ -116,8 +116,8 @@
         "lines": 2360
       },
       "script.js": {
-        "bytes": 128761,
-        "lines": 3632
+        "bytes": 129695,
+        "lines": 3652
       }
     }
   },
@@ -138,7 +138,12 @@
     "Import verified: restored theme, font size, notes, Word Bank, active book ID, and reading position; Resume reading mapped the saved percentage to the new pagination.",
     "Responsive checks at 1440px and 390px: mobile defaults to continuous scroll, quick-action labels are visible, and the bottom navigation stays in the viewport.",
     "All four themes and all three typefaces applied live; OpenDyslexic loaded successfully via document.fonts.check.",
-    "GitHub Pages build completed and served index.html, style.css, script.js, and state.json with HTTP 200."
+    "GitHub Pages build completed and served index.html, style.css, script.js, and state.json with HTTP 200.",
+    "Live GitHub Pages build verified: index.html, style.css, script.js, and state.json all served with HTTP 200; the live app rendered 20 curated cards with no console errors.",
+    "Live Gutendex search verified on GitHub Pages: “sherlock” returned 16 results and opened The Adventures of Sherlock Holmes (604 pages) from the GITenberg text path.",
+    "Title-page cleanup verified on Sherlock Holmes and The Yellow Wallpaper: table-of-contents/author front matter is dropped so page 1 opens on prose.",
+    "Context extraction verified around abbreviations: selecting “Bennet” captured the full sentence beginning “My dear Mr. Bennet…” instead of cutting at “Mr.”.",
+    "Mobile reader layout verified at 390×844: the bottom Previous/Next bar stays in the viewport and the quick-action labels remain visible."
   ],
   "artifacts": [
     "index.html",

@@ -1180,26 +1180,46 @@ function parseChapters(text) {
 }
 
 function trimTitlePage(chapters) {
-  if (!chapters.length) return chapters;
-  const first = chapters[0];
-  if (!first.blocks.length) return chapters;
-  if (!/^(full text|untitled|front matter)$/i.test(first.title) && !/^[A-Z0-9 ,.'’&:\-—]{3,80}$/.test(first.title)) {
-    return chapters;
+  const list = chapters.slice();
+  const isProseBlock = (block) => {
+    const text = String(block || '').trim();
+    const lines = text.split(/\n/).map((line) => line.trim()).filter(Boolean);
+    if (lines.length >= 3) {
+      const tocLines = lines.filter((line) => /^(?:[IVXLCDM]+|\d+)[.)]\s+/.test(line) || /^chapter\s+/i.test(line)).length;
+      if (tocLines >= 2) return false;
+      const average = lines.reduce((sum, line) => sum + line.length, 0) / lines.length;
+      if (lines.length >= 5 && average < 60) return false;
+    }
+    if (text.length > 220) return true;
+    return text.split(/\s+/).length > 12 && /[.!?]/.test(text);
+  };
+  let guard = 0;
+  while (list.length && guard < 5) {
+    guard += 1;
+    const first = list[0];
+    const titleLike =
+      /^(full text|untitled|front matter)$/i.test(first.title) ||
+      /^[A-Z0-9 ,.'’&:\-—]{3,80}$/.test(first.title) ||
+      /^by\b/i.test(first.title);
+    if (!titleLike) break;
+    if (!first.blocks.some(isProseBlock)) {
+      list.shift();
+      continue;
+    }
+    let index = 0;
+    while (index < first.blocks.length && index < 4) {
+      const text = first.blocks[index].trim();
+      const isTitleBlock =
+        /^by\b/i.test(text) ||
+        (/^[A-Z0-9 ,.'’&:\-—\n]{3,200}$/.test(text) && !/[.!?]/.test(text)) ||
+        /^(book|volume|part)\b/i.test(text);
+      if (!isTitleBlock) break;
+      index += 1;
+    }
+    if (index > 0 && index < first.blocks.length) first.blocks = first.blocks.slice(index);
+    break;
   }
-  let index = 0;
-  while (index < first.blocks.length && index < 4) {
-    const text = first.blocks[index].trim();
-    const isTitleBlock =
-      /^by\s+/i.test(text) ||
-      (/^[A-Z0-9 ,.'’&:\-—\n]{3,200}$/.test(text) && !/[.!?]/.test(text)) ||
-      /^(book|volume|part)\b/i.test(text);
-    if (!isTitleBlock) break;
-    index += 1;
-  }
-  if (index > 0 && index < first.blocks.length) {
-    first.blocks = first.blocks.slice(index);
-  }
-  return chapters;
+  return list.filter((chapter) => chapter.blocks.length);
 }
 
 function trimLeadingMatter(chapters) {
@@ -1465,7 +1485,7 @@ function pageHTML(page) {
   const pages = ui.bookData.pages;
   const chapterHeading =
     page.chapterStart && page.chapterTitle !== 'Full Text'
-      ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(/^chapter\b/i.test(page.chapterTitle) ? 'Chapter' : 'Book')}</span><h2>${escapeHtml(page.chapterTitle)}</h2></div>`
+      ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(/^chapter\b/i.test(page.chapterTitle) || /^[IVXLCDM]+\.?$/i.test(page.chapterTitle) ? 'Chapter' : 'Book')}</span><h2>${escapeHtml(page.chapterTitle)}</h2></div>`
       : '';
   return `
     <header class="page-head">
@@ -1580,7 +1600,7 @@ function renderScroll(initial = false) {
     .map((page) => {
       const chapterHeading =
         page.chapterStart && page.chapterTitle !== 'Full Text'
-          ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(/^chapter\b/i.test(page.chapterTitle) ? 'Chapter' : 'Book')}</span><h2>${escapeHtml(page.chapterTitle)}</h2></div>`
+          ? `<div class="chapter-heading"><span class="chapter-kicker">${escapeHtml(/^chapter\b/i.test(page.chapterTitle) || /^[IVXLCDM]+\.?$/i.test(page.chapterTitle) ? 'Chapter' : 'Book')}</span><h2>${escapeHtml(page.chapterTitle)}</h2></div>`
           : '';
       return `<section class="scroll-page${noDropCap(page) ? ' no-dropcap' : ''}" data-page-index="${page.index}" aria-label="Page ${page.index + 1}">
         ${chapterHeading}

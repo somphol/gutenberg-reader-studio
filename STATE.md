@@ -4,8 +4,8 @@
 | --- | --- |
 | Project | Gutenberg Reader Studio & Vocabulary Lab (`gutenberg-reader-studio`) |
 | Started | 2026-11-01 01:56:05.063000 UTC |
-| Completed | 2026-11-01 02:47:26.003340 UTC |
-| Duration | **0h 51m 20s** (3,080.9 seconds) |
+| Completed | 2026-11-01 02:52:17.183750 UTC |
+| Duration | **0h 56m 12s** (3,372.1 seconds) |
 | Harness | OpenCode 2.2.5 |
 | Model | DeepSeek V4.1 Flash (`opencode-go/deepseek-v4.1-flash`) |
 | Session | `ses_e6b2dd0caffeJNXNDXuZvo48oV` |
@@ -16,19 +16,19 @@
 
 | Metric | Tokens |
 | --- | ---: |
-| Input | 133,026 |
-| Output | 145,500 |
-| Reasoning | 107,431 |
-| **Total (input + output + reasoning)** | **385,957** |
-| Cache read | 46,626,816 |
+| Input | 141,066 |
+| Output | 154,815 |
+| Reasoning | 113,736 |
+| **Total (input + output + reasoning)** | **409,617** |
+| Cache read | 53,751,040 |
 | Cache write | 1,204 |
-| Total including cache | 47,013,977 |
+| Total including cache | 54,161,861 |
 
-> Snapshot taken from the OpenCode session record when the project was packaged at 2026-11-01T02:47:26.003340Z. The final commit, GitHub Pages deployment, and closing response occur outside this snapshot. `total = input + output + reasoning`; cache reads/writes are reported separately because they are a subset of context usage.
+> Snapshot taken from the OpenCode session record when the project was packaged at 2026-11-01T02:52:17.183750Z. The final commit/push and closing response occur outside this snapshot. `total = input + output + reasoning`; cache reads/writes are reported separately because they are a subset of context usage.
 
 ## What was built
 
-- **Three production files**: `index.html` (638 lines), `style.css` (2,360 lines), `script.js` (3,632 lines). No build step, framework, backend, or database.
+- **Three production files**: `index.html` (638 lines), `style.css` (2,360 lines), `script.js` (3,652 lines). No build step, framework, backend, or database.
 - **Discovery**: Gutendex search, language filtering, genre browsing, paged results, and 20 curated classics with verified GITenberg text sources.
 - **Reader**: automatic Gutenberg header/license cleaning, chapter detection, height-aware pagination, page-turn and continuous-scroll modes, running heads, page numbers, drop caps, poetry blocks, italics, and a reading-position memory.
 - **Customization**: four themes, three typefaces, 14–32px font size, 1.2×–2.2× line height, persisted in `localStorage`.
@@ -57,6 +57,11 @@
 - Responsive checks at 1440px and 390px: mobile defaults to continuous scroll, quick-action labels are visible, and the bottom navigation stays in the viewport.
 - All four themes and all three typefaces applied live; OpenDyslexic loaded successfully via document.fonts.check.
 - GitHub Pages build completed and served index.html, style.css, script.js, and state.json with HTTP 200.
+- Live GitHub Pages build verified: index.html, style.css, script.js, and state.json all served with HTTP 200; the live app rendered 20 curated cards with no console errors.
+- Live Gutendex search verified on GitHub Pages: “sherlock” returned 16 results and opened The Adventures of Sherlock Holmes (604 pages) from the GITenberg text path.
+- Title-page cleanup verified on Sherlock Holmes and The Yellow Wallpaper: table-of-contents/author front matter is dropped so page 1 opens on prose.
+- Context extraction verified around abbreviations: selecting “Bennet” captured the full sentence beginning “My dear Mr. Bennet…” instead of cutting at “Mr.”.
+- Mobile reader layout verified at 390×844: the bottom Previous/Next bar stays in the viewport and the quick-action labels remain visible.
 
 ## Credits
 
