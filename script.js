@@ -1527,16 +1527,28 @@ function renderPage(index, direction = null) {
     viewport.querySelectorAll('.page-sheet').forEach((existing) => {
       if (existing !== oldSheet) existing.remove();
     });
-    oldSheet.classList.add(direction === 'next' ? 'is-leaving-next' : 'is-leaving-prev');
-    sheet.classList.add(direction === 'next' ? 'is-entering-next' : 'is-entering-prev');
-    viewport.appendChild(sheet);
+
+    if (direction === 'next') {
+      // The new page is already underneath; the current page hinges on the
+      // spine and swings left, revealing it.
+      sheet.classList.add('is-under');
+      viewport.insertBefore(sheet, oldSheet);
+      oldSheet.classList.add('is-turning', 'is-turning-next');
+    } else {
+      // Going back: the current page waits underneath while the previous page
+      // swings in from the left, as if lifted back into place.
+      oldSheet.classList.add('is-under');
+      sheet.classList.add('is-turning', 'is-turning-prev');
+      viewport.appendChild(sheet);
+    }
+
     setTimeout(() => {
-      if (token === ui.pageRenderToken) {
-        viewport.querySelectorAll('.page-sheet').forEach((existing) => {
-          if (existing !== sheet) existing.remove();
-        });
-      }
-    }, 680);
+      if (token !== ui.pageRenderToken) return;
+      viewport.querySelectorAll('.page-sheet').forEach((existing) => {
+        if (existing !== sheet) existing.remove();
+      });
+      sheet.classList.remove('is-under', 'is-turning', 'is-turning-next', 'is-turning-prev');
+    }, 820);
   } else {
     viewport.replaceChildren(sheet);
   }

@@ -15,20 +15,20 @@
   ],
   "build": {
     "startedAt": "2026-11-01T01:56:05.063000Z",
-    "completedAt": "2026-11-01T02:52:17.183750Z",
-    "durationSeconds": 3372.1,
-    "durationHuman": "0h 56m 12s",
+    "completedAt": "2026-11-01T03:26:09.029289Z",
+    "durationSeconds": 5404.0,
+    "durationHuman": "1h 30m 3s",
     "timezone": "UTC",
     "note": "Elapsed time from OpenCode session creation to the token snapshot used for this state file. The final commit, GitHub Pages deployment, and closing response occur after this snapshot."
   },
   "tokens": {
-    "input": 141066,
-    "output": 154815,
-    "reasoning": 113736,
-    "cacheRead": 53751040,
+    "input": 166463,
+    "output": 176697,
+    "reasoning": 135823,
+    "cacheRead": 75116032,
     "cacheWrite": 1204,
-    "total": 409617,
-    "totalWithCache": 54161861,
+    "total": 478983,
+    "totalWithCache": 75596219,
     "note": "Snapshot from the OpenCode session record when the project was packaged. total = input + output + reasoning. Cache reads/writes are reported separately because they are a subset of context usage."
   },
   "cost": {
@@ -112,12 +112,12 @@
         "lines": 638
       },
       "style.css": {
-        "bytes": 75340,
-        "lines": 2360
+        "bytes": 75777,
+        "lines": 2379
       },
       "script.js": {
-        "bytes": 129695,
-        "lines": 3652
+        "bytes": 130172,
+        "lines": 3664
       }
     }
   },
@@ -126,7 +126,7 @@
     "Gutendex discovery verified: philosophy topic returned 32 results; search for “yellow wallpaper” returned the correct book and opened a 41-page reading session.",
     "Arbitrary Gutenberg text fetch verified through the GITenberg/GitHub lookup path when direct Gutenberg CORS requests were blocked.",
     "Pagination height model verified at 19px and 24px: page body scrollHeight equalled clientHeight (592px) with no page overflow.",
-    "3D page-turn animation verified: leaving/entering classes applied and the page deck cleaned up to one sheet after the transition.",
+    "3D page-turn animation verified: the outgoing page hinges on the spine and swings left, revealing the next page underneath; the deck cleans up to one sheet after the turn.",
     "Bionic reading verified: 117 word wrappers on page 1; double-clicking a bold prefix looked up the full word (“universally”), not the fragment.",
     "RSVP verified: starts at the first word of the current page (“It”), advances while playing, pauses/resumes, and updates 150–500 wpm.",
     "Teleprompter verified: HUD opens, scrollTop advances, manual wheel pauses, and the HUD closes cleanly.",
@@ -143,7 +143,8 @@
     "Live Gutendex search verified on GitHub Pages: “sherlock” returned 16 results and opened The Adventures of Sherlock Holmes (604 pages) from the GITenberg text path.",
     "Title-page cleanup verified on Sherlock Holmes and The Yellow Wallpaper: table-of-contents/author front matter is dropped so page 1 opens on prose.",
     "Context extraction verified around abbreviations: selecting “Bennet” captured the full sentence beginning “My dear Mr. Bennet…” instead of cutting at “Mr.”.",
-    "Mobile reader layout verified at 390×844: the bottom Previous/Next bar stays in the viewport and the quick-action labels remain visible."
+    "Mobile reader layout verified at 390×844: the bottom Previous/Next bar stays in the viewport and the quick-action labels remain visible.",
+    "Page-turn animation verified in both directions at 400ms: the outgoing page is visibly angled while the next sheet is already visible underneath; Previous swings the earlier page back in from the left."
   ],
   "artifacts": [
     "index.html",

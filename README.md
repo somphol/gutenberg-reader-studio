@@ -17,7 +17,7 @@ It runs entirely from a read-only static host such as GitHub Pages — no backen
 - **Automatic text cleanup** removes the Gutenberg header, license, transcriber notes, illustration markers, and page furniture.
 - **Chapter detection** for `CHAPTER`, `BOOK`, `PART`, `LETTER`, `ACT`, `SCENE`, and common front-matter headings.
 - **Typography-first reader** with a paper page, running head, page numbers, justified prose, poetry blocks, italics, and an optional drop cap.
-- **3D page-turn animation** or a continuous vertical scroll, switchable at any time without losing your place.
+- **3D page-turn animation** or a continuous vertical scroll, switchable at any time without losing your place. The outgoing page hinges on the spine and swings left to reveal the next page already waiting underneath.
 
 ### Customize the reading room
 

@@ -1208,6 +1208,7 @@ kbd {
   display: flex;
   min-height: 0;
   padding: 24px 26px;
+  overflow: hidden;
   background:
     radial-gradient(900px 500px at 50% 0%, var(--glow-1), transparent 70%),
     linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg-deep) 30%, transparent));
@@ -1226,8 +1227,8 @@ kbd {
   position: relative;
   flex: 1;
   min-height: 0;
-  perspective: 1800px;
-  perspective-origin: 50% 40%;
+  perspective: 3200px;
+  perspective-origin: 40% 50%;
 }
 .page-viewport[hidden] { display: none; }
 
@@ -1374,26 +1375,46 @@ kbd {
 .page-body b { font-weight: 700; }
 .page-body .word-hit { background: var(--accent-soft); border-radius: 2px; }
 
-/* 3D page turn animations */
-.page-sheet.is-leaving-next { animation: flipOutNext 0.62s var(--ease-out) forwards; }
-.page-sheet.is-entering-next { animation: flipInNext 0.62s var(--ease-out) both; }
-.page-sheet.is-leaving-prev { animation: flipOutPrev 0.62s var(--ease-out) forwards; }
-.page-sheet.is-entering-prev { animation: flipInPrev 0.62s var(--ease-out) both; }
-@keyframes flipOutNext {
-  0% { transform: rotateY(0deg); opacity: 1; }
-  100% { transform: rotateY(-105deg) translateX(-3%); opacity: 0; }
+/* 3D page turn — the outgoing sheet hinges on the spine and swings left,
+   revealing the next sheet already waiting underneath. */
+.page-sheet.is-under {
+  z-index: 1;
+  box-shadow:
+    0 18px 38px rgba(28, 22, 14, 0.14),
+    0 4px 12px rgba(28, 22, 14, 0.08),
+    inset 0 0 0 1px var(--reader-line);
 }
-@keyframes flipInNext {
-  0% { transform: rotateY(105deg) translateX(3%); opacity: 0; }
-  100% { transform: rotateY(0deg); opacity: 1; }
+.page-sheet.is-turning {
+  z-index: 3;
+  pointer-events: none;
+  transform-origin: left center;
+  box-shadow:
+    -26px 22px 60px rgba(28, 22, 14, 0.28),
+    0 12px 26px rgba(28, 22, 14, 0.14),
+    inset 0 0 0 1px var(--reader-line);
+  will-change: transform;
 }
-@keyframes flipOutPrev {
-  0% { transform: rotateY(0deg); opacity: 1; }
-  100% { transform: rotateY(105deg) translateX(3%); opacity: 0; }
+.page-sheet.is-turning-next {
+  animation: flipPageLeft 0.8s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
-@keyframes flipInPrev {
-  0% { transform: rotateY(-105deg) translateX(-3%); opacity: 0; }
-  100% { transform: rotateY(0deg); opacity: 1; }
+.page-sheet.is-turning-prev {
+  animation: flipPageInFromLeft 0.8s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+@keyframes flipPageLeft {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-96deg); }
+}
+@keyframes flipPageInFromLeft {
+  from { transform: rotateY(-96deg); }
+  to { transform: rotateY(0deg); }
+}
+[data-theme='midnight'] .page-sheet.is-under,
+[data-theme='oled'] .page-sheet.is-under {
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 0 0 1px var(--reader-line);
+}
+[data-theme='midnight'] .page-sheet.is-turning,
+[data-theme='oled'] .page-sheet.is-turning {
+  box-shadow: -26px 22px 60px rgba(0, 0, 0, 0.6), 0 12px 26px rgba(0, 0, 0, 0.35), inset 0 0 0 1px var(--reader-line);
 }
 
 /* Scroll mode */
@@ -2344,10 +2365,8 @@ input[type='range']::-moz-range-thumb {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .page-sheet.is-leaving-next,
-  .page-sheet.is-leaving-prev,
-  .page-sheet.is-entering-next,
-  .page-sheet.is-entering-prev { animation: none !important; }
+  .page-sheet.is-turning-next,
+  .page-sheet.is-turning-prev { animation: none !important; }
 }
 
 /* ---------- Print ---------- */
