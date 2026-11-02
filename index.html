@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fbf9f5">
-  <meta name="description" content="Gutenberg Reader Studio &amp; Vocabulary Lab — a calm, customizable reading room for 75,000+ public-domain classics, with bionic reading, RSVP speed reading, ambient sound, and a spaced-repetition word bank.">
+  <meta name="description" content="Gutenberg Reader Studio &amp; Vocabulary Lab — a calm, customizable reading room for 75,000+ public-domain classics, with bionic reading, RSVP speed reading, read-aloud narration, ambient sound, and a spaced-repetition word bank.">
   <meta name="color-scheme" content="light dark">
   <title>Gutenberg Reader Studio &amp; Vocabulary Lab</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -16,7 +16,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Gutenberg Reader Studio &amp; Vocabulary Lab" />
   <meta property="og:title" content="Gutenberg Reader Studio &amp; Vocabulary Lab — A Reading Room for the Public Domain" />
-  <meta property="og:description" content="Search 75,000+ classics, read with bionic or RSVP modes, and keep every unfamiliar word in a spaced-repetition vocabulary bank." />
+  <meta property="og:description" content="Search 75,000+ classics, read with bionic or RSVP modes, listen with read-aloud narration, and keep every unfamiliar word in a spaced-repetition vocabulary bank." />
   <meta property="og:url" content="https://somphol.github.io/gutenberg-reader-studio/" />
   <meta property="og:image" content="https://somphol.github.io/gutenberg-reader-studio/docs/social-card.png" />
   <meta property="og:image:type" content="image/png" />
@@ -25,7 +25,7 @@
   <meta property="og:image:alt" content="Gutenberg Reader Studio &amp; Vocabulary Lab — A Reading Room for the Public Domain" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Gutenberg Reader Studio &amp; Vocabulary Lab — A Reading Room for the Public Domain" />
-  <meta name="twitter:description" content="Search 75,000+ classics, read with bionic or RSVP modes, and keep every unfamiliar word in a spaced-repetition vocabulary bank." />
+  <meta name="twitter:description" content="Search 75,000+ classics, read with bionic or RSVP modes, listen with read-aloud narration, and keep every unfamiliar word in a spaced-repetition vocabulary bank." />
   <meta name="twitter:image" content="https://somphol.github.io/gutenberg-reader-studio/docs/social-card.png" />
   <meta name="twitter:image:alt" content="Gutenberg Reader Studio &amp; Vocabulary Lab — A Reading Room for the Public Domain" />
 
@@ -67,7 +67,7 @@
           <div class="hero-copy">
             <p class="eyebrow"><span class="eyebrow-dot"></span> Project Gutenberg · 75,000+ free classics</p>
             <h1 id="library-heading">Read the classics.<br><em>Keep the words.</em></h1>
-            <p class="hero-lede">A quiet, customizable reading room with bionic reading, RSVP speed reading, ambient study sound, and a spaced-repetition vocabulary lab. No account. No tracking. Your library stays on your device.</p>
+            <p class="hero-lede">A quiet, customizable reading room with bionic reading, RSVP speed reading, read-aloud narration, ambient study sound, and a spaced-repetition vocabulary lab. No account. No tracking. Your library stays on your device.</p>
 
             <form class="search-shell" id="search-form" role="search">
               <span class="search-icon" aria-hidden="true">
@@ -239,6 +239,7 @@
           <div class="reader-quick-actions">
             <button class="tool-btn" type="button" data-quick="bionic" id="quick-bionic" aria-pressed="false" title="Toggle bionic reading">Bion<span class="tool-dot"></span></button>
             <button class="tool-btn" type="button" data-quick="rsvp" title="Open RSVP speed reader">RSVP</button>
+            <button class="tool-btn" type="button" data-quick="tts" id="quick-tts" aria-pressed="false" title="Read this page aloud (L)">Listen</button>
             <button class="tool-btn" type="button" data-quick="teleprompter" id="quick-teleprompter" aria-pressed="false" title="Toggle auto-scroll teleprompter">Scroll</button>
             <button class="tool-btn" type="button" data-quick="sound" id="quick-sound" aria-pressed="false" title="Ambient study sound">Sound</button>
             <button class="tool-btn tool-btn-strong" type="button" data-open="settings" title="Reader settings">Aa</button>
@@ -290,6 +291,15 @@
           <span class="hud-value" id="teleprompter-speed-label">30</span>
           <button class="btn btn-small btn-ink" type="button" id="teleprompter-toggle">Pause</button>
           <button class="icon-btn icon-btn-small" type="button" id="teleprompter-close" aria-label="Close auto-scroll">×</button>
+        </div>
+
+        <div class="teleprompter-hud tts-hud" id="tts-hud" hidden>
+          <span class="hud-label"><span class="pulse-dot"></span> Read aloud</span>
+          <button class="icon-btn icon-btn-small" type="button" id="tts-prev" aria-label="Previous sentence" title="Previous sentence">‹</button>
+          <button class="btn btn-small btn-ink" type="button" id="tts-toggle" aria-label="Pause reading aloud">Pause</button>
+          <button class="icon-btn icon-btn-small" type="button" id="tts-next" aria-label="Next sentence" title="Next sentence">›</button>
+          <span class="hud-value" id="tts-position">—</span>
+          <button class="icon-btn icon-btn-small" type="button" id="tts-close" aria-label="Stop reading aloud" title="Stop reading aloud">×</button>
         </div>
       </section>
     </main>
@@ -386,6 +396,29 @@
           <button class="btn btn-ghost btn-small" type="button" id="open-rsvp">◎ Open RSVP reader</button>
           <button class="btn btn-ghost btn-small" type="button" id="open-teleprompter">↕ Start auto-scroll</button>
         </div>
+      </section>
+
+      <section class="setting-group">
+        <div class="setting-head"><h3>Read aloud</h3><span class="setting-hint">Listen</span></div>
+        <label class="range-row" for="tts-voice">
+          <span>Voice</span>
+          <select id="tts-voice" class="select select-compact"></select>
+        </label>
+        <p class="tiny-note" id="tts-voice-hint">Voices come from your device's speech engine.</p>
+        <label class="range-row" for="tts-rate-range">
+          <span>Speed</span>
+          <input id="tts-rate-range" type="range" min="0.5" max="2" step="0.1" value="1">
+          <output id="tts-rate-readout">1.0×</output>
+        </label>
+        <label class="switch-row">
+          <span><strong>Auto-turn pages</strong><small>Keep narrating into the next page</small></span>
+          <input type="checkbox" id="toggle-tts-autoadvance" checked>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+        <div class="setting-actions">
+          <button class="btn btn-ghost btn-small" type="button" id="start-tts">▶ Read this page aloud</button>
+        </div>
+        <p class="tiny-note">Speech is synthesized by your browser or device speech engine. The app does not record or upload it.</p>
       </section>
 
       <section class="setting-group">
@@ -593,6 +626,7 @@
           <ul class="help-list">
             <li><strong>Bionic reading</strong> bolds word prefixes for faster visual scanning.</li>
             <li><strong>RSVP</strong> flashes one word at a time at 150–500 wpm.</li>
+            <li><strong>Read aloud</strong> narrates the page sentence by sentence with a moving highlight. Pick a voice and speed in <strong>Aa</strong>; <strong>L</strong> starts or stops it.</li>
             <li><strong>Auto-scroll</strong> moves the page hands-free; adjust the speed in the floating HUD.</li>
             <li><strong>Ambient sound</strong> synthesizes rain, café, and fireplace audio in the browser.</li>
           </ul>
@@ -603,6 +637,8 @@
             <span><kbd>←</kbd><kbd>→</kbd></span><span>Turn page</span>
             <span><kbd>B</kbd></span><span>Bionic reading</span>
             <span><kbd>R</kbd></span><span>RSVP reader</span>
+            <span><kbd>L</kbd></span><span>Read aloud</span>
+            <span><kbd>Space</kbd></span><span>Pause reading aloud</span>
             <span><kbd>T</kbd></span><span>Auto-scroll</span>
             <span><kbd>S</kbd></span><span>Settings</span>
             <span><kbd>W</kbd></span><span>Word Bank</span>

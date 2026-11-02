@@ -3732,6 +3732,9 @@ function defaultState() {
       teleprompterSpeed: 30,
       ambient: 'off',
       ambientVolume: 0.45,
+      ttsRate: 1,
+      ttsVoice: '',
+      ttsAutoAdvance: true,
     },
     library: {
       activeBookId: null,
@@ -3762,6 +3765,9 @@ function sanitizeSettings(raw = {}) {
   settings.teleprompterSpeed = clamp(Number(raw.teleprompterSpeed) || base.teleprompterSpeed, 5, 120);
   settings.ambient = ['off', 'rain', 'cafe', 'fireplace'].includes(raw.ambient) ? raw.ambient : 'off';
   settings.ambientVolume = clamp(Number(raw.ambientVolume) || base.ambientVolume, 0, 1);
+  settings.ttsRate = clamp(Number(raw.ttsRate) || base.ttsRate, 0.5, 2);
+  settings.ttsVoice = typeof raw.ttsVoice === 'string' ? raw.ttsVoice.slice(0, 300) : '';
+  settings.ttsAutoAdvance = raw.ttsAutoAdvance === undefined ? base.ttsAutoAdvance : Boolean(raw.ttsAutoAdvance);
   return settings;
 }
 
@@ -3894,6 +3900,16 @@ const ui = {
   rsvp: { open: false, index: 0, playing: false, timer: null },
   review: { queue: [], index: 0, revealed: false },
   teleprompter: { active: false, paused: false, raf: null, last: 0 },
+  tts: {
+    active: false,
+    playing: false,
+    pageIndex: 0,
+    index: 0,
+    sentences: [],
+    utterance: null,
+    token: 0,
+    expectedPage: null,
+  },
   lastFocus: null,
   ignoreHash: false,
 };
@@ -3964,6 +3980,13 @@ function syncSettingsUI() {
     rsvpWpm.value = settings.rsvpWpm;
     setRangeFill(rsvpWpm);
   }
+  const ttsRate = $('#tts-rate-range');
+  if (ttsRate) {
+    ttsRate.value = settings.ttsRate;
+    setRangeFill(ttsRate);
+  }
+  const ttsVoice = $('#tts-voice');
+  if (ttsVoice) ttsVoice.value = settings.ttsVoice || '';
 
   setText('#font-size-readout', `${settings.fontSize}px`);
   setText('#line-height-readout', `${settings.lineHeight.toFixed(2)}×`);
@@ -3971,12 +3994,15 @@ function syncSettingsUI() {
   setText('#volume-readout', `${Math.round(settings.ambientVolume * 100)}%`);
   setText('#teleprompter-speed-label', String(settings.teleprompterSpeed));
   setText('#rsvp-wpm-readout', `${settings.rsvpWpm} wpm`);
+  setText('#tts-rate-readout', `${settings.ttsRate.toFixed(1)}×`);
   setText('#ambient-readout', settings.ambient === 'off' ? 'Off' : capitalize(settings.ambient));
 
   const togglePageTurn = $('#toggle-pageturn');
   if (togglePageTurn) togglePageTurn.checked = settings.pageTurn;
   const toggleBionic = $('#toggle-bionic');
   if (toggleBionic) toggleBionic.checked = settings.bionic;
+  const toggleTtsAdvance = $('#toggle-tts-autoadvance');
+  if (toggleTtsAdvance) toggleTtsAdvance.checked = settings.ttsAutoAdvance;
   updateBionicUI();
   updateModeUI();
   updateAmbientUI();
@@ -4022,7 +4048,7 @@ function setSetting(key, value, options = {}) {
   }
   if (options.rerender) renderCurrentView();
   if (key === 'bionic') renderCurrentView();
-  if (key === 'pageTurn') switchMode(value, { silent: true, percent: previousPercent });
+  if (key === 'pageTurn') switchMode(value, { percent: previousPercent });
   if (key === 'ambientVolume') Ambient.setVolume(value);
   if (key === 'rsvpWpm' && ui.rsvp.open && ui.rsvp.playing) restartRsvpTimer();
 }
@@ -5004,6 +5030,7 @@ function buildRsvpWords(pages) {
    -------------------------------------------------------------------------- */
 async function openBook(book, options = {}) {
   if (!book || ui.loadingBook) return;
+  stopTts();
   ui.loadingBook = true;
   const normalized = { ...book };
   showLoading('Opening your book', normalized.title || 'Preparing the text…');
@@ -5237,6 +5264,7 @@ function renderPage(index, direction = null) {
   if (body) body.scrollTop = 0;
   updateProgress();
   renderChapterSelect();
+  ttsOnPageRendered(safeIndex);
 }
 
 function blocksToHtml(blocks) {
@@ -5250,7 +5278,7 @@ function blockToHtml(block) {
     return `<h3>${escapeHtml(trimmed.replace(/\s+/g, ' '))}</h3>`;
   }
   if (isPoemBlock(trimmed)) {
-    const lines = trimmed.split('\n').map((line) => inlineTextHtml(line.replace(/--/g, '—')));
+    const lines = trimmed.split('\n').map((line) => `<span class="poem-line">${inlineTextHtml(line.replace(/--/g, '—'))}</span>`);
     return `<p class="poem">${lines.join('<br>')}</p>`;
   }
   const prose = trimmed.replace(/\s*\n\s*/g, ' ').replace(/\s{2,}/g, ' ').replace(/--/g, '—').trim();
@@ -5328,6 +5356,7 @@ function renderScroll(initial = false) {
       restore();
       ui.currentPage = pageAtPercent(percent);
       updateProgress();
+      ttsOnPageRendered(ui.currentPage);
     }, 100);
     setTimeout(restore, 450);
   });
@@ -5999,7 +6028,7 @@ function speakFallback(word) {
   const utterance = new SpeechSynthesisUtterance(word);
   utterance.lang = 'en-US';
   utterance.rate = 0.9;
-  window.speechSynthesis.cancel();
+  if (!ui.tts.active) window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 }
 
@@ -6224,6 +6253,7 @@ function openRsvp() {
     toast('Open a book first.', 'info');
     return;
   }
+  stopTts();
   closeWordPopup();
   closeDrawers();
   stopTeleprompter();
@@ -6363,6 +6393,7 @@ function toggleTeleprompter() {
     toast('Open a book first.', 'info');
     return;
   }
+  stopTts();
   if (state.settings.pageTurn) {
     switchMode(false);
   }
@@ -6418,7 +6449,521 @@ function toggleTeleprompterPause() {
 }
 
 /* --------------------------------------------------------------------------
-   14. Ambient Web Audio engine
+   14. Read aloud (TTS)
+   -------------------------------------------------------------------------- */
+const TTS_MAX_CHUNK = 220;
+
+const ttsSegmenter = (() => {
+  try {
+    return typeof Intl !== 'undefined' && Intl.Segmenter
+      ? new Intl.Segmenter('en', { granularity: 'sentence' })
+      : null;
+  } catch (error) {
+    return null;
+  }
+})();
+
+function ttsSupported() {
+  return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+}
+
+function ttsVoices() {
+  if (!ttsSupported()) return [];
+  try {
+    return window.speechSynthesis.getVoices() || [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function ttsSelectedVoice() {
+  const uri = state.settings.ttsVoice;
+  if (!uri) return null;
+  return ttsVoices().find((voice) => voice.voiceURI === uri) || null;
+}
+
+function populateTtsVoices() {
+  const select = $('#tts-voice');
+  if (!select) return;
+  const voices = ttsVoices()
+    .slice()
+    .sort((a, b) => {
+      const aEnglish = /^en/i.test(a.lang) ? 0 : 1;
+      const bEnglish = /^en/i.test(b.lang) ? 0 : 1;
+      return aEnglish - bEnglish || String(a.lang).localeCompare(String(b.lang)) || String(a.name).localeCompare(String(b.name));
+    });
+  const current = state.settings.ttsVoice || '';
+  select.replaceChildren();
+  const auto = document.createElement('option');
+  auto.value = '';
+  auto.textContent = 'System default';
+  select.appendChild(auto);
+  voices.forEach((voice) => {
+    const option = document.createElement('option');
+    option.value = voice.voiceURI;
+    option.textContent = `${voice.name} — ${voice.lang}${voice.default ? ' (default)' : ''}`;
+    select.appendChild(option);
+  });
+  select.value = voices.some((voice) => voice.voiceURI === current) ? current : '';
+  setText('#tts-voice-hint', voices.length ? `${voices.length} voices on this device` : 'No voices reported by this browser');
+}
+
+function splitIntoSentences(text) {
+  const source = String(text || '');
+  const ranges = [];
+  if (ttsSegmenter) {
+    for (const part of ttsSegmenter.segment(source)) {
+      ranges.push([part.index, part.index + part.segment.length]);
+    }
+  } else {
+    const regex = /[^.!?…]+(?:[.!?…]+["'”’)\]]*|$)/g;
+    let match;
+    while ((match = regex.exec(source)) !== null) {
+      if (!match[0]) break;
+      ranges.push([match.index, match.index + match[0].length]);
+    }
+  }
+  const segments = [];
+  ranges.forEach(([start, end]) => ttsPushSentences(segments, source, start, end));
+  return segments;
+}
+
+function ttsPushSentences(segments, source, rawStart, rawEnd) {
+  let start = rawStart;
+  let end = rawEnd;
+  while (start < end && /\s/.test(source[start])) start += 1;
+  while (end > start && /\s/.test(source[end - 1])) end -= 1;
+  if (end - start < 2) return;
+  if (end - start <= TTS_MAX_CHUNK) {
+    segments.push({ start, end, text: source.slice(start, end) });
+    return;
+  }
+  let cursor = start;
+  while (cursor < end) {
+    let limit = Math.min(end, cursor + TTS_MAX_CHUNK);
+    if (limit < end) {
+      const windowText = source.slice(cursor, limit);
+      const breakAt = Math.max(
+        windowText.lastIndexOf('. '),
+        windowText.lastIndexOf('; '),
+        windowText.lastIndexOf(', '),
+        windowText.lastIndexOf(' — '),
+        windowText.lastIndexOf(' ')
+      );
+      if (breakAt > TTS_MAX_CHUNK * 0.35) limit = cursor + breakAt + 1;
+    }
+    let next = limit;
+    while (next < end && /\s/.test(source[next])) next += 1;
+    let chunkEnd = limit;
+    while (chunkEnd > cursor && /\s/.test(source[chunkEnd - 1])) chunkEnd -= 1;
+    if (chunkEnd > cursor) {
+      segments.push({ start: cursor, end: chunkEnd, text: source.slice(cursor, chunkEnd) });
+    }
+    cursor = Math.max(next, cursor + 1);
+  }
+}
+
+function ttsTextNodes(element) {
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  let text = '';
+  let node = walker.nextNode();
+  while (node) {
+    nodes.push({ node, start: text.length });
+    text += node.data;
+    node = walker.nextNode();
+  }
+  return { nodes, text };
+}
+
+function ttsOffsetPoint(nodes, index) {
+  if (!nodes.length) return null;
+  for (let i = nodes.length - 1; i >= 0; i -= 1) {
+    const entry = nodes[i];
+    if (index >= entry.start) {
+      return { node: entry.node, offset: clamp(index - entry.start, 0, entry.node.data.length) };
+    }
+  }
+  return { node: nodes[0].node, offset: 0 };
+}
+
+function ttsWrapBlock(element) {
+  const { nodes, text } = ttsTextNodes(element);
+  const segments = splitIntoSentences(text);
+  if (!segments.length) return [];
+  const spans = [];
+  for (let i = segments.length - 1; i >= 0; i -= 1) {
+    const segment = segments[i];
+    const from = ttsOffsetPoint(nodes, segment.start);
+    const to = ttsOffsetPoint(nodes, segment.end);
+    if (!from || !to) continue;
+    const range = document.createRange();
+    range.setStart(from.node, from.offset);
+    range.setEnd(to.node, to.offset);
+    const span = document.createElement('span');
+    span.className = 'tts-sentence';
+    try {
+      span.appendChild(range.extractContents());
+      range.insertNode(span);
+    } catch (error) {
+      continue;
+    }
+    spans.unshift(span);
+  }
+  element.dataset.ttsWrapped = '1';
+  return spans;
+}
+
+function ttsPageContainer(pageIndex) {
+  if (state.settings.pageTurn) {
+    return $(`.page-body[data-page-index="${pageIndex}"]`);
+  }
+  return $(`.scroll-page[data-page-index="${pageIndex}"]`);
+}
+
+function ttsCollectElements(container) {
+  const elements = [];
+  Array.from(container.children).forEach((child) => {
+    if (child.classList.contains('chapter-heading')) {
+      const heading = child.querySelector('h2');
+      if (heading) elements.push(heading);
+      return;
+    }
+    if (child.classList.contains('page-foot')) return;
+    if (child.classList.contains('poem')) {
+      const lines = Array.from(child.querySelectorAll('.poem-line'));
+      if (lines.length) {
+        elements.push(...lines);
+        return;
+      }
+    }
+    if (child.matches('p, h3, blockquote, li')) elements.push(child);
+  });
+  return elements;
+}
+
+function ttsLoadPage(pageIndex) {
+  const container = ttsPageContainer(pageIndex);
+  if (!container) {
+    ui.tts.sentences = [];
+    return false;
+  }
+  const sentences = [];
+  ttsCollectElements(container).forEach((element) => {
+    const spans = element.dataset.ttsWrapped === '1'
+      ? Array.from(element.querySelectorAll(':scope > .tts-sentence'))
+      : ttsWrapBlock(element);
+    spans.forEach((span) => {
+      const text = span.textContent.replace(/\s+/g, ' ').trim();
+      if (text) sentences.push({ span, text });
+    });
+  });
+  ui.tts.pageIndex = pageIndex;
+  ui.tts.sentences = sentences;
+  return sentences.length > 0;
+}
+
+function ttsFirstVisibleIndex(sentences) {
+  if (state.settings.pageTurn) return 0;
+  const viewport = $('#scroll-viewport');
+  if (!viewport) return 0;
+  const top = viewport.getBoundingClientRect().top + 12;
+  const index = sentences.findIndex((entry) => entry.span.getBoundingClientRect().bottom > top);
+  return index < 0 ? 0 : index;
+}
+
+function startTts() {
+  if (!ttsSupported()) {
+    toast('Read aloud is not available in this browser.', 'info');
+    return;
+  }
+  if (!ui.bookData) {
+    toast('Open a book first.', 'info');
+    return;
+  }
+  closeRsvp();
+  stopTeleprompter();
+  closeWordPopup();
+  closeDrawers();
+  if (ui.view !== 'reader') showReader();
+
+  ui.tts.active = true;
+  ui.tts.playing = true;
+  ui.tts.token += 1;
+  ui.tts.expectedPage = null;
+  ui.tts.index = 0;
+  const hud = $('#tts-hud');
+  if (hud) hud.hidden = false;
+  const quick = $('#quick-tts');
+  if (quick) quick.setAttribute('aria-pressed', 'true');
+
+  if (!ttsLoadPage(ui.currentPage)) {
+    stopTts();
+    toast('There is no readable text on this page.', 'info');
+    return;
+  }
+  ui.tts.index = ttsFirstVisibleIndex(ui.tts.sentences);
+  ttsSpeakCurrent();
+}
+
+function stopTts(options = {}) {
+  const wasActive = ui.tts.active;
+  ui.tts.active = false;
+  ui.tts.playing = false;
+  ui.tts.utterance = null;
+  ui.tts.expectedPage = null;
+  ui.tts.token += 1;
+  if (ttsSupported()) window.speechSynthesis.cancel();
+  ttsClearHighlight();
+  const hud = $('#tts-hud');
+  if (hud) hud.hidden = true;
+  const quick = $('#quick-tts');
+  if (quick) quick.setAttribute('aria-pressed', 'false');
+  ttsSyncHud();
+  if (wasActive && options.message) toast(options.message, 'info');
+}
+
+function toggleTts() {
+  if (ui.tts.active) stopTts();
+  else startTts();
+}
+
+function toggleTtsPause() {
+  if (!ui.tts.active) return;
+  if (ui.tts.playing) {
+    ui.tts.playing = false;
+    if (ttsSupported()) window.speechSynthesis.pause();
+  } else {
+    ui.tts.playing = true;
+    if (ttsSupported() && window.speechSynthesis.paused) window.speechSynthesis.resume();
+    else ttsSpeakCurrent();
+  }
+  ttsSyncHud();
+}
+
+function ttsSpeakCurrent() {
+  if (!ui.tts.active) return;
+  if (!ttsSupported()) {
+    stopTts();
+    return;
+  }
+  if (!ui.tts.sentences.length) {
+    if (!ttsAdvancePage()) ttsReachedEnd();
+    return;
+  }
+  if (ui.tts.index < 0) ui.tts.index = 0;
+  const entry = ui.tts.sentences[ui.tts.index];
+  if (!entry || !entry.span.isConnected) {
+    const wanted = ui.tts.index;
+    if (!ttsLoadPage(ui.tts.pageIndex)) {
+      ttsReachedEnd();
+      return;
+    }
+    ui.tts.index = clamp(wanted, 0, Math.max(0, ui.tts.sentences.length - 1));
+    return ttsSpeakCurrent();
+  }
+
+  const token = ++ui.tts.token;
+  const utterance = new SpeechSynthesisUtterance(entry.text);
+  const voice = ttsSelectedVoice();
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang || 'en-US';
+  } else {
+    utterance.lang = 'en-US';
+  }
+  utterance.rate = clamp(Number(state.settings.ttsRate) || 1, 0.5, 2);
+  utterance.pitch = 1;
+  utterance.onboundary = (event) => {
+    if (token !== ui.tts.token) return;
+    if (!event.name || event.name === 'word') ttsHighlightWord(entry.span, event.charIndex || 0);
+  };
+  utterance.onend = () => {
+    if (token !== ui.tts.token || !ui.tts.active || !ui.tts.playing) return;
+    ttsStep(1);
+  };
+  utterance.onerror = (event) => {
+    if (token !== ui.tts.token) return;
+    if (event.error === 'interrupted' || event.error === 'canceled') return;
+    console.warn('Read aloud error:', event.error);
+    ui.tts.playing = false;
+    ttsSyncHud();
+    toast('Read aloud paused. Try another voice or press Resume.', 'info');
+  };
+  ui.tts.utterance = utterance;
+  ttsHighlight(ui.tts.index);
+  ttsSyncHud();
+  try {
+    window.speechSynthesis.speak(utterance);
+  } catch (error) {
+    console.warn('Could not start speech:', error);
+    ui.tts.playing = false;
+    ttsSyncHud();
+    toast('Read aloud could not start in this browser.', 'info');
+  }
+}
+
+function ttsStep(delta) {
+  if (!ui.tts.active) return;
+  const next = ui.tts.index + delta;
+  if (next >= ui.tts.sentences.length) {
+    if (!ttsAdvancePage()) ttsReachedEnd();
+    return;
+  }
+  if (next < 0) {
+    if (ui.tts.pageIndex > 0) {
+      ttsGoToPage(ui.tts.pageIndex - 1, 'prev', 'last');
+      return;
+    }
+    ui.tts.index = 0;
+  } else {
+    ui.tts.index = next;
+  }
+  ui.tts.playing = true;
+  ttsSpeakCurrent();
+}
+
+function ttsGoToPage(pageIndex, direction, startIndex) {
+  if (!ui.bookData) return false;
+  if (pageIndex < 0 || pageIndex >= ui.bookData.pages.length) return false;
+  ui.tts.expectedPage = state.settings.pageTurn ? pageIndex : null;
+  goToPage(pageIndex, direction);
+  if (!ttsLoadPage(pageIndex)) return false;
+  const last = startIndex === 'last';
+  ui.tts.index = clamp(last ? ui.tts.sentences.length - 1 : Number(startIndex) || 0, 0, Math.max(0, ui.tts.sentences.length - 1));
+  ui.tts.playing = true;
+  ttsSpeakCurrent();
+  return true;
+}
+
+function ttsAdvancePage() {
+  if (!ui.bookData || !state.settings.ttsAutoAdvance) return false;
+  return ttsGoToPage(ui.tts.pageIndex + 1, 'next', 0);
+}
+
+function ttsReachedEnd() {
+  const finishedBook = !ui.bookData || ui.tts.pageIndex >= ui.bookData.pages.length - 1;
+  stopTts();
+  toast(
+    finishedBook || state.settings.ttsAutoAdvance
+      ? 'You reached the end of the book.'
+      : 'Page finished. Turn the page to keep listening.',
+    'info'
+  );
+}
+
+function ttsOnPageRendered(pageIndex) {
+  if (!ui.tts.active) return;
+  if (ui.tts.expectedPage === pageIndex) {
+    ui.tts.expectedPage = null;
+    return;
+  }
+  const samePage = ui.tts.pageIndex === pageIndex;
+  const previousIndex = ui.tts.index;
+  if (!ttsLoadPage(pageIndex)) {
+    ttsSyncHud();
+    return;
+  }
+  ui.tts.index = clamp(samePage ? previousIndex : 0, 0, Math.max(0, ui.tts.sentences.length - 1));
+  if (ui.tts.playing) ttsSpeakCurrent();
+  else {
+    ttsHighlight(ui.tts.index);
+    ttsSyncHud();
+  }
+}
+
+function ttsSyncHud() {
+  const total = ui.tts.sentences.length;
+  const pages = ui.bookData?.pages?.length || 1;
+  setText('#tts-position', total ? `${ui.tts.index + 1} / ${total}` : '—');
+  const button = $('#tts-toggle');
+  if (button) {
+    button.textContent = ui.tts.playing ? 'Pause' : 'Resume';
+    button.setAttribute('aria-label', ui.tts.playing ? 'Pause reading aloud' : 'Resume reading aloud');
+  }
+  const prev = $('#tts-prev');
+  if (prev) prev.disabled = !total || (ui.tts.index <= 0 && ui.tts.pageIndex <= 0);
+  const next = $('#tts-next');
+  if (next) next.disabled = !total || (ui.tts.index >= total - 1 && ui.tts.pageIndex >= pages - 1);
+}
+
+function ttsClearHighlight() {
+  $$('.tts-sentence.is-speaking').forEach((span) => span.classList.remove('is-speaking'));
+  if (window.CSS?.highlights) {
+    try {
+      CSS.highlights.delete('tts-word');
+    } catch (error) {
+      // Older implementations may not expose delete.
+    }
+  }
+}
+
+function ttsHighlight(index) {
+  ttsClearHighlight();
+  const entry = ui.tts.sentences[index];
+  if (!entry) return;
+  entry.span.classList.add('is-speaking');
+  ttsScrollIntoView(entry.span);
+  ttsSyncHud();
+}
+
+function ttsHighlightWord(span, charIndex) {
+  if (!window.CSS?.highlights || typeof Highlight !== 'function') return;
+  const { nodes, text } = ttsTextNodes(span);
+  if (!nodes.length || !text) return;
+  const isWordChar = (char) => /[\p{L}\p{N}'’\-]/u.test(char);
+  let index = clamp(charIndex, 0, text.length - 1);
+  while (index < text.length && !isWordChar(text[index])) index += 1;
+  if (index >= text.length) return;
+  let start = index;
+  while (start > 0 && isWordChar(text[start - 1])) start -= 1;
+  let end = index;
+  while (end < text.length && isWordChar(text[end])) end += 1;
+  if (end <= start) return;
+  const from = ttsOffsetPoint(nodes, start);
+  const to = ttsOffsetPoint(nodes, end);
+  if (!from || !to) return;
+  const range = document.createRange();
+  range.setStart(from.node, from.offset);
+  range.setEnd(to.node, to.offset);
+  try {
+    CSS.highlights.set('tts-word', new Highlight(range));
+  } catch (error) {
+    // Highlighting is a progressive enhancement.
+  }
+}
+
+function ttsScrollIntoView(span) {
+  const pageMode = state.settings.pageTurn;
+  const scroller = pageMode ? span.closest('.page-body') : $('#scroll-viewport');
+  if (!scroller) return;
+  const rect = span.getBoundingClientRect();
+  const box = scroller.getBoundingClientRect();
+  const margin = 48;
+  if (rect.top < box.top + margin || rect.bottom > box.bottom - margin) {
+    const delta = rect.top - box.top - box.height * 0.35;
+    scroller.scrollTo({
+      top: Math.max(0, scroller.scrollTop + delta),
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    });
+  }
+}
+
+function ttsOnSurfaceClick(event) {
+  if (!ui.tts.active || event.detail > 1) return;
+  if (window.getSelection()?.toString().trim()) return;
+  const span = event.target.closest?.('.tts-sentence');
+  if (!span) return;
+  const index = ui.tts.sentences.findIndex((entry) => entry.span === span);
+  if (index < 0) return;
+  ui.tts.index = index;
+  ui.tts.playing = true;
+  ttsSpeakCurrent();
+}
+
+
+/* --------------------------------------------------------------------------
+   15. Ambient Web Audio engine
    -------------------------------------------------------------------------- */
 const Ambient = {
   ctx: null,
@@ -6623,7 +7168,7 @@ async function setAmbient(type) {
 }
 
 /* --------------------------------------------------------------------------
-   15. Drawers, modals, toasts, loading
+   16. Drawers, modals, toasts, loading
    -------------------------------------------------------------------------- */
 function openDrawer(name) {
   const drawer = $(`#${name}-drawer`);
@@ -6638,7 +7183,10 @@ function openDrawer(name) {
   document.body.classList.add('is-locked');
   if (name === 'wordbank') renderWordBank();
   if (name === 'notes') renderNotes();
-  if (name === 'settings') syncSettingsUI();
+  if (name === 'settings') {
+    syncSettingsUI();
+    populateTtsVoices();
+  }
   const close = drawer.querySelector('[data-close-drawer]');
   close?.focus();
 }
@@ -6732,7 +7280,7 @@ function hideLoading() {
 }
 
 /* --------------------------------------------------------------------------
-   16. View routing
+   17. View routing
    -------------------------------------------------------------------------- */
 function setHash(hash, replace = false) {
   if (ui.ignoreHash) return;
@@ -6745,6 +7293,7 @@ function setHash(hash, replace = false) {
 }
 
 function showLibrary(options = {}) {
+  stopTts();
   ui.view = 'library';
   const library = $('#library-view');
   const reader = $('#reader-view');
@@ -6827,7 +7376,7 @@ function handleRoute() {
 }
 
 /* --------------------------------------------------------------------------
-   17. Import / export
+   18. Import / export
    -------------------------------------------------------------------------- */
 function exportState() {
   try {
@@ -6874,6 +7423,7 @@ async function importState(file) {
     if (hasData && currentHasData && !window.confirm('Replace the current reading library, notes, and Word Bank with this file?')) return;
     state = mergeState(raw);
     saveStateNow();
+    stopTts();
     ui.currentBook = null;
     ui.bookData = null;
     ui.currentPage = 0;
@@ -6896,7 +7446,7 @@ async function importState(file) {
 }
 
 /* --------------------------------------------------------------------------
-   18. Build provenance
+   19. Build provenance
    -------------------------------------------------------------------------- */
 async function loadBuildState() {
   try {
@@ -6924,7 +7474,7 @@ function openBuildState() {
 }
 
 /* --------------------------------------------------------------------------
-   19. Keyboard shortcuts & event wiring
+   20. Keyboard shortcuts & event wiring
    -------------------------------------------------------------------------- */
 function isTypingTarget(target) {
   if (!target) return false;
@@ -7010,6 +7560,7 @@ function setupEvents() {
       const action = button.dataset.quick;
       if (action === 'bionic') setSetting('bionic', !state.settings.bionic);
       if (action === 'rsvp') openRsvp();
+      if (action === 'tts') toggleTts();
       if (action === 'teleprompter') toggleTeleprompter();
       if (action === 'sound') {
         if (state.settings.ambient === 'off') setAmbient('rain');
@@ -7077,6 +7628,14 @@ function setupEvents() {
   $('#toggle-bionic')?.addEventListener('change', (event) => setSetting('bionic', event.target.checked));
   $('#open-rsvp')?.addEventListener('click', openRsvp);
   $('#open-teleprompter')?.addEventListener('click', toggleTeleprompter);
+  $('#tts-rate-range')?.addEventListener('input', (event) => {
+    setText('#tts-rate-readout', `${Number(event.target.value).toFixed(1)}×`);
+    setRangeFill(event.target);
+    setSetting('ttsRate', Number(event.target.value));
+  });
+  $('#tts-voice')?.addEventListener('change', (event) => setSetting('ttsVoice', event.target.value));
+  $('#toggle-tts-autoadvance')?.addEventListener('change', (event) => setSetting('ttsAutoAdvance', event.target.checked));
+  $('#start-tts')?.addEventListener('click', startTts);
   $('#sound-grid')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-sound]');
     if (button) setAmbient(button.dataset.sound);
@@ -7090,6 +7649,7 @@ function setupEvents() {
   $('#import-file')?.addEventListener('change', (event) => importState(event.target.files?.[0]));
   $('#btn-reset-data')?.addEventListener('click', () => {
     if (!window.confirm('Delete every saved book, note, word, and setting from this browser? Export first if you want a backup.')) return;
+    stopTts();
     state = defaultState();
     ui.currentBook = null;
     ui.bookData = null;
@@ -7197,6 +7757,13 @@ function setupEvents() {
   $('#teleprompter-toggle')?.addEventListener('click', toggleTeleprompterPause);
   $('#teleprompter-close')?.addEventListener('click', stopTeleprompter);
 
+  // Read aloud
+  $('#tts-toggle')?.addEventListener('click', toggleTtsPause);
+  $('#tts-prev')?.addEventListener('click', () => ttsStep(-1));
+  $('#tts-next')?.addEventListener('click', () => ttsStep(1));
+  $('#tts-close')?.addEventListener('click', () => stopTts());
+  $('#reading-surface')?.addEventListener('click', ttsOnSurfaceClick);
+
   // Keyboard
   document.addEventListener('keydown', handleKeydown);
 
@@ -7240,6 +7807,10 @@ function handleKeydown(event) {
       stopTeleprompter();
       return;
     }
+    if (ui.tts.active) {
+      stopTts();
+      return;
+    }
   }
 
   if (ui.rsvp.open) {
@@ -7267,6 +7838,11 @@ function handleKeydown(event) {
       event.preventDefault();
       exportState();
     }
+    return;
+  }
+  if (ui.tts.active && event.code === 'Space' && !event.target.closest?.('button, a, input, select, textarea, [role="button"]')) {
+    event.preventDefault();
+    toggleTtsPause();
     return;
   }
 
@@ -7307,6 +7883,11 @@ function handleKeydown(event) {
     openRsvp();
     return;
   }
+  if (key === 'l') {
+    event.preventDefault();
+    toggleTts();
+    return;
+  }
   if (key === 't') {
     event.preventDefault();
     toggleTeleprompter();
@@ -7324,7 +7905,7 @@ function handleKeydown(event) {
 }
 
 /* --------------------------------------------------------------------------
-   20. Initialisation
+   21. Initialisation
    -------------------------------------------------------------------------- */
 function init() {
   // Ambient audio cannot auto-start without a gesture. Keep the preference
@@ -7336,6 +7917,10 @@ function init() {
   applySettings();
   setupEvents();
   setupReaderSelection();
+  populateTtsVoices();
+  if (ttsSupported() && typeof window.speechSynthesis.addEventListener === 'function') {
+    window.speechSynthesis.addEventListener('voiceschanged', populateTtsVoices);
+  }
   renderCurated();
   renderCatalogShelf();
   renderWordBank();

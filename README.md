@@ -6,7 +6,7 @@
 
 **A Reading Room for the Public Domain**
 
-Search 75,000+ classics, read with bionic or RSVP modes, and keep every unfamiliar word in a spaced-repetition vocabulary bank.
+Search 75,000+ classics, read with bionic or RSVP modes, listen with browser-native read-aloud narration, and keep every unfamiliar word in a spaced-repetition vocabulary bank.
 
 [![Live demo](https://img.shields.io/badge/live_demo-online-d4a373?style=flat-square)](https://somphol.github.io/gutenberg-reader-studio/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-d4a373?style=flat-square)](LICENSE)
@@ -40,6 +40,7 @@ Search 75,000+ classics, read with bionic or RSVP modes, and keep every unfamili
 | Font size | 14px – 32px |
 | Line height | 1.2× – 2.2× |
 | Definition card text | 12px – 20px |
+| Read-aloud voice & speed | Any installed system voice, 0.5× – 2× |
 
 All settings apply live and are remembered in `localStorage`.
 
@@ -47,6 +48,7 @@ All settings apply live and are remembered in `localStorage`.
 
 - **Bionic reading** — bolds the first ~42% of letters in every word to give the eye an anchor. Double-clicking a bionic word still looks up the whole word, not the bold fragment.
 - **RSVP speed reader** — one word at a time on a fixed focal point, 150–500 words per minute, with punctuation pauses, keyboard stepping, and a progress bar.
+- **Read aloud (TTS)** — narrates the page sentence by sentence with a moving highlight, play/pause, sentence stepping, and optional automatic page turns. Choose a system voice and speed in settings; speech is produced by the browser's or device's speech engine.
 - **Teleprompter auto-scroll** — hands-free scrolling at an adjustable speed. Scrolling manually pauses it.
 - **Ambient soundscapes** — rain, café murmur, and fireplace crackle synthesized live with the Web Audio API. No audio files, no downloads.
 
@@ -143,6 +145,7 @@ Each saved word stores `status`, `reviewCount`, `intervalIndex`, `lastReviewed`,
 | `←` / `→` | Previous / next page (or scroll by a screen) |
 | `B` | Toggle bionic reading |
 | `R` | Open the RSVP speed reader |
+| `L` | Start / stop reading aloud |
 | `T` | Toggle teleprompter auto-scroll |
 | `S` | Open reader settings |
 | `W` | Open the Word Bank |
@@ -150,7 +153,7 @@ Each saved word stores `status`, `reviewCount`, `intervalIndex`, `lastReviewed`,
 | `/` | Focus library search |
 | `?` | Open the help guide |
 | `Esc` | Close the current panel, popup, or overlay |
-| `Space` | Play / pause in the RSVP reader |
+| `Space` | Play / pause read-aloud narration, or play / pause RSVP |
 | `Ctrl/Cmd + S` | Export the reading library |
 
 ## Data model
@@ -170,7 +173,10 @@ The exported `gutenberg_studio_state.json` contains:
     "rsvpWpm": 260,
     "teleprompterSpeed": 30,
     "ambient": "off",
-    "ambientVolume": 0.45
+    "ambientVolume": 0.45,
+    "ttsRate": 1,
+    "ttsVoice": "",
+    "ttsAutoAdvance": true
   },
   "library": {
     "activeBookId": 1342,
@@ -191,7 +197,7 @@ Book text itself is not stored — it is re-fetched and re-paginated when you re
 - Reading positions, notes, and vocabulary live in `localStorage` and in files you explicitly export.
 - Network requests are limited to Project Gutenberg/GITenberg and Standard Ebooks text, Gutendex metadata, the Free Dictionary API, and optional Google Fonts / jsDelivr font files.
 - Full book text opened in the reader is cached locally in IndexedDB so it can reopen without another download.
-- Speech audio is played by the browser; the app does not record or upload audio.
+- Speech audio is played by the browser; the app does not record or upload audio or book text. Read-aloud narration uses your browser's or device's speech engine.
 
 ## Browser support
 
@@ -200,7 +206,8 @@ Book text itself is not stored — it is re-fetched and re-paginated when you re
 | Reader, themes, SRS, notes, import/export | All modern browsers |
 | 3D page-turn and Web Audio ambience | Chrome, Edge, Safari, Firefox |
 | Dictionary pronunciation audio | Any browser with `Audio` |
-| Speech fallback | Any browser with `speechSynthesis` |
+| Read-aloud narration (TTS) | Any browser with `speechSynthesis` and installed voices |
+| Word-highlight karaoke while listening | Chrome, Edge, Safari (CSS Custom Highlight API); sentence highlighting works everywhere |
 
 On screens 720px wide or narrower the reader starts in continuous scroll mode, which is more comfortable on a phone. You can still switch to 3D page-turn at any time.
 

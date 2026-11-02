@@ -1405,6 +1405,20 @@ kbd {
 .page-body b { font-weight: 700; }
 .page-body .word-hit { background: var(--accent-soft); border-radius: 2px; }
 
+/* Read aloud: sentence-level highlight plus optional word highlight through
+   the CSS Custom Highlight API. Spans are only wrapped while listening. */
+.tts-sentence.is-speaking {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background 0.2s var(--ease-out);
+}
+::highlight(tts-word) {
+  background: color-mix(in srgb, var(--accent) 36%, transparent);
+  color: var(--accent-strong);
+}
+
 /* 3D page turn — the outgoing sheet hinges on the spine and swings left,
    revealing the next sheet already waiting underneath. */
 .page-sheet.is-under {
@@ -1541,6 +1555,8 @@ kbd {
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
 .teleprompter-hud input[type='range'] { width: 120px; }
 .hud-value { font-size: 10px; font-weight: 600; color: var(--ink-soft); min-width: 20px; text-align: right; font-variant-numeric: tabular-nums; }
+.tts-hud .icon-btn:disabled { opacity: 0.28; cursor: not-allowed; transform: none; background: transparent; }
+.tts-hud .hud-value { min-width: 46px; }
 
 /* ---------- Drawers ---------- */
 .drawer-backdrop {
@@ -1705,6 +1721,7 @@ kbd {
 }
 .range-row > span:first-child { width: 72px; flex-shrink: 0; }
 .range-row input[type='range'] { flex: 1; }
+.range-row .select { flex: 1; min-width: 0; }
 .range-row output { min-width: 40px; text-align: right; font-size: 10px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
 .range-scale { display: flex; justify-content: space-between; padding-left: 84px; font-size: 8px; color: var(--faint); letter-spacing: 0.06em; }
 
