@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   sentence controls, adjustable voice speed, system voice selection, click-to-jump
   sentences, and optional automatic page turns. Starts from the **Listen** toolbar
   button, the settings drawer, or the `L` shortcut.
+- The read-aloud voice picker now lists every voice exposed by the platform, grouped
+  by accent and language with on-device/online badges, inferred female/male labels,
+  a novelty/effects group, a voice preview button, a refresh control, and automatic
+  preference for an on-device voice when no explicit voice is chosen.
 - Fix: switching **3D page-turn** in settings now renders the selected reading mode
   immediately.
 - Complete repository documentation: contributing guide, code of conduct, security

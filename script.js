@@ -6452,6 +6452,45 @@ function toggleTeleprompterPause() {
    14. Read aloud (TTS)
    -------------------------------------------------------------------------- */
 const TTS_MAX_CHUNK = 220;
+const TTS_PREVIEW_TEXT = 'The quick brown fox jumps over the lazy dog.';
+const TTS_FEMALE_NAMES = new Set([
+  'samantha', 'karen', 'moira', 'tessa', 'zira', 'hazel', 'susan', 'catherine', 'linda', 'heera',
+  'aria', 'jenny', 'michelle', 'sonia', 'libby', 'natasha', 'clara', 'emily', 'joanna', 'salli',
+  'kendra', 'kimberly', 'ivy', 'amy', 'emma', 'nicole', 'olivia', 'sophie', 'alice', 'amelie',
+  'alva', 'flo', 'sandy', 'shelley', 'grandma', 'molly', 'maisie', 'neerja', 'swara', 'ananya',
+  'kavya', 'priya', 'kalpana', 'lekha', 'monica', 'paulina', 'milena', 'vicki', 'mariska', 'yuna',
+  'mei', 'ting', 'linh', 'lan', 'hoda', 'salma', 'zeina', 'laila', 'serena', 'kate', 'stephanie',
+  'allison', 'ava', 'nicky', 'zoe', 'isabel', 'ashley', 'jane', 'nancy', 'sara', 'laura',
+]);
+const TTS_MALE_NAMES = new Set([
+  'david', 'mark', 'george', 'james', 'ravi', 'richard', 'daniel', 'alex', 'fred', 'albert',
+  'guy', 'ryan', 'william', 'liam', 'prabhat', 'connor', 'thomas', 'oliver', 'arthur', 'tom',
+  'aaron', 'gordon', 'lee', 'junior', 'ralph', 'rishi', 'eddy', 'rocko', 'reed', 'grandpa',
+  'jorge', 'diego', 'juan', 'carlos', 'xander', 'magnus', 'klaus', 'stefan', 'milos', 'yannick',
+  'hans', 'otto', 'jamal', 'tarik', 'majed', 'hamed', 'naayf', 'kangkang', 'yunxi', 'davis',
+  'jason', 'tony', 'brandon', 'christopher', 'eric', 'roger', 'steffan', 'peter', 'john',
+]);
+const TTS_NOVELTY_NAMES = new Set([
+  'bad news', 'bahh', 'bells', 'boing', 'bubbles', 'cellos', 'good news', 'jester', 'organ',
+  'superstar', 'trinoids', 'whisper', 'wobble', 'zarvox',
+]);
+
+const ttsLanguageNames = (() => {
+  try {
+    return new Intl.DisplayNames(['en'], { type: 'language' });
+  } catch (error) {
+    return null;
+  }
+})();
+const ttsRegionNames = (() => {
+  try {
+    return new Intl.DisplayNames(['en'], { type: 'region' });
+  } catch (error) {
+    return null;
+  }
+})();
+
+let ttsPreviewToken = 0;
 
 const ttsSegmenter = (() => {
   try {
@@ -6476,36 +6515,184 @@ function ttsVoices() {
   }
 }
 
+function ttsIsLocal(voice) {
+  return voice.localService !== false;
+}
+
+function ttsVoiceNameKey(name) {
+  return String(name || '')
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function ttsInferGender(voice) {
+  const name = String(voice?.name || '');
+  if (/\bfemale\b/i.test(name)) return 'female';
+  if (/\bmale\b/i.test(name)) return 'male';
+  const words = ttsVoiceNameKey(name).split(' ').filter(Boolean);
+  for (const word of words) {
+    if (TTS_FEMALE_NAMES.has(word)) return 'female';
+    if (TTS_MALE_NAMES.has(word)) return 'male';
+  }
+  return '';
+}
+
+function ttsIsNovelty(voice) {
+  return TTS_NOVELTY_NAMES.has(ttsVoiceNameKey(voice?.name || ''));
+}
+
+function ttsDisplayName(displayNames, code, fallback) {
+  try {
+    return displayNames?.of(code) || fallback;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function ttsLanguageLabel(lang) {
+  const tag = String(lang || '').replace(/_/g, '-');
+  const parts = tag.split('-').filter(Boolean);
+  const language = parts[0] || '';
+  const region = parts.slice(1).find((part) => /^[A-Za-z]{2}$/.test(part)) || '';
+  const languageName = language
+    ? ttsDisplayName(ttsLanguageNames, language, language.toUpperCase())
+    : 'Other';
+  const regionName = region
+    ? ttsDisplayName(ttsRegionNames, region.toUpperCase(), region.toUpperCase())
+    : '';
+  return regionName ? `${languageName} (${regionName})` : languageName;
+}
+
+function ttsVoiceOptionText(voice) {
+  const gender = ttsInferGender(voice);
+  const explicitGender = /\b(female|male)\b/i.test(voice.name);
+  const details = [];
+  if (gender && !explicitGender) details.push(gender);
+  details.push(ttsIsLocal(voice) ? 'on this device' : 'online');
+  return `${voice.name} — ${details.join(' · ')}`;
+}
+
+function compareTtsVoices(a, b) {
+  return Number(!a.default) - Number(!b.default)
+    || Number(!ttsIsLocal(a)) - Number(!ttsIsLocal(b))
+    || String(a.name).localeCompare(String(b.name));
+}
+
+function ttsAutoVoice() {
+  const voices = ttsVoices();
+  if (!voices.length) return null;
+  const usable = voices.filter((voice) => !ttsIsNovelty(voice));
+  const pool = usable.length ? usable : voices;
+  const browserDefault = pool.find((voice) => voice.default);
+  if (browserDefault && ttsIsLocal(browserDefault)) return browserDefault;
+  const localEnglish = pool.find((voice) => ttsIsLocal(voice) && /^en(-|$)/i.test(voice.lang));
+  if (localEnglish) return localEnglish;
+  const anyLocal = pool.find(ttsIsLocal);
+  return anyLocal || browserDefault || pool[0];
+}
+
 function ttsSelectedVoice() {
-  const uri = state.settings.ttsVoice;
-  if (!uri) return null;
-  return ttsVoices().find((voice) => voice.voiceURI === uri) || null;
+  const voices = ttsVoices();
+  if (!voices.length) return null;
+  const saved = state.settings.ttsVoice
+    ? voices.find((voice) => voice.voiceURI === state.settings.ttsVoice)
+    : null;
+  return saved || ttsAutoVoice();
 }
 
 function populateTtsVoices() {
   const select = $('#tts-voice');
   if (!select) return;
-  const voices = ttsVoices()
-    .slice()
-    .sort((a, b) => {
-      const aEnglish = /^en/i.test(a.lang) ? 0 : 1;
-      const bEnglish = /^en/i.test(b.lang) ? 0 : 1;
-      return aEnglish - bEnglish || String(a.lang).localeCompare(String(b.lang)) || String(a.name).localeCompare(String(b.name));
-    });
-  const current = state.settings.ttsVoice || '';
+  const voices = ttsVoices();
+  const savedVoice = state.settings.ttsVoice || '';
+  const groups = new Map();
+  const novelty = [];
+
+  voices.forEach((voice) => {
+    if (ttsIsNovelty(voice)) {
+      novelty.push(voice);
+      return;
+    }
+    const key = String(voice.lang || 'other');
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(voice);
+  });
+
   select.replaceChildren();
   const auto = document.createElement('option');
   auto.value = '';
-  auto.textContent = 'System default';
+  auto.textContent = 'Automatic — prefer an on-device voice';
   select.appendChild(auto);
-  voices.forEach((voice) => {
-    const option = document.createElement('option');
-    option.value = voice.voiceURI;
-    option.textContent = `${voice.name} — ${voice.lang}${voice.default ? ' (default)' : ''}`;
-    select.appendChild(option);
-  });
-  select.value = voices.some((voice) => voice.voiceURI === current) ? current : '';
-  setText('#tts-voice-hint', voices.length ? `${voices.length} voices on this device` : 'No voices reported by this browser');
+
+  const addGroup = (label, list) => {
+    const group = document.createElement('optgroup');
+    group.label = label;
+    list.slice().sort(compareTtsVoices).forEach((voice) => {
+      const option = document.createElement('option');
+      option.value = voice.voiceURI;
+      option.textContent = ttsVoiceOptionText(voice);
+      group.appendChild(option);
+    });
+    select.appendChild(group);
+  };
+
+  Array.from(groups.entries())
+    .sort((a, b) => {
+      const rank = ([lang, list]) => (list.some((voice) => voice.default) ? 0 : /^en/i.test(lang) ? 1 : 2);
+      return rank(a) - rank(b)
+        || ttsLanguageLabel(a[0]).localeCompare(ttsLanguageLabel(b[0]))
+        || a[0].localeCompare(b[0]);
+    })
+    .forEach(([lang, list]) => addGroup(ttsLanguageLabel(lang), list));
+
+  if (novelty.length) addGroup('Novelty & effects', novelty);
+
+  const savedAvailable = voices.some((voice) => voice.voiceURI === savedVoice);
+  select.value = savedAvailable ? savedVoice : '';
+  const localCount = voices.filter(ttsIsLocal).length;
+  const localLabel = localCount === voices.length ? 'all on this device' : `${localCount} on this device`;
+  let hint = voices.length
+    ? `${voices.length} voices · ${localLabel} · grouped by accent`
+    : 'No voices reported by this browser yet';
+  if (savedVoice && !savedAvailable) hint += ' · saved voice unavailable, using automatic';
+  setText('#tts-voice-hint', hint);
+}
+
+function previewTtsVoice() {
+  if (!ttsSupported()) {
+    toast('Voice preview is not available in this browser.', 'info');
+    return;
+  }
+  const token = ++ttsPreviewToken;
+  const voice = ttsSelectedVoice();
+  const wasActive = ui.tts.active;
+  const wasPlaying = ui.tts.playing;
+  if (wasActive) {
+    ui.tts.playing = false;
+    ui.tts.token += 1;
+    ttsSyncHud();
+  }
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(TTS_PREVIEW_TEXT);
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang || 'en-US';
+  }
+  utterance.rate = clamp(Number(state.settings.ttsRate) || 1, 0.5, 2);
+  const finish = () => {
+    if (token !== ttsPreviewToken) return;
+    if (wasActive && wasPlaying) {
+      ui.tts.playing = true;
+      ttsSpeakCurrent();
+    } else {
+      ttsSyncHud();
+    }
+  };
+  utterance.onend = finish;
+  utterance.onerror = finish;
+  window.speechSynthesis.speak(utterance);
 }
 
 function splitIntoSentences(text) {
@@ -6681,6 +6868,8 @@ function startTts() {
     toast('Open a book first.', 'info');
     return;
   }
+  ttsPreviewToken += 1;
+  if (ttsSupported()) window.speechSynthesis.cancel();
   closeRsvp();
   stopTeleprompter();
   closeWordPopup();
@@ -6713,6 +6902,7 @@ function stopTts(options = {}) {
   ui.tts.utterance = null;
   ui.tts.expectedPage = null;
   ui.tts.token += 1;
+  ttsPreviewToken += 1;
   if (ttsSupported()) window.speechSynthesis.cancel();
   ttsClearHighlight();
   const hud = $('#tts-hud');
@@ -6735,8 +6925,13 @@ function toggleTtsPause() {
     if (ttsSupported()) window.speechSynthesis.pause();
   } else {
     ui.tts.playing = true;
-    if (ttsSupported() && window.speechSynthesis.paused) window.speechSynthesis.resume();
-    else ttsSpeakCurrent();
+    ttsPreviewToken += 1;
+    if (ttsSupported() && window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    } else {
+      if (ttsSupported()) window.speechSynthesis.cancel();
+      ttsSpeakCurrent();
+    }
   }
   ttsSyncHud();
 }
@@ -7633,7 +7828,19 @@ function setupEvents() {
     setRangeFill(event.target);
     setSetting('ttsRate', Number(event.target.value));
   });
-  $('#tts-voice')?.addEventListener('change', (event) => setSetting('ttsVoice', event.target.value));
+  $('#tts-voice')?.addEventListener('change', (event) => {
+    setSetting('ttsVoice', event.target.value);
+    populateTtsVoices();
+  });
+  $('#tts-preview')?.addEventListener('click', previewTtsVoice);
+  $('#tts-refresh-voices')?.addEventListener('click', () => {
+    const count = ttsVoices().length;
+    populateTtsVoices();
+    toast(
+      count ? `${count} voices available on this platform.` : 'No voices reported yet. Install a system voice, then refresh.',
+      count ? 'info' : 'error'
+    );
+  });
   $('#toggle-tts-autoadvance')?.addEventListener('change', (event) => setSetting('ttsAutoAdvance', event.target.checked));
   $('#start-tts')?.addEventListener('click', startTts);
   $('#sound-grid')?.addEventListener('click', (event) => {

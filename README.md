@@ -40,7 +40,7 @@ Search 75,000+ classics, read with bionic or RSVP modes, listen with browser-nat
 | Font size | 14px – 32px |
 | Line height | 1.2× – 2.2× |
 | Definition card text | 12px – 20px |
-| Read-aloud voice & speed | Any installed system voice, 0.5× – 2× |
+| Read-aloud voice & speed | Every installed platform voice, grouped by accent, with preview and on-device/online labels; 0.5× – 2× |
 
 All settings apply live and are remembered in `localStorage`.
 
@@ -48,7 +48,7 @@ All settings apply live and are remembered in `localStorage`.
 
 - **Bionic reading** — bolds the first ~42% of letters in every word to give the eye an anchor. Double-clicking a bionic word still looks up the whole word, not the bold fragment.
 - **RSVP speed reader** — one word at a time on a fixed focal point, 150–500 words per minute, with punctuation pauses, keyboard stepping, and a progress bar.
-- **Read aloud (TTS)** — narrates the page sentence by sentence with a moving highlight, play/pause, sentence stepping, and optional automatic page turns. Choose a system voice and speed in settings; speech is produced by the browser's or device's speech engine.
+- **Read aloud (TTS)** — narrates the page sentence by sentence with a moving highlight, play/pause, sentence stepping, and optional automatic page turns. The voice picker lists every voice your platform provides, grouped by accent with on-device/online labels, inferred voice character, a preview button, and a refresh control. Automatic mode prefers an on-device voice so narration still works offline.
 - **Teleprompter auto-scroll** — hands-free scrolling at an adjustable speed. Scrolling manually pauses it.
 - **Ambient soundscapes** — rain, café murmur, and fireplace crackle synthesized live with the Web Audio API. No audio files, no downloads.
 
